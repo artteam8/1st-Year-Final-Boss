@@ -14,6 +14,9 @@ typedef struct Node {
 char
 pseudohash(char *func);
 
+int
+unpseudohash(char hash);
+
 Node*
 build_ast(char **expr, int len);
 

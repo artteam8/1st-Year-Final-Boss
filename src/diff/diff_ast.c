@@ -19,6 +19,8 @@ copytree(Node *dest, Node *ref) {
 
 Node*
 diff(Node *node) {
+    if (node == NULL) return node;
+    printf("%c\n", node->value);
     Node *new = calloc(1, sizeof(Node));
 
     if (node->left != NULL) {
@@ -90,6 +92,7 @@ diff(Node *node) {
                 case '^': {
                     // f(x) ^ g(x) = f(x) ^ g(x) * (ln(f(x)) * g(x))' = f(x) ^ g(x) * (ln(f(x))*g(x)' + f(x)'/f(x)*g(x))
                     new->value = '*';
+                    new->left = calloc(1, sizeof(Node));
                     copytree(new->left, node); // f(x)^g(x)
                     new->right = calloc(1, sizeof(Node));
                     new->right->value = '+';
@@ -180,6 +183,7 @@ diff(Node *node) {
                 
                 der->right = calloc(1, sizeof(Node));
                 copytree(der->right, node->left);
+                der->value = '/';
             }
 
             if (sign == -1) {

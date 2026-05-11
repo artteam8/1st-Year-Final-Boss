@@ -21,6 +21,21 @@ pseudohash(char *func) {
     return s;
 }
 
+int
+unpseudohash(char hash) {
+    char *values[] = {"sin", "cos", "tan", "ctg", "ln", "pi"};
+    int len = 6;
+    for (int i = 0; i < len; ++i) {
+        //printf("trying %s...\n", values[i]);
+        if (pseudohash(values[i]) == hash) {
+            printf("%s ", values[i]);
+            return 1;
+        }
+    }
+    //printf("nah ):\n");
+    return 0;
+}
+
 Node*
 build_ast(char **expr, int len) {
     Node *stack[MAX_LEN];
@@ -106,8 +121,8 @@ void print_rpn(Node *node) {
     print_rpn(node->left);
     print_rpn(node->right);
 
-    if (node->value != 0) {
-        printf("%c ", node->value); 
+    if (node->value > 0) {
+        if (!unpseudohash(node->value)) printf("%c ", node->value); 
     } else {
         printf("%d ", node->number); 
     }
