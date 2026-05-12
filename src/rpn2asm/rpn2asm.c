@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ast.h>
 #include <diff_ast.h>
 
 #define MAX_LEN 1000
@@ -25,7 +24,7 @@ find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index
 
     if (node->left == NULL && node->right == NULL && node->value != 'x' && find_in_list(node->number, const_list, *const_index) == -1) {
         //consts[*index] = node->number;
-        int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dd %g\n", *const_index, node->number);
+        int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, node->number);
         if (written < 0 || *secdata_idx + written >= MAX_LEN) {
             fprintf(stderr, "\n\nBUFFER WRITING ERROR!!!!!!!!!!!\n\n");
             exit(1);
@@ -45,12 +44,12 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
 
     if (node->right == NULL) {
         if (node->left == NULL) { //value
-            if (node->value == 'x') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld [ebp+8]\n");
-            else if (node->value == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld dword[e]\n");
-            else if (node->value == pseudohash("pi")) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld dword[pi]\n");
+            if (node->value == 'x') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[ebp+8]\n");
+            else if (node->value == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_e]\n");
+            else if (node->value == pseudohash("pi")) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_pi]\n");
             else {
                 int const_idx = find_in_list(node->number, const_list, const_num);
-                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld [const_%d]\n", const_idx);
+                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_%d]\n", const_idx);
             }
         } else { // unary
             convert_x87(node->left, write_buffer, buffer_idx, const_list, const_num);
@@ -80,19 +79,19 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
 }
 
 void
-gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int const_num, int func_idx) {
-    *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    push ebx\n    push esi\n    push edi\n    push ebp\n    mov ebp, esp\n", func_idx);
+gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int const_num) {
+    *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    push ebp\n    mov ebp, esp\n    push ebx\n    push esi\n    push edi\n");
     convert_x87(root, write_buffer, buffer_idx, const_list, const_num);
-    *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    pop ebp\n    pop edi\n    pop esi\n    pop ebx\n    ret\n");
+    *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    pop edi\n    pop esi\n    pop ebx\n    pop ebp\n    ret\n");
 }
 
 int
 main(void) {
     char *secdata_buffer = calloc(MAX_SIZE, sizeof(char));
-    int secdata_idx = snprintf(secdata_buffer, MAX_SIZE, "section .data\n");
+    int secdata_idx = snprintf(secdata_buffer, MAX_SIZE, "section .data\n    const_pi dq 3.141592653589793\n    const_e dq 2.718281828459045\n");
 
     char *sectext_buffer = calloc(MAX_SIZE, sizeof(char));
-    int sectext_idx = snprintf(sectext_buffer, MAX_SIZE, "section .text\n");
+    int sectext_idx = snprintf(sectext_buffer, MAX_SIZE, "section .text\n    global f_1, f_2, f_3, d_1, d_2, d_3\n");
 
     int const_index = 0;
     double *const_list = calloc(MAX_CONSTS, sizeof(double));
@@ -124,7 +123,7 @@ main(void) {
         find_consts(root, secdata_buffer, &secdata_idx, &const_index, const_list);
         
         sectext_idx += snprintf(sectext_buffer + sectext_idx, MAX_SIZE - sectext_idx, "f_%d:\n", i);
-        gen_x87(root, sectext_buffer, &sectext_idx, const_list, const_index, i);
+        gen_x87(root, sectext_buffer, &sectext_idx, const_list, const_index);
     
 
         Node *diff_root = diff(root);
@@ -136,7 +135,7 @@ main(void) {
         find_consts(diff_root, secdata_buffer, &secdata_idx, &const_index, const_list);
 
         sectext_idx += snprintf(sectext_buffer + sectext_idx, MAX_SIZE - sectext_idx, "d_%d:\n", i);
-        gen_x87(diff_root, sectext_buffer, &sectext_idx, const_list, const_index, i);
+        gen_x87(diff_root, sectext_buffer, &sectext_idx, const_list, const_index);
 
         for (int j = 0; j < idx; ++j) {
             free(expr[j]);
