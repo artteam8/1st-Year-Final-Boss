@@ -6,7 +6,7 @@
 
 typedef struct Node {
     char value;
-    int number;
+    double number;
     struct Node *left;
     struct Node *right;
 } Node;

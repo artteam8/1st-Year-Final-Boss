@@ -20,7 +20,6 @@ copytree(Node *dest, Node *ref) {
 Node*
 diff(Node *node) {
     if (node == NULL) return node;
-    printf("%c\n", node->value);
     Node *new = calloc(1, sizeof(Node));
 
     if (node->left != NULL) {

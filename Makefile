@@ -3,7 +3,7 @@
 CC := gcc
 CFLAGS := -std=c99 -Wall -Wextra -O2 -I include $(addprefix -I , $(wildcard include/*))
 
-FUNC_FILE ?= func_rpn.txt
+FUNC_FILE ?= funcs.txt
 
 all: bin/func
 
@@ -19,9 +19,8 @@ bin/gen: obj/rpn2asm/rpn2asm.o obj/ast.o | bin
 	$(CC) $^ -o $@
 
 
-func.asm: bin/gen $(FUNC_FILE)
-	cp main_template.asm func.asm
-	echo "$$(cat $(FUNC_FILE))" | ./bin/gen >> func.asm
+funcs.asm: bin/gen $(FUNC_FILE)
+	cat $(FUNC_FILE) | ./bin/gen >> funcs.asm
 
 bin/func: func.asm
 	nasm -f elf32 func.asm

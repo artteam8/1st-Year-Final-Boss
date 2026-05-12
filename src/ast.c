@@ -6,7 +6,7 @@
 
 typedef struct Node {
     char value;
-    int number;
+    double number;
     struct Node *left;
     struct Node *right;
 } Node;
@@ -124,7 +124,7 @@ void print_rpn(Node *node) {
     if (node->value > 0) {
         if (!unpseudohash(node->value)) printf("%c ", node->value); 
     } else {
-        printf("%d ", node->number); 
+        printf("%lf ", node->number); 
     }
 }
 //*/
