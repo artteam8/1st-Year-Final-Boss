@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <numeric.h>
+#include <math.h>
+#include <getopt.h>
 
-#define EPS 1e-3
-#define N_SPLITS 1000
+#define EPS1 1e-9
+#define EPS2 1e-9
 
 extern double f_1(double x);
 extern double f_2(double x);
@@ -21,42 +23,64 @@ compare(double x, f f_1, f f_2, f f_3) {
     }
 }
 
+int
+main(int argc, char *argv[]) {
+    int print_absc = 0;
+    int print_iters = 0;
+    struct option cli_keys[] = {{"help", no_argument, 0,  'h'}, {0,0,0,0}};
 
-double
-simpson(f func, double left, double right) {
-    double h = (right - left) / N_SPLITS;
-    double sum = func(left) + func(right);
-    
-    for (int i = 1; i < N_SPLITS; ++i) {
-        double x = left + i * h;
-        if (i % 2 == 1) {
-            sum += 4 * func(x); // odd with coef=4
-        } else {
-            sum += 2 * func(x); // even with coef=2
+    int opt;
+    while ((opt = getopt_long(argc, argv, "ai", cli_keys, NULL)) != -1) {
+        switch(opt) {
+            case 'a':
+                print_absc = 1;
+                break;
+            case 'i':
+                print_iters = 1;
+                break;
+            case 'h':
+                printf("--help       show this message and quit\n -a          show intersection points\n -i          show number of iterations\n");
+                return 0;
         }
     }
-    
-    return sum * h / 3;
-}
 
-int
-main(void) {
+
+
+
+
+#if USE_NEWTON
+    printf("Newton method is used\n");
+#else
+    printf("Secant method is used\n");
+#endif
+
+#if USE_SIMPSON
+    printf("Simpson rule is used\n");
+#else
+    printf("Trapezium rule is used\n");
+#endif
+
+
+
+
+
     FILE *spec_file = fopen(SPEC_FILE, "r");
     double a, b;
     fscanf(spec_file, "%lf%lf", &a, &b);
-    double *xs = crosses(a, b, EPS);
-    
+    double *xs = crosses(a, b, EPS1, print_iters);
+
+    if (print_absc) printf("points: %lf %lf %lf\n", xs[0], xs[1], xs[2]);
+
     double points[] = {a, xs[0], xs[1], xs[2], b};
     f lowest;
     double area = 0;
 
     for (int i = 0; i < 4; ++i) {
         lowest = compare((points[i]+points[i+1])/2, &f_1, &f_2, &f_3);
-        printf("%lf %lf\n", points[i], points[i+1]);
-        area += simpson(lowest, points[i], points[i+1]);
+        area += integral(lowest, points[i], points[i+1], EPS2);
     }
 
-    printf("%lf\n", area);
+    printf("Area: %lf\n", area);
     return 0;
 }
 

@@ -20,4 +20,22 @@ double
 d_3(double x);
 
 double*
-crosses(double a, double b, double eps1);
+crosses(double a, double b, double eps1, int print_iters);
+
+
+
+
+
+
+
+
+
+
+double
+simpson(double (*func)(double), double a, double b, int n_splits);
+
+double
+trapezium(double (*func)(double), double a, double b, int n_splits);
+
+double
+integral(double (*func)(double), double a, double b, double eps2);

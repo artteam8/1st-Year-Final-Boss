@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define D_EPS 1e-12
 #define MAX_ITER 1000000
 
 extern double f_1(double x);
@@ -13,6 +12,8 @@ extern double f_3(double x);
 extern double d_1(double x);
 extern double d_2(double x);
 extern double d_3(double x);
+
+FILE *outp = NULL;
 
 double
 root(double (*f)(double),
@@ -32,13 +33,13 @@ root(double (*f)(double),
         if (fabs(y) < eps1) break;
 
         dy = f_der(x) - g_der(x);
-        if(fabs(dy) < D_EPS) break;
+        if(fabs(dy) < eps1) break;
 
         x = x - y/dy;
         ++iter;
     }
 
-    printf("iters: %d\n", iter);
+    fprintf(outp, "iters: %d\n", iter);
     return x;
 }
 #else
@@ -59,7 +60,7 @@ root(double (*f)(double),
         y = f(x) - g(x);
 
         if (fabs(y) < eps1) {
-            printf("iters: %d\n", iter);
+            fprintf(outp, "iters: %d\n", iter);
             return x;
         }
 
@@ -73,13 +74,13 @@ root(double (*f)(double),
         }
 
         if (fabs(b - a) < eps1) {
-            printf("iters: %d\n", iter);
+            fprintf(outp, "iters: %d\n", iter);
             return x;
         }
 
         ++iter;
     }
-    printf("iters: %d\n", iter);
+    fprintf(outp, "iters: %d\n", iter);
 
     return x;
 }
@@ -103,19 +104,86 @@ sort(double *xs) {
 }
 
 double*
-crosses(double a, double b, double eps1) {
+crosses(double a, double b, double eps1, int print_iters) {
+    if (print_iters) outp = stdout;
+    else outp = fopen("/dev/null", "w");
+
     double *xs = calloc(3, sizeof(double));
 #if USE_NEWTON
-    printf("Newton method is used\n");
     xs[0] = root(&f_1, &f_2, &d_1, &d_2, a, b, eps1);
     xs[1] = root(&f_2, &f_3, &d_2, &d_3, a, b, eps1);
     xs[2] = root(&f_1, &f_3, &d_1, &d_3, a, b, eps1);
 #else
-    printf("Secant method is used\n");
     xs[0] = root(&f_1, &f_2, a, b, eps1);
     xs[1] = root(&f_2, &f_3, a, b, eps1);
     xs[2] = root(&f_1, &f_3, a, b, eps1);
 #endif
     sort(xs);
     return xs;
+}
+
+
+
+
+
+
+
+
+
+
+#if USE_SIMPSON
+double
+simpson(double (*func)(double), double a, double b, int n_splits) {
+    double h = (b - a) / n_splits;
+    double sum = func(a) + func(b);
+
+    for (int i = 1; i < n_splits; ++i) {
+        double x = a + i * h;
+        if (i % 2 == 1) {
+            sum += 4 * func(x); // odd with coef=4
+        } else {
+            sum += 2 * func(x); // even with coef=2
+        }
+    }
+
+    return sum * h / 3;
+}
+#else
+double
+trapezium(double (*func)(double), double a, double b, int n_splits) {
+    double h = (b - a) / n_splits;
+    double sum = (func(a) + func(b)) / 2.0;
+
+    for (int i = 1; i < n_splits; ++i) {
+        double x = a + i * h;
+        sum += func(x);
+    }
+
+    return sum * h;
+}
+#endif
+
+double
+integral(double (*func)(double), double a, double b, double eps2) {
+    int n_splits = 10;
+    double I_old, I_new;
+#if USE_SIMPSON
+    I_new = simpson(func, a, b, n_splits);
+
+    do {
+        I_old = I_new;
+        n_splits *= 2;
+        I_new = simpson(func, a, b, n_splits);
+    } while (fabs(I_new - I_old) / 15 > eps2);
+#else
+    I_new = trapezium(func, a, b, n_splits);
+
+    do {
+        I_old = I_new;
+        n_splits *= 2;
+        I_new = trapezium(func, a, b, n_splits);
+    } while (fabs(I_new - I_old) / 3.0 > eps2);
+#endif
+
+    return I_new;
 }
