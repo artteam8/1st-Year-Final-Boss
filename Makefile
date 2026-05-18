@@ -1,11 +1,12 @@
-.PHONY: all force_numeric
+.PHONY: all force
 
 SPEC_FILE = in.txt
 
 CC := gcc
 CFLAGS := -std=c99 -Wall -Wextra -m32 -O2 -DUSE_NEWTON=$(USE_NEWTON) -DUSE_SIMPSON=$(USE_SIMPSON) -DSPEC_FILE=\"$(SPEC_FILE)\"  -I include -I include/rpn2asm
 
-all: bin/main
+all: bin/main obj/main.o obj/numeric.o
+force: ;
 
 bin/main:  obj/main.o obj/numeric.o obj/funcs.o | bin
 	$(CC) -m32 $^ -o $@
@@ -14,7 +15,11 @@ obj/funcs.o: funcs.asm
 	mkdir -p $(dir $@)
 	nasm -f elf32 $< -o $@
 
-obj/numeric.o: src/numeric.c force_numeric
+obj/numeric.o: src/numeric.c force
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+obj/main.o: src/main.c force
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 

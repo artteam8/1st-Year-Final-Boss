@@ -169,6 +169,14 @@ check_subtree(Node *root) {
     return root;
 }
 
+void
+freetree(Node *root) {
+    if (root == NULL) return;
+    freetree(root->left);
+    freetree(root->right);
+    free(root);
+}
+
 ///*
 void print_rpn(Node *node) {
     if (node == NULL) return;

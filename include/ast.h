@@ -36,4 +36,7 @@ balance_subtree(Node **flat, int start, int end, char oper);
 Node*
 check_subtree(Node *root);
 
+void
+freetree(Node *root);
+
 void print_rpn(Node *node);

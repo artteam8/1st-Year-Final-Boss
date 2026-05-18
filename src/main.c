@@ -2,6 +2,7 @@
 #include <numeric.h>
 #include <math.h>
 #include <getopt.h>
+#include <stdlib.h>
 
 #define EPS1 1e-9
 #define EPS2 1e-9
@@ -9,6 +10,9 @@
 extern double f_1(double x);
 extern double f_2(double x);
 extern double f_3(double x);
+extern double d_1(double x);
+extern double d_2(double x);
+extern double d_3(double x);
 
 typedef double (*f)(double);
 
@@ -69,6 +73,7 @@ main(int argc, char *argv[]) {
     FILE *spec_file = fopen(SPEC_FILE, "r");
     double a, b;
     fscanf(spec_file, "%lf%lf", &a, &b);
+    //printf("a,b: %lf %lf\n", a, b);
 #if USE_NEWTON
     double *xs = crosses(f_1, f_2, f_3, d_1, d_2, d_3, a, b, EPS1, print_iters);
 #else
@@ -86,6 +91,7 @@ main(int argc, char *argv[]) {
     }
 
     printf("Area: %lf\n", area);
+    free(xs);
     return 0;
 }
 

@@ -137,6 +137,8 @@ main(void) {
         sectext_idx += snprintf(sectext_buffer + sectext_idx, MAX_SIZE - sectext_idx, "d_%d:\n", i);
         gen_x87(diff_root, sectext_buffer, &sectext_idx, const_list, const_index);
 
+        freetree(root);
+        freetree(diff_root);
         for (int j = 0; j < idx; ++j) {
             free(expr[j]);
         }

@@ -7,26 +7,12 @@
 
 typedef double (*f)(double);
 
-double
-f_1(double x);
-double
-f_2(double x);
-double
-f_3(double x);
-
-double
-d_1(double x);
-double
-d_2(double x);
-double
-d_3(double x);
-
 #if USE_NEWTON
 double*
-crosses(f f_1, f f_2, f f_3, f d_1, f d_2, f d_3, double a, double b, double eps1, int print_iters);
+crosses(f f1, f f2, f f3, f d1, f d2, f d3, double a, double b, double eps1, int print_iters);
 #else
 double*
-crosses(f f_1, f f_2, f f_3, double a, double b, double eps1, int print_iters) {
+crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters);
 #endif
 
 

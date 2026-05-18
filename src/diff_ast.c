@@ -62,9 +62,11 @@ diff(Node *node) {
                     //memcpy(denumenator->left, second, sizeof(Node)); // doesn't copy the subtree, leaves the ptrs
                     copytree(denumenator->left, node->right);
                     denumenator->right = calloc(1, sizeof(Node));
-                    denumenator->right->number = 2;
-                    denumenator->right->value = -1; // marking as constant
-                    denumenator->value = '^';
+                    //denumenator->right->number = 2;
+                    //denumenator->right->value = -1; // marking as constant
+                    //denumenator->value = '^';
+                    copytree(denumenator->right, node->right);
+                    denumenator->value = '*';
 
                     new->left = numenator;
                     new->right = denumenator;
@@ -134,14 +136,19 @@ diff(Node *node) {
 
                 der->value = '/';
                 der->right = calloc(1, sizeof(Node));
-                der->right->value = '^';
+                //der->right->value = '^';
+                der->right->value = '*';
+
                 der->right->left = calloc(1, sizeof(Node));
                 der->right->right = calloc(1, sizeof(Node));
                 der->right->left->value = pseudohash("cos");
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
-                der->right->right->value = -1;
-                der->right->right->number = 2;
+                //der->right->right->value = -1;
+                //der->right->right->number = 2;
+                der->right->right->value = pseudohash("cos");
+                der->right->right->left = calloc(1, sizeof(Node));
+                copytree(der->right->right->left, node->left);
             } else if (node->value == pseudohash("ctg")) {
                 der->left = calloc(1, sizeof(Node));
                 der->left->value = -1;
@@ -149,14 +156,19 @@ diff(Node *node) {
 
                 der->value = '/';
                 der->right = calloc(1, sizeof(Node));
-                der->right->value = '^';
+                //der->right->value = '^';
+                der->right->value = '*';
                 der->right->left = calloc(1, sizeof(Node));
                 der->right->right = calloc(1, sizeof(Node));
+
                 der->right->left->value = pseudohash("sin");
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
-                der->right->right->value = -1;
-                der->right->right->number = 2;
+                //der->right->right->value = -1;
+                //der->right->right->number = 2;
+                der->right->right->value = pseudohash("sin");
+                der->right->right->left = calloc(1, sizeof(Node));
+                copytree(der->right->right->left, node->left);
                 
                 sign = -1;
             } else if (node->value == pseudohash("ln")) {
