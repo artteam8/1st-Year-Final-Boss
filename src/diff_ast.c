@@ -11,7 +11,7 @@ diff(Node *node) {
             ///////////////////////////////////////////////////////
             //                  binary functions                 //
             ///////////////////////////////////////////////////////
-            switch(node->value) {
+            switch(node->value[0]) {
                 case '+':
                 case '-': {
                     new->left = diff(node->left);
@@ -22,8 +22,8 @@ diff(Node *node) {
                 case '*': {
                     Node *first = calloc(1, sizeof(Node));
                     Node *second = calloc(1, sizeof(Node));
-                    first->value = '*';
-                    second->value = '*';
+                    first->value = "*";
+                    second->value = "*";
                     first->left = diff(node->left);
                     //first->right = node->right;
                     //second->left = node->left;
@@ -33,7 +33,7 @@ diff(Node *node) {
                     copytree(second->left, node->left);
                     second->right = diff(node->right);
 
-                    new->value = '+';
+                    new->value = "+";
                     new->left = first;
                     new->right = second;
                     return new;
@@ -41,8 +41,8 @@ diff(Node *node) {
                 case '/': {
                     Node *first = calloc(1, sizeof(Node));
                     Node *second = calloc(1, sizeof(Node));
-                    first->value = '*';
-                    second->value = '*';
+                    first->value = "*";
+                    second->value = "*";
                     first->left = diff(node->left);
                     //first->right = node->right;
                     //second->left = node->left;
@@ -53,7 +53,7 @@ diff(Node *node) {
                     second->right = diff(node->right);
 
                     Node *numenator = calloc(1, sizeof(Node));
-                    numenator->value = '-';
+                    numenator->value = "-";
                     numenator->left = first;
                     numenator->right = second;
 
@@ -66,41 +66,41 @@ diff(Node *node) {
                     //denumenator->right->value = -1; // marking as constant
                     //denumenator->value = '^';
                     copytree(denumenator->right, node->right);
-                    denumenator->value = '*';
+                    denumenator->value = "*";
 
                     new->left = numenator;
                     new->right = denumenator;
-                    new->value = '/';
+                    new->value = "/";
 
                     return new;
                 }
                 case '^': {
                     // f(x) ^ g(x) = f(x) ^ g(x) * (ln(f(x)) * g(x))' = f(x) ^ g(x) * (ln(f(x))*g(x)' + f(x)'/f(x)*g(x))
-                    new->value = '*';
+                    new->value = "*";
                     new->left = calloc(1, sizeof(Node));
                     copytree(new->left, node); // f(x)^g(x)
                     new->right = calloc(1, sizeof(Node));
-                    new->right->value = '+';
+                    new->right->value = "+";
 
                     Node *first = calloc(1, sizeof(Node));
                     Node *ln = calloc(1, sizeof(Node));
-                    ln->value = pseudohash("ln");
+                    ln->value = "ln";
                     //ln->left = node->left; //f(x)
                     ln->left = calloc(1, sizeof(Node));
                     copytree(ln->left, node->left); //f(x)
                     ln->right = NULL;
-                    first->value = '*';
+                    first->value = "*";
                     first->left = ln;
                     first->right = diff(node->right); //g(x)'
                     
                     Node *second = calloc(1, sizeof(Node));
                     Node *f_to_der = calloc(1, sizeof(Node));
-                    f_to_der->value = '/';
+                    f_to_der->value = "/";
                     f_to_der->left = diff(node->left);
                     //f_to_der->right = node->left;
                     f_to_der->right = calloc(1, sizeof(Node));
                     copytree(f_to_der->right, node->left);
-                    second->value = '*';
+                    second->value = "*";
                     second->left = f_to_der;
                     //second->right = node->right; //g(x)
                     second->right = calloc(1, sizeof(Node));
@@ -119,79 +119,79 @@ diff(Node *node) {
             Node *internal = diff(node->left); // g'(x)
             Node *der = calloc(1, sizeof(Node));
             int sign = 1;
-            if (node->value == pseudohash("sin")) {
-                der->value = pseudohash("cos");
+            if (strcmp(node->value, "sin") == 0) {
+                der->value = "cos";
                 der->left = calloc(1, sizeof(Node));
                 copytree(der->left, node->left); //g(x)
-            } else if (node->value == pseudohash("cos")) {
-                der->value = pseudohash("sin");
+            } else if (strcmp(node->value, "cos") == 0) {
+                der->value = "sin";
                 der->left = calloc(1, sizeof(Node));
                 copytree(der->left, node->left); //g(x)
 
                 sign = -1;
-            } else if (node->value == pseudohash("tan")) {
+            } else if (strcmp(node->value, "tan") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                der->left->value = -1;
+                der->left->value = "none";
                 der->left->number = 1;
 
-                der->value = '/';
+                der->value = "/";
                 der->right = calloc(1, sizeof(Node));
                 //der->right->value = '^';
-                der->right->value = '*';
+                der->right->value = "*";
 
                 der->right->left = calloc(1, sizeof(Node));
                 der->right->right = calloc(1, sizeof(Node));
-                der->right->left->value = pseudohash("cos");
+                der->right->left->value = "cos";
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
                 //der->right->right->value = -1;
                 //der->right->right->number = 2;
-                der->right->right->value = pseudohash("cos");
+                der->right->right->value = "cos";
                 der->right->right->left = calloc(1, sizeof(Node));
                 copytree(der->right->right->left, node->left);
-            } else if (node->value == pseudohash("ctg")) {
+            } else if (strcmp(node->value, "ctg")) {
                 der->left = calloc(1, sizeof(Node));
-                der->left->value = -1;
+                der->left->value = "none";
                 der->left->number = 1;
 
-                der->value = '/';
+                der->value = "/";
                 der->right = calloc(1, sizeof(Node));
                 //der->right->value = '^';
-                der->right->value = '*';
+                der->right->value = "*";
                 der->right->left = calloc(1, sizeof(Node));
                 der->right->right = calloc(1, sizeof(Node));
 
-                der->right->left->value = pseudohash("sin");
+                der->right->left->value = "sin";
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
                 //der->right->right->value = -1;
                 //der->right->right->number = 2;
-                der->right->right->value = pseudohash("sin");
+                der->right->right->value = "sin";
                 der->right->right->left = calloc(1, sizeof(Node));
                 copytree(der->right->right->left, node->left);
                 
                 sign = -1;
-            } else if (node->value == pseudohash("ln")) {
+            } else if (strcmp(node->value, "ln") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                der->left->value = -1;
+                der->left->value = "none";
                 der->left->number = 1;
                 
                 der->right = calloc(1, sizeof(Node));
                 copytree(der->right, node->left);
-                der->value = '/';
+                der->value = "/";
             }
 
             if (sign == -1) {
                 Node *neg = calloc(1, sizeof(Node));
-                neg->value = '-';
+                neg->value = "-";
                 neg->left = calloc(1, sizeof(Node));
-                neg->left->value = -1;
+                neg->left->value = "none";
                 neg->right = der;
 
                 der = neg;
             }
 
-            new->value = '*';
+            new->value = "*";
             new->left = der;
             new->right = internal;
         }
@@ -199,8 +199,8 @@ diff(Node *node) {
         /////////////////
         //  constants  //
         /////////////////
-        new->value = -1;
-        if (node->value == 'x') new->number = 1;
+        new->value = "none";
+        if (node->value[0] == 'x') new->number = 1;
         else new->number = 0;
     }
 

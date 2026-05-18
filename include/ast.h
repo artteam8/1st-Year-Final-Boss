@@ -5,7 +5,7 @@
 #define MAX_LEN 1000
 
 typedef struct Node {
-    char value;
+    char *value;
     double number;
     struct Node *left;
     struct Node *right;

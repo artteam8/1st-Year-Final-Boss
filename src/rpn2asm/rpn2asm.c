@@ -22,7 +22,7 @@ void
 find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index, double *const_list) {
     if (node == NULL || *const_index == MAX_CONSTS) return;
 
-    if (node->left == NULL && node->right == NULL && node->value != 'x' && find_in_list(node->number, const_list, *const_index) == -1) {
+    if (node->left == NULL && node->right == NULL && node->value[0] != 'x' && find_in_list(node->number, const_list, *const_index) == -1) {
         //consts[*index] = node->number;
         int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, node->number);
         if (written < 0 || *secdata_idx + written >= MAX_LEN) {
@@ -44,29 +44,29 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
 
     if (node->right == NULL) {
         if (node->left == NULL) { //value
-            if (node->value == 'x') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[ebp+8]\n");
-            else if (node->value == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_e]\n");
-            else if (node->value == pseudohash("pi")) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_pi]\n");
+            if (node->value[0] == 'x') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[ebp+8]\n");
+            else if (node->value[0] == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_e]\n");
+            else if (strcmp(node->value, "pi") == 0) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_pi]\n");
             else {
                 int const_idx = find_in_list(node->number, const_list, const_num);
                 *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_%d]\n", const_idx);
             }
         } else { // unary
             convert_x87(node->left, write_buffer, buffer_idx, const_list, const_num);
-            if (node->value == pseudohash("sin")) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fsin\n");
-            else if (node->value == pseudohash("cos")) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fcos\n");
-            else if (node->value == pseudohash("tan")) {
+            if (strcmp(node->value, "sin") == 0) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fsin\n");
+            else if (strcmp(node->value, "cos") == 0) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fcos\n");
+            else if (strcmp(node->value, "tan") == 0) {
                 *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld st0\n    fsin\n    fxch\n    fcos\n    fdivp st1, st0\n");
-            } else if (node->value == pseudohash("ctg")) {
+            } else if (strcmp(node->value, "ctg") == 0) {
                 *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld st0\n    fcos\n    fxch\n    fsin\n    fdivp st1, st0\n");
-            } else if (node->value == pseudohash("ln")) {
+            } else if (strcmp(node->value, "ln") == 0) {
                     *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fldln2\n    fxch\n    fyl2x\n");
             }
         }
     } else { //binary
         convert_x87(node->left, write_buffer, buffer_idx, const_list, const_num);
         convert_x87(node->right, write_buffer, buffer_idx, const_list, const_num);
-        switch(node->value) {
+        switch(node->value[0]) {
             case '+': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    faddp st1, st0\n"); break;
             case '-': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fsubp st1, st0\n"); break;
             case '*': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fmulp st1, st0\n"); break;
