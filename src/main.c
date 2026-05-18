@@ -12,14 +12,22 @@ extern double f_3(double x);
 
 typedef double (*f)(double);
 
-f
-compare(double x, f f_1, f f_2, f f_3) {
-    if (f_1(x) < f_2(x)) {
-        if (f_3(x) < f_1(x)) return f_3;
-        else return f_1;
-    } else {
-        if (f_2(x) < f_3(x)) return f_2;
-        else return f_3;
+void
+sort_func(double x, f fs[3]) {
+    if (fs[0](x) > fs[1](x)) {
+        f temp = fs[1];
+        fs[1] = fs[0];
+        fs[0] = temp;
+    }
+    if (fs[1](x) > fs[2](x)) {
+        f temp = fs[2];
+        fs[2] = fs[1];
+        fs[1] = temp;
+        if (fs[0](x) > fs[1](x)) {
+            temp = fs[1];
+            fs[1] = fs[0];
+            fs[0] = temp;
+        }
     }
 }
 
@@ -45,9 +53,6 @@ main(int argc, char *argv[]) {
     }
 
 
-
-
-
 #if USE_NEWTON
     printf("Newton method is used\n");
 #else
@@ -61,23 +66,23 @@ main(int argc, char *argv[]) {
 #endif
 
 
-
-
-
     FILE *spec_file = fopen(SPEC_FILE, "r");
     double a, b;
     fscanf(spec_file, "%lf%lf", &a, &b);
-    double *xs = crosses(a, b, EPS1, print_iters);
+#if USE_NEWTON
+    double *xs = crosses(f_1, f_2, f_3, d_1, d_2, d_3, a, b, EPS1, print_iters);
+#else
+    double *xs = crosses(f_1, f_2, f_3, a, b, EPS1, print_iters);
+#endif
 
     if (print_absc) printf("points: %lf %lf %lf\n", xs[0], xs[1], xs[2]);
 
-    double points[] = {a, xs[0], xs[1], xs[2], b};
-    f lowest;
+    f fs[] = {f_1, f_2, f_3};
     double area = 0;
 
-    for (int i = 0; i < 4; ++i) {
-        lowest = compare((points[i]+points[i+1])/2, &f_1, &f_2, &f_3);
-        area += integral(lowest, points[i], points[i+1], EPS2);
+    for (int i = 0; i < 2; ++i) {
+        sort_func((xs[i]+xs[i+1])/2, fs);
+        area += integral(fs[1], xs[i], xs[i+1], EPS2) - integral(fs[0], xs[i], xs[i+1], EPS2);
     }
 
     printf("Area: %lf\n", area);

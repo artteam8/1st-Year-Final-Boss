@@ -36,6 +36,38 @@ unpseudohash(char hash) {
     return 0;
 }
 
+void
+copytree(Node *dest, Node *ref) {
+    if (!ref) return;
+    dest->value = ref->value;
+    dest->number = ref->number;
+
+    if (ref->left) {
+        dest->left = calloc(1, sizeof(Node));
+        copytree(dest->left, ref->left);
+    }
+    if (ref->right) {
+        dest->right = calloc(1, sizeof(Node));
+        copytree(dest->right, ref->right);
+    }
+}
+
+Node*
+power_tree(Node *ref, int power) {
+    Node *node = calloc(1, sizeof(Node));
+    if (power == 1) {
+        copytree(node, ref);
+        return node;
+    } else {
+        int left_power = power / 2;
+        int right_power = power - left_power;
+        node->value = '*';
+        node->left = power_tree(ref, left_power);
+        node->right = power_tree(ref, right_power);
+        return node;
+    }
+}
+
 Node*
 build_ast(char **expr, int len) {
     Node *stack[MAX_LEN];
@@ -51,10 +83,33 @@ build_ast(char **expr, int len) {
             node->value = token[0];
             node->right = NULL;
             node->left = NULL;
-        } else if (('*' <= token[0] && token[0] <= '/') || token[0] == '^') {
+        } else if ('*' <= token[0] && token[0] <= '/') {
             node->value = token[0];
             node->right = stack[--stack_ptr];
             node->left = stack[--stack_ptr];
+        } else if (token[0] == '^') { // only constant integer powers are allowed; treats x^y = x*x*...*x with y amount of multiplications; x^-y = 1 / x^y
+            int power = stack[--stack_ptr]->number;
+            if (power > 1) {
+                Node *value = stack[--stack_ptr];
+                int left_power = power / 2;
+                int right_power = power - left_power;
+                node->value = '*';
+                node->left = power_tree(value, left_power);
+                node->right = power_tree(value, right_power);
+            } else if (power == 1) {
+                free(node);
+                node = stack[--stack_ptr];
+            } else if (power == 0) {
+                node->value = -1;
+                node->number = 1;
+            } else {
+                Node *value = stack[--stack_ptr];
+                node->value = '/';
+                node->left = calloc(1, sizeof(Node));
+                node->left->value = -1;
+                node->left->number = 1;
+                node->right = power_tree(value, -power);
+            }
         }
         else if (strcmp(token, "pi") == 0) {
             node->value = pseudohash(token);

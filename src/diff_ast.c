@@ -1,22 +1,6 @@
 #include <stdio.h>
 #include <ast.h>
 
-void
-copytree(Node *dest, Node *ref) {
-    if (!ref) return;
-    dest->value = ref->value;
-    dest->number = ref->number;
-
-    if (ref->left) {
-        dest->left = calloc(1, sizeof(Node));
-        copytree(dest->left, ref->left);
-    }
-    if (ref->right) {
-        dest->right = calloc(1, sizeof(Node));
-        copytree(dest->right, ref->right);
-    }
-}
-
 Node*
 diff(Node *node) {
     if (node == NULL) return node;

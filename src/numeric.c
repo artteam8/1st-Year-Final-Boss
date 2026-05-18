@@ -4,17 +4,11 @@
 
 #define MAX_ITER 1000000
 
-extern double f_1(double x);
-extern double f_2(double x);
-extern double f_3(double x);
-
-#if USE_NEWTON
-extern double d_1(double x);
-extern double d_2(double x);
-extern double d_3(double x);
+typedef double (*f)(double);
 
 FILE *outp = NULL;
 
+#if USE_NEWTON
 double
 root(double (*f)(double),
     double (*g)(double),
@@ -39,7 +33,7 @@ root(double (*f)(double),
         ++iter;
     }
 
-    fprintf(outp, "iters: %d\n", iter);
+    fprintf(outp, "iters: %d, x=%lf\n", iter, x);
     return x;
 }
 #else
@@ -99,28 +93,46 @@ sort(double *xs) {
         t = xs[1];
         xs[1] = xs[2];
         xs[2] = t;
+        // here xs[1] <= xs[2]
+        if (xs[0] > xs[1]) {
+            t = xs[0];
+            xs[0] = xs[1];
+            xs[1] = t;
+            // here xs[0] <= xs[1] <= xs[2]
+        }
     }
-    // here xs[1] <= xs[2]
 }
 
+#if USE_NEWTON
 double*
-crosses(double a, double b, double eps1, int print_iters) {
+crosses(f f_1, f f_2, f f_3, f d_1, f d_2, f d_3, double a, double b, double eps1, int print_iters) {
     if (print_iters) outp = stdout;
     else outp = fopen("/dev/null", "w");
 
     double *xs = calloc(3, sizeof(double));
-#if USE_NEWTON
-    xs[0] = root(&f_1, &f_2, &d_1, &d_2, a, b, eps1);
-    xs[1] = root(&f_2, &f_3, &d_2, &d_3, a, b, eps1);
-    xs[2] = root(&f_1, &f_3, &d_1, &d_3, a, b, eps1);
-#else
-    xs[0] = root(&f_1, &f_2, a, b, eps1);
-    xs[1] = root(&f_2, &f_3, a, b, eps1);
-    xs[2] = root(&f_1, &f_3, a, b, eps1);
-#endif
+    xs[0] = root(f_1, f_2, d_1, d_2, a, b, eps1);
+    xs[1] = root(f_2, f_3, d_2, d_3, a, b, eps1);
+    xs[2] = root(f_1, f_3, d_1, d_3, a, b, eps1);
     sort(xs);
     return xs;
 }
+#else
+double*
+crosses(f f_1, f f_2, f f_3, double a, double b, double eps1, int print_iters) {
+    if (print_iters) outp = stdout;
+    else outp = fopen("/dev/null", "w");
+
+    double *xs = calloc(3, sizeof(double));
+    xs[0] = root(&f_1, &f_2, &d_1, &d_2, a, b, eps1);
+    xs[1] = root(&f_2, &f_3, &d_2, &d_3, a, b, eps1);
+    xs[2] = root(&f_1, &f_3, &d_1, &d_3, a, b, eps1);
+    xs[0] = root(&f_1, &f_2, a, b, eps1);
+    xs[1] = root(&f_2, &f_3, a, b, eps1);
+    xs[2] = root(&f_1, &f_3, a, b, eps1);
+    sort(xs);
+    return xs;
+}
+#endif
 
 
 
@@ -165,7 +177,7 @@ trapezium(double (*func)(double), double a, double b, int n_splits) {
 
 double
 integral(double (*func)(double), double a, double b, double eps2) {
-    int n_splits = 10;
+    int n_splits = 10000;
     double I_old, I_new;
 #if USE_SIMPSON
     I_new = simpson(func, a, b, n_splits);

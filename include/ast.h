@@ -17,6 +17,13 @@ pseudohash(char *func);
 int
 unpseudohash(char hash);
 
+void
+copytree(Node *dest, Node *ref);
+
+void
+copytree(Node *dest, Node *ref);
+
+
 Node*
 build_ast(char **expr, int len);
 
