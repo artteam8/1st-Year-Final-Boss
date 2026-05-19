@@ -7,16 +7,17 @@
 /// Node value stores an operator. if value stores "none", Node stores a number
 typedef struct Node {
     char *value;
-    double number;
+    //double number;
     struct Node *left;
     struct Node *right;
 } Node;
 
+/// copies tree (statement) to a new independent tree. space for dest should be allocated first
 void
 copytree(Node *dest, Node *ref) {
     if (!ref) return;
     dest->value = ref->value;
-    dest->number = ref->number;
+    //dest->number = ref->number;
 
     if (ref->left) {
         dest->left = calloc(1, sizeof(Node));
@@ -28,6 +29,21 @@ copytree(Node *dest, Node *ref) {
     }
 }
 
+/// prints tree in reverse Polish notation
+void print_rpn(Node *node) {
+    if (node == NULL) return;
+
+    print_rpn(node->left);
+    print_rpn(node->right);
+
+    //if (strcmp(node->value, "none") != 0) {
+    printf("%s ", node->value);
+    //} else {
+    //    printf("%lf ", node->number); 
+    //}
+}
+
+/// splits the power into halfs, and builds chains of multiplications minimazing tree height
 Node*
 power_tree(Node *ref, int power) {
     Node *node = calloc(1, sizeof(Node));
@@ -44,6 +60,7 @@ power_tree(Node *ref, int power) {
     }
 }
 
+/// TODO document
 Node*
 build_ast(char **expr, int len) {
     Node *stack[MAX_LEN];
@@ -51,62 +68,67 @@ build_ast(char **expr, int len) {
 
     for (int i = 0; i < len; ++i) {
         char *token = expr[i];
+        //printf("t: %s\n", token);
         Node *node = calloc(1, sizeof(Node));
-        node->number = 0;
+        //node->number = 0;
         node->value = "none";
 
-        if (strcmp(token, "x") == 0 || strcmp(token, "e") == 0) {
+        if ((token[0] == 'x') || (token[0] == 'e') || (strcmp(token, "pi") == 0)) {
             node->value = token;
             node->right = NULL;
             node->left = NULL;
-        } else if ('*' <= token[0] && token[0] <= '/') {
+        } else if (strlen(token) == 1 && '*' <= token[0] && token[0] <= '/') {
             node->value = token;
             node->right = stack[--stack_ptr];
             node->left = stack[--stack_ptr];
         } else if (token[0] == '^') { // only constant integer powers are allowed; treats x^y = x*x*...*x with y amount of multiplications; x^-y = 1 / x^y
-            int power = stack[--stack_ptr]->number;
+            //Node *power_node = stack[--stack_ptr];
+            //double power = power_node->number;
+            //if (strcmp(power_node->value, "none") != 0) power = atof(power_node->value);
+            double power = atof(stack[--stack_ptr]->value);
+            Node *ref = stack[--stack_ptr];
+
             if (power > 1) {
-                Node *value = stack[--stack_ptr];
+                //Node *ref = stack[--stack_ptr];
                 int left_power = power / 2;
                 int right_power = power - left_power;
                 node->value = "*";
-                node->left = power_tree(value, left_power);
-                node->right = power_tree(value, right_power);
+                node->left = power_tree(ref, left_power);
+                node->right = power_tree(ref, right_power);
             } else if (power == 1) {
                 free(node);
-                node = stack[--stack_ptr];
+                //node = stack[--stack_ptr];
+                node = ref;
             } else if (power == 0) {
-                node->value = "none";
-                node->number = 1;
+                //node->value = "none";
+                //node->number = 1;
+                node->value = "1";
             } else {
-                Node *ref = stack[--stack_ptr];
+                //Node *ref = stack[--stack_ptr];
                 node->value = "/";
                 node->left = calloc(1, sizeof(Node));
-                node->left->value = "none";
-                node->left->number = 1;
+                //node->left->value = "none";
+                //node->left->number = 1;
+                node->left->value = "1";
                 node->right = power_tree(ref, -power);
             }
-        }
-        else if (strcmp(token, "pi") == 0) {
-            node->value = token;
-            node->right = NULL;
-            node->left = NULL;
         } else if ('c' <= token[0] && token[0] <= 't'){ // should be on of sin, cos, tan, ctg, ln
             node->value = token;
             node->right = NULL;
             node->left = stack[--stack_ptr];
         } else { // a constant number
-            node->number = atof(token);
+            //node->number = atof(token);
+            node->value = token; // as we have value as a string, lets just store it in string. usable for negative
             node->right = NULL;
             node->left = NULL;
         }
 
         stack[stack_ptr++] = node;
     }
-
     return stack[0];
 }
 
+/// finds and flattens a flat of associative operations
 void
 flatten(Node *node, char *oper, Node **flat, int *cnt) { // finds a sequence of identical associative operands
     if (strcmp(node->value, oper) == 0) {
@@ -117,6 +139,7 @@ flatten(Node *node, char *oper, Node **flat, int *cnt) { // finds a sequence of 
     }
 }
 
+/// TODO document
 Node*
 balance_subtree(Node **flat, int start, int end, char *oper) {
     if (start == end) return flat[start];
@@ -128,6 +151,7 @@ balance_subtree(Node **flat, int start, int end, char *oper) {
     return new;
 }
 
+/// TODO document
 Node*
 check_subtree(Node *root) {
     if (!('*' <= root->value[0] && root->value[0] <= '/')) return root;
@@ -141,10 +165,66 @@ check_subtree(Node *root) {
 
     root->left = check_subtree(root->left);
     root->right = check_subtree(root->right);
-    
     return root;
 }
 
+Node*
+clear_tree(Node *root) {
+    if (!('*' <= root->value[0] && root->value[0] <= '/')) return root;
+
+    root->left = clear_tree(root->left);
+    root->right = clear_tree(root->right);
+    
+    // remove zero nodes
+    if ((strlen(root->value) == 1) && (((root->value[0] == '*') && ((strcmp(root->left->value, "0") == 0) || (strcmp(root->right->value, "0") == 0)))
+    || ((root->value[0] == '/') && (strcmp(root->left->value, "0") == 0))
+    || ((root->value[0] == '+' || root->value[0] == '-') && ((strcmp(root->left->value, "0") == 0)) && (strcmp(root->right->value, "0") == 0)))) {
+        root->left = NULL;
+        root->right = NULL;
+        root->value = "0";
+    } else if (root->value[0] == '+') {
+        if (strcmp(root->left->value, "0") == 0) {
+            Node *temp = root->right;
+            free(root->left);
+            free(root);
+            root = temp;
+        } else if (strcmp(root->right->value, "0") == 0) {
+            Node *temp = root->left;
+            free(root->right);
+            free(root);
+            root = temp;
+        }
+    } else if ((root->value[0] == '-') && (strcmp(root->right->value, "0") == 0)){
+        Node *temp = root->left;
+        free(root->right);
+        free(root);
+        root = temp;
+    }
+
+    // set node*1=node and node/1=node
+    if (root->value[0] == '*') {
+        if (strcmp(root->left->value, "1") == 0) {
+            Node *temp = root->right;
+            free(root->left);
+            free(root);
+            root = temp;
+        } else if (strcmp(root->right->value, "1") == 0) {
+            Node *temp = root->left;
+            free(root->right);
+            free(root);
+            root = temp;
+        }
+    } else if ((root->value[0] == '/') && (strcmp(root->right->value, "1") == 0)) {
+        Node *temp = root->left;
+        free(root->right);
+        free(root);
+        root = temp;
+    }
+
+    return root;
+}
+
+/// frees subtrees and the tree
 void
 freetree(Node *root) {
     if (root == NULL) return;
@@ -152,19 +232,4 @@ freetree(Node *root) {
     freetree(root->right);
     free(root);
 }
-
-///*
-void print_rpn(Node *node) {
-    if (node == NULL) return;
-
-    print_rpn(node->left);
-    print_rpn(node->right);
-
-    if (strcmp(node->value, "none") != 0) {
-        printf("%s ", node->value);
-    } else {
-        printf("%lf ", node->number); 
-    }
-}
-//*/
 

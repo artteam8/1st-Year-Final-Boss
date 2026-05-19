@@ -16,6 +16,7 @@ extern double d_3(double x);
 
 typedef double (*f)(double);
 
+/// sorts array of three functions in points x
 void
 sort_func(double x, f fs[3]) {
     if (fs[0](x) > fs[1](x)) {

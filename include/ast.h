@@ -6,7 +6,7 @@
 
 typedef struct Node {
     char *value;
-    double number;
+    //double number;
     struct Node *left;
     struct Node *right;
 } Node;
@@ -35,6 +35,9 @@ balance_subtree(Node **flat, int start, int end, char oper);
 
 Node*
 check_subtree(Node *root);
+
+Node*
+clear_tree(Node *root);
 
 void
 freetree(Node *root);

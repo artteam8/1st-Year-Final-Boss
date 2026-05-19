@@ -18,19 +18,20 @@ find_in_list(double num, double *arr, int len) {
     return -1;
 }
 
+/// find constants in tree to define them in .rodata
 void
 find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index, double *const_list) {
     if (node == NULL || *const_index == MAX_CONSTS) return;
 
-    if (node->left == NULL && node->right == NULL && node->value[0] != 'x' && find_in_list(node->number, const_list, *const_index) == -1) {
+    if (node->left == NULL && node->right == NULL && node->value[0] != 'x' && find_in_list(atof(node->value), const_list, *const_index) == -1) {
         //consts[*index] = node->number;
-        int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, node->number);
+        int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, atof(node->value));
         if (written < 0 || *secdata_idx + written >= MAX_LEN) {
             fprintf(stderr, "\n\nBUFFER WRITING ERROR!!!!!!!!!!!\n\n");
             exit(1);
         }
         *secdata_idx += written;
-        const_list[*const_index] = node->number;
+        const_list[*const_index] = atof(node->value);
         ++(*const_index);
     } else {
         find_consts(node->left, secdata_buffer, secdata_idx, const_index, const_list);
@@ -48,7 +49,7 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
             else if (node->value[0] == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_e]\n");
             else if (strcmp(node->value, "pi") == 0) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_pi]\n");
             else {
-                int const_idx = find_in_list(node->number, const_list, const_num);
+                int const_idx = find_in_list(atof(node->value), const_list, const_num);
                 *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_%d]\n", const_idx);
             }
         } else { // unary
@@ -88,7 +89,7 @@ gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int
 int
 main(void) {
     char *secdata_buffer = calloc(MAX_SIZE, sizeof(char));
-    int secdata_idx = snprintf(secdata_buffer, MAX_SIZE, "section .data\n    const_pi dq 3.141592653589793\n    const_e dq 2.718281828459045\n");
+    int secdata_idx = snprintf(secdata_buffer, MAX_SIZE, "section .rodata\n    const_pi dq 3.141592653589793\n    const_e dq 2.718281828459045\n");
 
     char *sectext_buffer = calloc(MAX_SIZE, sizeof(char));
     int sectext_idx = snprintf(sectext_buffer, MAX_SIZE, "section .text\n    global f_1, f_2, f_3, d_1, d_2, d_3\n");
@@ -105,6 +106,7 @@ main(void) {
     
         while (scanf("%c", &c) == 1 && c != '\n') {
             if (c == ' ') {
+                expr[idx][pos] = '\0';
                 ++idx;
                 expr[idx] = calloc(10, sizeof(char));
                 pos = 0;
@@ -115,6 +117,7 @@ main(void) {
         }
 
         Node *root = build_ast(expr, idx + 1);
+        root = clear_tree(root);
         root = check_subtree(root);
 
         print_rpn(root);
@@ -127,6 +130,7 @@ main(void) {
     
 
         Node *diff_root = diff(root);
+        diff_root = clear_tree(diff_root);
         diff_root = check_subtree(diff_root);
 
         print_rpn(diff_root);

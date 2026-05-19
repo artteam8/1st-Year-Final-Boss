@@ -132,7 +132,8 @@ diff(Node *node) {
             } else if (strcmp(node->value, "tan") == 0) {
                 der->left = calloc(1, sizeof(Node));
                 der->left->value = "none";
-                der->left->number = 1;
+                //der->left->number = 1;
+                der->left->value = "1";
 
                 der->value = "/";
                 der->right = calloc(1, sizeof(Node));
@@ -152,7 +153,8 @@ diff(Node *node) {
             } else if (strcmp(node->value, "ctg")) {
                 der->left = calloc(1, sizeof(Node));
                 der->left->value = "none";
-                der->left->number = 1;
+                //der->left->number = 1;
+                der->left->value = "1";
 
                 der->value = "/";
                 der->right = calloc(1, sizeof(Node));
@@ -174,7 +176,8 @@ diff(Node *node) {
             } else if (strcmp(node->value, "ln") == 0) {
                 der->left = calloc(1, sizeof(Node));
                 der->left->value = "none";
-                der->left->number = 1;
+                //der->left->number = 1;
+                der->left->value = "1";
                 
                 der->right = calloc(1, sizeof(Node));
                 copytree(der->right, node->left);
@@ -199,9 +202,9 @@ diff(Node *node) {
         /////////////////
         //  constants  //
         /////////////////
-        new->value = "none";
-        if (node->value[0] == 'x') new->number = 1;
-        else new->number = 0;
+        //new->value = "none";
+        if (node->value[0] == 'x') new->value = "1";//new->number = 1;
+        else new->value = "0";
     }
 
     return new;

@@ -9,6 +9,7 @@ typedef double (*f)(double);
 FILE *outp = NULL;
 
 #if USE_NEWTON
+/// Newton method. TODO explanation
 double
 root(double (*f)(double),
     double (*g)(double),
@@ -37,6 +38,7 @@ root(double (*f)(double),
     return x;
 }
 #else
+/// Secant method. TODO explanation
 double
 root(double (*f)(double),
     double (*g)(double),
@@ -80,6 +82,7 @@ root(double (*f)(double),
 }
 #endif
 
+/// sorts array of three elements
 void
 sort(double *xs) {
     double t;
@@ -103,6 +106,7 @@ sort(double *xs) {
     }
 }
 
+/// finds intersections of three curves
 #if USE_NEWTON
 double*
 crosses(f f1, f f2, f f3, f d1, f d2, f d3, double a, double b, double eps1, int print_iters) {
@@ -140,6 +144,7 @@ crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters) {
 
 
 
+/// Simpson rule. TODO explanation
 #if USE_SIMPSON
 double
 simpson(double (*func)(double), double a, double b, int n_splits) {
@@ -158,6 +163,7 @@ simpson(double (*func)(double), double a, double b, int n_splits) {
     return sum * h / 3;
 }
 #else
+/// Trapezium rule. TODO explanation
 double
 trapezium(double (*func)(double), double a, double b, int n_splits) {
     double h = (b - a) / n_splits;
@@ -172,6 +178,7 @@ trapezium(double (*func)(double), double a, double b, int n_splits) {
 }
 #endif
 
+/// repeats integrating with increasing number of splits until eps2 is reached. TODO explanation
 double
 integral(double (*func)(double), double a, double b, double eps2) {
     int n_splits = 10000;
