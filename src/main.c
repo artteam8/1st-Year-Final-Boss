@@ -83,15 +83,30 @@ main(int argc, char *argv[]) {
 
     if (print_absc) printf("points: %lf %lf %lf\n", xs[0], xs[1], xs[2]);
 
+
     f fs[] = {f_1, f_2, f_3};
     double area = 0;
+    int sign = 1;
+
+    for (int i = 0; i < 2; ++i) {
+        for (int j = 0; j < 2; ++j) {
+            if (i != j && fabs(fs[i](xs[1]) - fs[j](xs[1])) < 1e-6) {
+                int k = 0+1+2 - i - j;
+                if (fs[k](xs[1]) < fs[i](xs[1])) {
+                    sign = -1;
+                }
+                break;
+            }
+        }
+    }
 
     for (int i = 0; i < 2; ++i) {
         sort_func((xs[i]+xs[i+1])/2, fs);
-        area += integral(fs[1], xs[i], xs[i+1], EPS2) - integral(fs[0], xs[i], xs[i+1], EPS2);
+        //area += integral(fs[1], xs[i], xs[i+1], EPS2) - integral(fs[0], xs[i], xs[i+1], EPS2);
+        area += sign * (integral(fs[1 + sign], xs[i], xs[i+1], EPS2) - integral(fs[1], xs[i], xs[i+1], EPS2));
     }
 
-    printf("Area: %lf\n", area);
+    printf("Area: %.4lf\n", area);
     free(xs);
     return 0;
 }
