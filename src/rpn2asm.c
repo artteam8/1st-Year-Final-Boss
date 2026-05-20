@@ -73,7 +73,8 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
             case '*': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fmulp st1, st0\n"); break;
             case '/': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fdivp st1, st0\n"); break;
             case '^': // not fully supported yet due to unique label problem
-                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    ftst\n    fstsw ax\n    fwait\n    sahf\n    jnz .non_zero_exp\n    fstp st0\n    fstp st0\n    fld1\n   jmp .pow_done\n.non_zero_exp:\n    fxch\n    ftst\n    fstsw ax\n    sahf\n    jnz .calc_pow\n    fstp st0\n    fstp st0\n    fldz\n    jmp .pow_done\n.calc_pow:\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n.pow_done:\n");
+                //*buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    ftst\n    fstsw ax\n    fwait\n    sahf\n    jnz .non_zero_exp\n    fstp st0\n    fstp st0\n    fld1\n   jmp .pow_done\n.non_zero_exp:\n    fxch\n    ftst\n    fstsw ax\n    sahf\n    jnz .calc_pow\n    fstp st0\n    fstp st0\n    fldz\n    jmp .pow_done\n.calc_pow:\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n.pow_done:\n");
+                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fxch\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n");
                 break;
         }
     }

@@ -1,9 +1,10 @@
 .PHONY: all force
 
 SPEC_FILE = in.txt
+SAFE_EXP=1
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -m32 -O2 -DUSE_NEWTON=$(USE_NEWTON) -DUSE_SIMPSON=$(USE_SIMPSON) -DSPEC_FILE=\"$(SPEC_FILE)\"  -I include -I include/rpn2asm
+CFLAGS := -std=c99 -Wall -Wextra -m32 -lm -O2 -DUSE_NEWTON=$(USE_NEWTON) -DUSE_SIMPSON=$(USE_SIMPSON) -DSAFE_EXP=$(SAFE_EXP) -DSPEC_FILE=\"$(SPEC_FILE)\"  -I include
 
 all: bin/main obj/main.o obj/numeric.o
 force: ;
@@ -26,8 +27,8 @@ obj/main.o: src/main.c force
 funcs.asm: bin/gen $(SPEC_FILE)
 	tail -n +2 $(SPEC_FILE) | ./bin/gen
 
-bin/gen: obj/rpn2asm/rpn2asm.o obj/ast.o obj/diff_ast.o | bin
-	$(CC) -m32 $^ -o $@
+bin/gen: obj/rpn2asm.o obj/ast.o obj/diff_ast.o | bin
+	$(CC) -m32 -lm $^ -o $@
 
 obj/%.o: src/%.c
 	mkdir -p $(dir $@)

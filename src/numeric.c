@@ -74,6 +74,8 @@ root(double (*f)(double),
             return x;
         }
 
+
+
         ++iter;
     }
     fprintf(outp, "iters: %d\n", iter);
