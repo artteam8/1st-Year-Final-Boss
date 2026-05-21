@@ -435,7 +435,6 @@ precompute(Node *root) {
 Node*
 clear_tree(Node *root) {
     if (root == NULL) return root;
-    printf(":::%d\n", sizeof(Node));
 
     root->left = clear_tree(root->left);
     root->right = clear_tree(root->right);
