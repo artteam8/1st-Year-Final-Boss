@@ -111,7 +111,7 @@ Functions</h2></td></tr>
 <tr class="memitem:ab7aa2cbaeae41ab736383f44d6042567" id="r_ab7aa2cbaeae41ab736383f44d6042567"><td class="memItemLeft">void&#160;</td><td class="memItemRight"><a class="el" href="#ab7aa2cbaeae41ab736383f44d6042567">sort</a> (double *xs)</td></tr>
 <tr class="memdesc:ab7aa2cbaeae41ab736383f44d6042567"><td class="mdescLeft">&#160;</td><td class="mdescRight">sorts array of three elements  <br /></td></tr>
 <tr class="memitem:a309c41ca36766ffeb2bab17015b9971f" id="r_a309c41ca36766ffeb2bab17015b9971f"><td class="memItemLeft">double *&#160;</td><td class="memItemRight"><a class="el" href="#a309c41ca36766ffeb2bab17015b9971f">crosses</a> (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a> f1, <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a> f2, <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a> f3, double a, double b, double eps1, int print_iters)</td></tr>
-<tr class="memdesc:a309c41ca36766ffeb2bab17015b9971f"><td class="mdescLeft">&#160;</td><td class="mdescRight">finds intersections of three curves  <br /></td></tr>
+<tr class="memdesc:a309c41ca36766ffeb2bab17015b9971f"><td class="mdescLeft">&#160;</td><td class="mdescRight">a wrapper, finds intersections of three given curves  <br /></td></tr>
 <tr class="memitem:a687b84a04df402ea2808a87bbdab49bc" id="r_a687b84a04df402ea2808a87bbdab49bc"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a> (double(*func)(double), double a, double b, int n_splits)</td></tr>
 <tr class="memitem:a92877fee99fe8411e505e68a85a2c2ce" id="r_a92877fee99fe8411e505e68a85a2c2ce"><td class="memItemLeft">double&#160;</td><td class="memItemRight"><a class="el" href="#a92877fee99fe8411e505e68a85a2c2ce">integral</a> (double(*func)(double), double a, double b, double eps2)</td></tr>
 </table><table class="memberdecls">
@@ -199,24 +199,24 @@ Variables</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>finds intersections of three curves </p>
+<p>a wrapper, finds intersections of three given curves </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00142">142</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  142</span>                                                                            {</div>
-<div class="line"><span class="lineno">  143</span>    <span class="comment">// if no -i flag, output it straight to /dev/null blackhole</span></div>
-<div class="line"><span class="lineno">  144</span>    <span class="keywordflow">if</span> (print_iters) <a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a> = stdout;</div>
-<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">else</span> <a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a> = fopen(<span class="stringliteral">&quot;/dev/null&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>);</div>
-<div class="line"><span class="lineno">  146</span> </div>
-<div class="line"><span class="lineno">  147</span>    <span class="keywordtype">double</span> *xs = calloc(3, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
-<div class="line"><span class="lineno">  148</span>    xs[0] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f1, f2, a, b, eps1);</div>
-<div class="line"><span class="lineno">  149</span>    xs[1] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f2, f3, a, b, eps1);</div>
-<div class="line"><span class="lineno">  150</span>    xs[2] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f1, f3, a, b, eps1);</div>
-<div class="line"><span class="lineno">  151</span>    <a class="code hl_function" href="#ab7aa2cbaeae41ab736383f44d6042567">sort</a>(xs);</div>
-<div class="line"><span class="lineno">  152</span>    <span class="keywordflow">return</span> xs;</div>
-<div class="line"><span class="lineno">  153</span>}</div>
+<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00146">146</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>                                                                            {</div>
+<div class="line"><span class="lineno">  147</span>    <span class="comment">// if no -i flag, output it straight to /dev/null blackhole</span></div>
+<div class="line"><span class="lineno">  148</span>    <span class="keywordflow">if</span> (print_iters) <a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a> = stdout;</div>
+<div class="line"><span class="lineno">  149</span>    <span class="keywordflow">else</span> <a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a> = fopen(<span class="stringliteral">&quot;/dev/null&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>);</div>
+<div class="line"><span class="lineno">  150</span> </div>
+<div class="line"><span class="lineno">  151</span>    <span class="keywordtype">double</span> *xs = calloc(3, <span class="keyword">sizeof</span>(<span class="keywordtype">double</span>));</div>
+<div class="line"><span class="lineno">  152</span>    xs[0] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f1, f2, a, b, eps1);</div>
+<div class="line"><span class="lineno">  153</span>    xs[1] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f2, f3, a, b, eps1);</div>
+<div class="line"><span class="lineno">  154</span>    xs[2] = <a class="code hl_function" href="#aa81b1736748c564740700de7d0153ac4">root</a>(f1, f3, a, b, eps1);</div>
+<div class="line"><span class="lineno">  155</span>    <a class="code hl_function" href="#ab7aa2cbaeae41ab736383f44d6042567">sort</a>(xs);</div>
+<div class="line"><span class="lineno">  156</span>    <span class="keywordflow">return</span> xs;</div>
+<div class="line"><span class="lineno">  157</span>}</div>
 <div class="ttc" id="anumeric_8c_html_aa493fd55901e7772abe9c54337006200"><div class="ttname"><a href="#aa493fd55901e7772abe9c54337006200">outp</a></div><div class="ttdeci">FILE * outp</div><div class="ttdoc">where to output iters</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00010">numeric.c:10</a></div></div>
-<div class="ttc" id="anumeric_8c_html_aa81b1736748c564740700de7d0153ac4"><div class="ttname"><a href="#aa81b1736748c564740700de7d0153ac4">root</a></div><div class="ttdeci">double root(double(*f)(double), double(*g)(double), double a, double b, double eps1)</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00059">numeric.c:59</a></div></div>
-<div class="ttc" id="anumeric_8c_html_ab7aa2cbaeae41ab736383f44d6042567"><div class="ttname"><a href="#ab7aa2cbaeae41ab736383f44d6042567">sort</a></div><div class="ttdeci">void sort(double *xs)</div><div class="ttdoc">sorts array of three elements</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00103">numeric.c:103</a></div></div>
+<div class="ttc" id="anumeric_8c_html_aa81b1736748c564740700de7d0153ac4"><div class="ttname"><a href="#aa81b1736748c564740700de7d0153ac4">root</a></div><div class="ttdeci">double root(double(*f)(double), double(*g)(double), double a, double b, double eps1)</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00063">numeric.c:63</a></div></div>
+<div class="ttc" id="anumeric_8c_html_ab7aa2cbaeae41ab736383f44d6042567"><div class="ttname"><a href="#ab7aa2cbaeae41ab736383f44d6042567">sort</a></div><div class="ttdeci">void sort(double *xs)</div><div class="ttdoc">sorts array of three elements</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00107">numeric.c:107</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -250,31 +250,31 @@ Variables</h2></td></tr>
 </div><div class="memdoc">
 <p>repeats integration with increasing number of splits until eps2 is reached. Runge rule is used, check paper for more details </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00213">213</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  213</span>                                                                  {</div>
-<div class="line"><span class="lineno">  214</span>    <span class="keywordtype">int</span> n_splits = 10000;</div>
-<div class="line"><span class="lineno">  215</span>    <span class="keywordtype">double</span> I_old, I_new;</div>
-<div class="line"><span class="lineno">  216</span><span class="preprocessor">#if USE_SIMPSON</span></div>
-<div class="line"><span class="lineno">  217</span>    I_new = simpson(func, a, b, n_splits);</div>
-<div class="line"><span class="lineno">  218</span> </div>
-<div class="line"><span class="lineno">  219</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><span class="lineno">  220</span>        I_old = I_new;</div>
-<div class="line"><span class="lineno">  221</span>        n_splits *= 2;</div>
-<div class="line"><span class="lineno">  222</span>        I_new = simpson(func, a, b, n_splits);</div>
-<div class="line"><span class="lineno">  223</span>    } <span class="keywordflow">while</span> (fabs(I_new - I_old) / 15 &gt; eps2);</div>
-<div class="line"><span class="lineno">  224</span><span class="preprocessor">#else</span></div>
-<div class="line"><span class="lineno">  225</span>    I_new = <a class="code hl_function" href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a>(func, a, b, n_splits);</div>
-<div class="line"><span class="lineno">  226</span> </div>
-<div class="line"><span class="lineno">  227</span>    <span class="keywordflow">do</span> {</div>
-<div class="line"><span class="lineno">  228</span>        I_old = I_new;</div>
-<div class="line"><span class="lineno">  229</span>        n_splits *= 2;</div>
-<div class="line"><span class="lineno">  230</span>        I_new = <a class="code hl_function" href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a>(func, a, b, n_splits);</div>
-<div class="line"><span class="lineno">  231</span>    } <span class="keywordflow">while</span> (fabs(I_new - I_old) / 3.0 &gt; eps2);</div>
-<div class="line"><span class="lineno">  232</span><span class="preprocessor">#endif</span></div>
+<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00220">220</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>                                                                  {</div>
+<div class="line"><span class="lineno">  221</span>    <span class="keywordtype">int</span> n_splits = 10000;</div>
+<div class="line"><span class="lineno">  222</span>    <span class="keywordtype">double</span> I_old, I_new;</div>
+<div class="line"><span class="lineno">  223</span><span class="preprocessor">#if USE_SIMPSON</span></div>
+<div class="line"><span class="lineno">  224</span>    I_new = simpson(func, a, b, n_splits);</div>
+<div class="line"><span class="lineno">  225</span> </div>
+<div class="line"><span class="lineno">  226</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><span class="lineno">  227</span>        I_old = I_new;</div>
+<div class="line"><span class="lineno">  228</span>        n_splits *= 2;</div>
+<div class="line"><span class="lineno">  229</span>        I_new = simpson(func, a, b, n_splits);</div>
+<div class="line"><span class="lineno">  230</span>    } <span class="keywordflow">while</span> (fabs(I_new - I_old) / 15 &gt; eps2);</div>
+<div class="line"><span class="lineno">  231</span><span class="preprocessor">#else</span></div>
+<div class="line"><span class="lineno">  232</span>    I_new = <a class="code hl_function" href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a>(func, a, b, n_splits);</div>
 <div class="line"><span class="lineno">  233</span> </div>
-<div class="line"><span class="lineno">  234</span>    <span class="keywordflow">return</span> I_new;</div>
-<div class="line"><span class="lineno">  235</span>}</div>
-<div class="ttc" id="anumeric_8c_html_a687b84a04df402ea2808a87bbdab49bc"><div class="ttname"><a href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a></div><div class="ttdeci">double trapezium(double(*func)(double), double a, double b, int n_splits)</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00197">numeric.c:197</a></div></div>
+<div class="line"><span class="lineno">  234</span>    <span class="keywordflow">do</span> {</div>
+<div class="line"><span class="lineno">  235</span>        I_old = I_new;</div>
+<div class="line"><span class="lineno">  236</span>        n_splits *= 2;</div>
+<div class="line"><span class="lineno">  237</span>        I_new = <a class="code hl_function" href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a>(func, a, b, n_splits);</div>
+<div class="line"><span class="lineno">  238</span>    } <span class="keywordflow">while</span> (fabs(I_new - I_old) / 3.0 &gt; eps2);</div>
+<div class="line"><span class="lineno">  239</span><span class="preprocessor">#endif</span></div>
+<div class="line"><span class="lineno">  240</span> </div>
+<div class="line"><span class="lineno">  241</span>    <span class="keywordflow">return</span> I_new;</div>
+<div class="line"><span class="lineno">  242</span>}</div>
+<div class="ttc" id="anumeric_8c_html_a687b84a04df402ea2808a87bbdab49bc"><div class="ttname"><a href="#a687b84a04df402ea2808a87bbdab49bc">trapezium</a></div><div class="ttdeci">double trapezium(double(*func)(double), double a, double b, int n_splits)</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00204">numeric.c:204</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -314,43 +314,43 @@ Variables</h2></td></tr>
 <p>Secant method. secant equation through points a and b: y = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) + ((<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a> - g(b)) - (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) * (x - a) / (b - a) let y=0 -(<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) = ((<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a> - g(b)) - (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) * (x - a) / (b - a) x - a = -(<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) * (b - a) / ((<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a> - g(b)) - (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) x = a - (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a)) * (b - a) / ((<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a> - g(b)) - (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> - g(a))</p>
 <p>we have segments (a; x) and (x; b) determine which segment to take, by checking which one has the sign different on its start and end </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00059">59</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>                 {</div>
-<div class="line"><span class="lineno">   64</span> </div>
-<div class="line"><span class="lineno">   65</span>    <span class="keywordtype">int</span> iter = 0;</div>
-<div class="line"><span class="lineno">   66</span>    <span class="keywordtype">double</span> ya = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(a) - g(a);</div>
-<div class="line"><span class="lineno">   67</span>    <span class="keywordtype">double</span> yb = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(b) - g(b);</div>
-<div class="line"><span class="lineno">   68</span>    <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><span class="lineno">   69</span> </div>
-<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">while</span> (iter &lt; <a class="code hl_define" href="#acd517c6f195c75b9dd0f3aad65326f3b">MAX_ITER</a>) {</div>
-<div class="line"><span class="lineno">   71</span>        x = a - ya * (b - a) / (yb - ya);</div>
-<div class="line"><span class="lineno">   72</span>        y = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(x) - g(x);</div>
+<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00063">63</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                 {</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>    <span class="keywordtype">int</span> iter = 0;</div>
+<div class="line"><span class="lineno">   70</span>    <span class="keywordtype">double</span> ya = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(a) - g(a);</div>
+<div class="line"><span class="lineno">   71</span>    <span class="keywordtype">double</span> yb = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(b) - g(b);</div>
+<div class="line"><span class="lineno">   72</span>    <span class="keywordtype">double</span> x, y;</div>
 <div class="line"><span class="lineno">   73</span> </div>
-<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">if</span> (fabs(y) &lt; eps1) {</div>
-<div class="line"><span class="lineno">   75</span>            fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
-<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">return</span> x;</div>
-<div class="line"><span class="lineno">   77</span>        }</div>
-<div class="line"><span class="lineno">   78</span> </div>
-<div class="line"><span class="lineno">   79</span>        <span class="comment">// checking where the root is</span></div>
-<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">if</span> (ya * y &lt; 0) {</div>
-<div class="line"><span class="lineno">   81</span>            b = x;</div>
-<div class="line"><span class="lineno">   82</span>            yb = y;</div>
-<div class="line"><span class="lineno">   83</span>        } <span class="keywordflow">else</span> {</div>
-<div class="line"><span class="lineno">   84</span>            a = x;</div>
-<div class="line"><span class="lineno">   85</span>            ya = y;</div>
-<div class="line"><span class="lineno">   86</span>        }</div>
-<div class="line"><span class="lineno">   87</span> </div>
-<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">if</span> (fabs(b - a) &lt; eps1) {</div>
-<div class="line"><span class="lineno">   89</span>            fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
-<div class="line"><span class="lineno">   90</span>            <span class="keywordflow">return</span> x;</div>
-<div class="line"><span class="lineno">   91</span>        }</div>
-<div class="line"><span class="lineno">   92</span> </div>
-<div class="line"><span class="lineno">   93</span>        ++iter;</div>
-<div class="line"><span class="lineno">   94</span>    }</div>
-<div class="line"><span class="lineno">   95</span>    fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">while</span> (iter &lt; <a class="code hl_define" href="#acd517c6f195c75b9dd0f3aad65326f3b">MAX_ITER</a>) {</div>
+<div class="line"><span class="lineno">   75</span>        x = a - ya * (b - a) / (yb - ya);</div>
+<div class="line"><span class="lineno">   76</span>        y = <a class="code hl_typedef" href="#a9c41a448afc0d03223ad53a4dc645e27">f</a>(x) - g(x);</div>
+<div class="line"><span class="lineno">   77</span> </div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">if</span> (fabs(y) &lt; eps1) {</div>
+<div class="line"><span class="lineno">   79</span>            fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">return</span> x;</div>
+<div class="line"><span class="lineno">   81</span>        }</div>
+<div class="line"><span class="lineno">   82</span> </div>
+<div class="line"><span class="lineno">   83</span>        <span class="comment">// checking where the root is</span></div>
+<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">if</span> (ya * y &lt; 0) {</div>
+<div class="line"><span class="lineno">   85</span>            b = x;</div>
+<div class="line"><span class="lineno">   86</span>            yb = y;</div>
+<div class="line"><span class="lineno">   87</span>        } <span class="keywordflow">else</span> {</div>
+<div class="line"><span class="lineno">   88</span>            a = x;</div>
+<div class="line"><span class="lineno">   89</span>            ya = y;</div>
+<div class="line"><span class="lineno">   90</span>        }</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">if</span> (fabs(b - a) &lt; eps1) {</div>
+<div class="line"><span class="lineno">   93</span>            fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">return</span> x;</div>
+<div class="line"><span class="lineno">   95</span>        }</div>
 <div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>    <span class="keywordflow">return</span> x;</div>
-<div class="line"><span class="lineno">   98</span>}</div>
+<div class="line"><span class="lineno">   97</span>        ++iter;</div>
+<div class="line"><span class="lineno">   98</span>    }</div>
+<div class="line"><span class="lineno">   99</span>    fprintf(<a class="code hl_variable" href="#aa493fd55901e7772abe9c54337006200">outp</a>, <span class="stringliteral">&quot;iters: %d\n&quot;</span>, iter);</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="line"><span class="lineno">  101</span>    <span class="keywordflow">return</span> x;</div>
+<div class="line"><span class="lineno">  102</span>}</div>
 <div class="ttc" id="anumeric_8c_html_a9c41a448afc0d03223ad53a4dc645e27"><div class="ttname"><a href="#a9c41a448afc0d03223ad53a4dc645e27">f</a></div><div class="ttdeci">double(* f)(double)</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00007">numeric.c:7</a></div></div>
 <div class="ttc" id="anumeric_8c_html_acd517c6f195c75b9dd0f3aad65326f3b"><div class="ttname"><a href="#acd517c6f195c75b9dd0f3aad65326f3b">MAX_ITER</a></div><div class="ttdeci">#define MAX_ITER</div><div class="ttdef"><b>Definition</b> <a href="numeric_8c_source.html#l00005">numeric.c:5</a></div></div>
 </div><!-- fragment -->
@@ -373,28 +373,28 @@ Variables</h2></td></tr>
 
 <p>sorts array of three elements </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00103">103</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  103</span>                 {</div>
-<div class="line"><span class="lineno">  104</span>    <span class="keywordtype">double</span> t;</div>
-<div class="line"><span class="lineno">  105</span>    <span class="keywordflow">if</span> (xs[0] &gt; xs[1]) {</div>
-<div class="line"><span class="lineno">  106</span>        t = xs[0];</div>
-<div class="line"><span class="lineno">  107</span>        xs[0] = xs[1];</div>
-<div class="line"><span class="lineno">  108</span>        xs[1] = t;</div>
-<div class="line"><span class="lineno">  109</span>    }</div>
-<div class="line"><span class="lineno">  110</span>    <span class="comment">// here xs[0] &lt;= xs[1]</span></div>
-<div class="line"><span class="lineno">  111</span>    <span class="keywordflow">if</span> (xs[1] &gt; xs[2]) {</div>
-<div class="line"><span class="lineno">  112</span>        t = xs[1];</div>
-<div class="line"><span class="lineno">  113</span>        xs[1] = xs[2];</div>
-<div class="line"><span class="lineno">  114</span>        xs[2] = t;</div>
-<div class="line"><span class="lineno">  115</span>        <span class="comment">// here xs[1] &lt;= xs[2]</span></div>
-<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">if</span> (xs[0] &gt; xs[1]) {</div>
-<div class="line"><span class="lineno">  117</span>            t = xs[0];</div>
-<div class="line"><span class="lineno">  118</span>            xs[0] = xs[1];</div>
-<div class="line"><span class="lineno">  119</span>            xs[1] = t;</div>
-<div class="line"><span class="lineno">  120</span>            <span class="comment">// here xs[0] &lt;= xs[1] &lt;= xs[2]</span></div>
-<div class="line"><span class="lineno">  121</span>        }</div>
-<div class="line"><span class="lineno">  122</span>    }</div>
-<div class="line"><span class="lineno">  123</span>}</div>
+<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00107">107</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>                 {</div>
+<div class="line"><span class="lineno">  108</span>    <span class="keywordtype">double</span> t;</div>
+<div class="line"><span class="lineno">  109</span>    <span class="keywordflow">if</span> (xs[0] &gt; xs[1]) {</div>
+<div class="line"><span class="lineno">  110</span>        t = xs[0];</div>
+<div class="line"><span class="lineno">  111</span>        xs[0] = xs[1];</div>
+<div class="line"><span class="lineno">  112</span>        xs[1] = t;</div>
+<div class="line"><span class="lineno">  113</span>    }</div>
+<div class="line"><span class="lineno">  114</span>    <span class="comment">// here xs[0] &lt;= xs[1]</span></div>
+<div class="line"><span class="lineno">  115</span>    <span class="keywordflow">if</span> (xs[1] &gt; xs[2]) {</div>
+<div class="line"><span class="lineno">  116</span>        t = xs[1];</div>
+<div class="line"><span class="lineno">  117</span>        xs[1] = xs[2];</div>
+<div class="line"><span class="lineno">  118</span>        xs[2] = t;</div>
+<div class="line"><span class="lineno">  119</span>        <span class="comment">// here xs[1] &lt;= xs[2]</span></div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">if</span> (xs[0] &gt; xs[1]) {</div>
+<div class="line"><span class="lineno">  121</span>            t = xs[0];</div>
+<div class="line"><span class="lineno">  122</span>            xs[0] = xs[1];</div>
+<div class="line"><span class="lineno">  123</span>            xs[1] = t;</div>
+<div class="line"><span class="lineno">  124</span>            <span class="comment">// here xs[0] &lt;= xs[1] &lt;= xs[2]</span></div>
+<div class="line"><span class="lineno">  125</span>        }</div>
+<div class="line"><span class="lineno">  126</span>    }</div>
+<div class="line"><span class="lineno">  127</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -426,20 +426,20 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Simpson rule. for one split: let h = length of one segment ∫ = h/3 * (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> + 4<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>) for more splits, it is h/3 * (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> + 4<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + 2<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x2)</a> + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>) check paper for more details Trapezium rule. for one split let h = length of segment ∫ = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(xi)</a> + f(x{i+1}))/2 * h = <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(xi)</a>/2 * h + f(x{i+1)/2 * h for more splits, each point except a and b appears twice ∫ = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x2)</a>/2 + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>/2) * h = = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>/2) * h </p>
+<p>Simpson rule. for one split: let h = length of one segment ∫ = h/3 * (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> + 4<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>) for more splits, it is h/3 * (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a> + 4<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + 2<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x2)</a> + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>) check paper for more details Trapezium rule. for one split let h = length of segment ∫ = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(xi)</a> + f(x{i+1}))/2 * h = <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(xi)</a>/2 * h + f(x{i+1})/2 * h for more splits, each point except a and b appears twice ∫ = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x2)</a>/2 + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>/2) * h = = (<a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(a)</a>/2 + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(x1)</a> + ... + <a class="el" href="#a9c41a448afc0d03223ad53a4dc645e27">f(b)</a>/2) * h </p>
 
-<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00197">197</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  197</span>                                                                    {</div>
-<div class="line"><span class="lineno">  198</span>    <span class="keywordtype">double</span> h = (b - a) / n_splits;</div>
-<div class="line"><span class="lineno">  199</span>    <span class="keywordtype">double</span> sum = (func(a) + func(b)) / 2.0;</div>
-<div class="line"><span class="lineno">  200</span> </div>
-<div class="line"><span class="lineno">  201</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; n_splits; ++i) {</div>
-<div class="line"><span class="lineno">  202</span>        <span class="keywordtype">double</span> x = a + i * h; <span class="comment">// xi</span></div>
-<div class="line"><span class="lineno">  203</span>        sum += func(x);</div>
-<div class="line"><span class="lineno">  204</span>    }</div>
-<div class="line"><span class="lineno">  205</span> </div>
-<div class="line"><span class="lineno">  206</span>    <span class="keywordflow">return</span> sum * h;</div>
-<div class="line"><span class="lineno">  207</span>}</div>
+<p class="definition">Definition at line <a class="el" href="numeric_8c_source.html#l00204">204</a> of file <a class="el" href="numeric_8c_source.html">numeric.c</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  204</span>                                                                    {</div>
+<div class="line"><span class="lineno">  205</span>    <span class="keywordtype">double</span> h = (b - a) / n_splits;</div>
+<div class="line"><span class="lineno">  206</span>    <span class="keywordtype">double</span> sum = (func(a) + func(b)) / 2.0;</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 1; i &lt; n_splits; ++i) {</div>
+<div class="line"><span class="lineno">  209</span>        <span class="keywordtype">double</span> x = a + i * h; <span class="comment">// xi</span></div>
+<div class="line"><span class="lineno">  210</span>        sum += func(x);</div>
+<div class="line"><span class="lineno">  211</span>    }</div>
+<div class="line"><span class="lineno">  212</span> </div>
+<div class="line"><span class="lineno">  213</span>    <span class="keywordflow">return</span> sum * h;</div>
+<div class="line"><span class="lineno">  214</span>}</div>
 </div><!-- fragment -->
 </div>
 </div>

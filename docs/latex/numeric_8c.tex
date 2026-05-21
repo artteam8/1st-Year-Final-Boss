@@ -21,7 +21,7 @@ double \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}
 void \doxymbox{\hyperlink{numeric_8c_ab7aa2cbaeae41ab736383f44d6042567}{sort}} (double \texorpdfstring{$\ast$}{*}xs)
 \begin{DoxyCompactList}\small\item\em sorts array of three elements \end{DoxyCompactList}\item 
 double \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{numeric_8c_a309c41ca36766ffeb2bab17015b9971f}{crosses}} (\doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}} f1, \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}} f2, \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}} f3, double a, double b, double eps1, int print\+\_\+iters)
-\begin{DoxyCompactList}\small\item\em finds intersections of three curves \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em a wrapper, finds intersections of three given curves \end{DoxyCompactList}\item 
 double \doxymbox{\hyperlink{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}{trapezium}} (double(\texorpdfstring{$\ast$}{*}func)(double), double a, double b, int n\+\_\+splits)
 \item 
 double \doxymbox{\hyperlink{numeric_8c_a92877fee99fe8411e505e68a85a2c2ce}{integral}} (double(\texorpdfstring{$\ast$}{*}func)(double), double a, double b, double eps2)
@@ -74,26 +74,26 @@ double \texorpdfstring{$\ast$}{*} crosses (\begin{DoxyParamCaption}\item[{\doxym
 
 
 
-finds intersections of three curves 
+a wrapper, finds intersections of three given curves 
 
 
 
-Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00142}{142}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
+Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00146}{146}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00143\ \ \ \ \ \textcolor{comment}{//\ if\ no\ -\/i\ flag,\ output\ it\ straight\ to\ /dev/null\ blackhole}}
-\DoxyCodeLine{00144\ \ \ \ \ \textcolor{keywordflow}{if}\ (print\_iters)\ \doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}}\ =\ stdout;}
-\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordflow}{else}\ \doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}}\ =\ fopen(\textcolor{stringliteral}{"{}/dev/null"{}},\ \textcolor{stringliteral}{"{}w"{}});}
-\DoxyCodeLine{00146\ }
-\DoxyCodeLine{00147\ \ \ \ \ \textcolor{keywordtype}{double}\ *xs\ =\ calloc(3,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
-\DoxyCodeLine{00148\ \ \ \ \ xs[0]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f1,\ f2,\ a,\ b,\ eps1);}
-\DoxyCodeLine{00149\ \ \ \ \ xs[1]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f2,\ f3,\ a,\ b,\ eps1);}
-\DoxyCodeLine{00150\ \ \ \ \ xs[2]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f1,\ f3,\ a,\ b,\ eps1);}
-\DoxyCodeLine{00151\ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_ab7aa2cbaeae41ab736383f44d6042567}{sort}}(xs);}
-\DoxyCodeLine{00152\ \ \ \ \ \textcolor{keywordflow}{return}\ xs;}
-\DoxyCodeLine{00153\ \}}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00147\ \ \ \ \ \textcolor{comment}{//\ if\ no\ -\/i\ flag,\ output\ it\ straight\ to\ /dev/null\ blackhole}}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{if}\ (print\_iters)\ \doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}}\ =\ stdout;}
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{else}\ \doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}}\ =\ fopen(\textcolor{stringliteral}{"{}/dev/null"{}},\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \ \ \ \ \textcolor{keywordtype}{double}\ *xs\ =\ calloc(3,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{00152\ \ \ \ \ xs[0]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f1,\ f2,\ a,\ b,\ eps1);}
+\DoxyCodeLine{00153\ \ \ \ \ xs[1]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f2,\ f3,\ a,\ b,\ eps1);}
+\DoxyCodeLine{00154\ \ \ \ \ xs[2]\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}(f1,\ f3,\ a,\ b,\ eps1);}
+\DoxyCodeLine{00155\ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_ab7aa2cbaeae41ab736383f44d6042567}{sort}}(xs);}
+\DoxyCodeLine{00156\ \ \ \ \ \textcolor{keywordflow}{return}\ xs;}
+\DoxyCodeLine{00157\ \}}
 
 \end{DoxyCode}
 \Hypertarget{numeric_8c_a92877fee99fe8411e505e68a85a2c2ce}\index{numeric.c@{numeric.c}!integral@{integral}}
@@ -104,33 +104,33 @@ double integral (\begin{DoxyParamCaption}\item[{double(\texorpdfstring{$\ast$}{*
 
 repeats integration with increasing number of splits until eps2 is reached. Runge rule is used, check paper for more details 
 
-Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00213}{213}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
+Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00220}{220}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00213\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00214\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_splits\ =\ 10000;}
-\DoxyCodeLine{00215\ \ \ \ \ \textcolor{keywordtype}{double}\ I\_old,\ I\_new;}
-\DoxyCodeLine{00216\ \textcolor{preprocessor}{\#if\ USE\_SIMPSON}}
-\DoxyCodeLine{00217\ \ \ \ \ I\_new\ =\ simpson(func,\ a,\ b,\ n\_splits);}
-\DoxyCodeLine{00218\ }
-\DoxyCodeLine{00219\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
-\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ I\_old\ =\ I\_new;}
-\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ n\_splits\ *=\ 2;}
-\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ I\_new\ =\ simpson(func,\ a,\ b,\ n\_splits);}
-\DoxyCodeLine{00223\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (fabs(I\_new\ -\/\ I\_old)\ /\ 15\ >\ eps2);}
-\DoxyCodeLine{00224\ \textcolor{preprocessor}{\#else}}
-\DoxyCodeLine{00225\ \ \ \ \ I\_new\ =\ \doxymbox{\hyperlink{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}{trapezium}}(func,\ a,\ b,\ n\_splits);}
-\DoxyCodeLine{00226\ }
-\DoxyCodeLine{00227\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
-\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ I\_old\ =\ I\_new;}
-\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ n\_splits\ *=\ 2;}
-\DoxyCodeLine{00230\ \ \ \ \ \ \ \ \ I\_new\ =\ \doxymbox{\hyperlink{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}{trapezium}}(func,\ a,\ b,\ n\_splits);}
-\DoxyCodeLine{00231\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (fabs(I\_new\ -\/\ I\_old)\ /\ 3.0\ >\ eps2);}
-\DoxyCodeLine{00232\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00221\ \ \ \ \ \textcolor{keywordtype}{int}\ n\_splits\ =\ 10000;}
+\DoxyCodeLine{00222\ \ \ \ \ \textcolor{keywordtype}{double}\ I\_old,\ I\_new;}
+\DoxyCodeLine{00223\ \textcolor{preprocessor}{\#if\ USE\_SIMPSON}}
+\DoxyCodeLine{00224\ \ \ \ \ I\_new\ =\ simpson(func,\ a,\ b,\ n\_splits);}
+\DoxyCodeLine{00225\ }
+\DoxyCodeLine{00226\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ I\_old\ =\ I\_new;}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ n\_splits\ *=\ 2;}
+\DoxyCodeLine{00229\ \ \ \ \ \ \ \ \ I\_new\ =\ simpson(func,\ a,\ b,\ n\_splits);}
+\DoxyCodeLine{00230\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (fabs(I\_new\ -\/\ I\_old)\ /\ 15\ >\ eps2);}
+\DoxyCodeLine{00231\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00232\ \ \ \ \ I\_new\ =\ \doxymbox{\hyperlink{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}{trapezium}}(func,\ a,\ b,\ n\_splits);}
 \DoxyCodeLine{00233\ }
-\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordflow}{return}\ I\_new;}
-\DoxyCodeLine{00235\ \}}
+\DoxyCodeLine{00234\ \ \ \ \ \textcolor{keywordflow}{do}\ \{}
+\DoxyCodeLine{00235\ \ \ \ \ \ \ \ \ I\_old\ =\ I\_new;}
+\DoxyCodeLine{00236\ \ \ \ \ \ \ \ \ n\_splits\ *=\ 2;}
+\DoxyCodeLine{00237\ \ \ \ \ \ \ \ \ I\_new\ =\ \doxymbox{\hyperlink{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}{trapezium}}(func,\ a,\ b,\ n\_splits);}
+\DoxyCodeLine{00238\ \ \ \ \ \}\ \textcolor{keywordflow}{while}\ (fabs(I\_new\ -\/\ I\_old)\ /\ 3.0\ >\ eps2);}
+\DoxyCodeLine{00239\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{return}\ I\_new;}
+\DoxyCodeLine{00242\ \}}
 
 \end{DoxyCode}
 \Hypertarget{numeric_8c_aa81b1736748c564740700de7d0153ac4}\index{numeric.c@{numeric.c}!root@{root}}
@@ -143,46 +143,46 @@ Secant method. secant equation through points a and b:\+ y = (\doxylink{numeric_
 
 we have segments (a; x) and (x; b) determine which segment to take, by checking which one has the sign different on its start and end 
 
-Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00059}{59}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
+Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00063}{63}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00064\ }
-\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keywordtype}{int}\ iter\ =\ 0;}
-\DoxyCodeLine{00066\ \ \ \ \ \textcolor{keywordtype}{double}\ ya\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(a)\ -\/\ g(a);}
-\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordtype}{double}\ yb\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(b)\ -\/\ g(b);}
-\DoxyCodeLine{00068\ \ \ \ \ \textcolor{keywordtype}{double}\ x,\ y;}
-\DoxyCodeLine{00069\ }
-\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordflow}{while}\ (iter\ <\ \doxymbox{\hyperlink{numeric_8c_acd517c6f195c75b9dd0f3aad65326f3b}{MAX\_ITER}})\ \{}
-\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ x\ =\ a\ -\/\ ya\ *\ (b\ -\/\ a)\ /\ (yb\ -\/\ ya);}
-\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ y\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(x)\ -\/\ g(x);}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keywordtype}{int}\ iter\ =\ 0;}
+\DoxyCodeLine{00070\ \ \ \ \ \textcolor{keywordtype}{double}\ ya\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(a)\ -\/\ g(a);}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordtype}{double}\ yb\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(b)\ -\/\ g(b);}
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{keywordtype}{double}\ x,\ y;}
 \DoxyCodeLine{00073\ }
-\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(y)\ <\ eps1)\ \{}
-\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
-\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
-\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00078\ }
-\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ checking\ where\ the\ root\ is}}
-\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ya\ *\ y\ <\ 0)\ \{}
-\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
-\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ yb\ =\ y;}
-\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
-\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ x;}
-\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ ya\ =\ y;}
-\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00087\ }
-\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ eps1)\ \{}
-\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
-\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
-\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00092\ }
-\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ ++iter;}
-\DoxyCodeLine{00094\ \ \ \ \ \}}
-\DoxyCodeLine{00095\ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keywordflow}{while}\ (iter\ <\ \doxymbox{\hyperlink{numeric_8c_acd517c6f195c75b9dd0f3aad65326f3b}{MAX\_ITER}})\ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ x\ =\ a\ -\/\ ya\ *\ (b\ -\/\ a)\ /\ (yb\ -\/\ ya);}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ y\ =\ \doxymbox{\hyperlink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}(x)\ -\/\ g(x);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(y)\ <\ eps1)\ \{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ checking\ where\ the\ root\ is}}
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (ya\ *\ y\ <\ 0)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \ \ \ \ b\ =\ x;}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ yb\ =\ y;}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ a\ =\ x;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ ya\ =\ y;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(b\ -\/\ a)\ <\ eps1)\ \{}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \}}
 \DoxyCodeLine{00096\ }
-\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
-\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ ++iter;}
+\DoxyCodeLine{00098\ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ fprintf(\doxymbox{\hyperlink{numeric_8c_aa493fd55901e7772abe9c54337006200}{outp}},\ \textcolor{stringliteral}{"{}iters:\ \%d\(\backslash\)n"{}},\ iter);}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{return}\ x;}
+\DoxyCodeLine{00102\ \}}
 
 \end{DoxyCode}
 \Hypertarget{numeric_8c_ab7aa2cbaeae41ab736383f44d6042567}\index{numeric.c@{numeric.c}!sort@{sort}}
@@ -197,31 +197,31 @@ sorts array of three elements
 
 
 
-Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00103}{103}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
+Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00107}{107}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00104\ \ \ \ \ \textcolor{keywordtype}{double}\ t;}
-\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[0]\ >\ xs[1])\ \{}
-\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ t\ =\ xs[0];}
-\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ xs[0]\ =\ xs[1];}
-\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ xs[1]\ =\ t;}
-\DoxyCodeLine{00109\ \ \ \ \ \}}
-\DoxyCodeLine{00110\ \ \ \ \ \textcolor{comment}{//\ here\ xs[0]\ <=\ xs[1]}}
-\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[1]\ >\ xs[2])\ \{}
-\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ t\ =\ xs[1];}
-\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ xs[1]\ =\ xs[2];}
-\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ xs[2]\ =\ t;}
-\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ here\ xs[1]\ <=\ xs[2]}}
-\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[0]\ >\ xs[1])\ \{}
-\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ xs[0];}
-\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ xs[0]\ =\ xs[1];}
-\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ xs[1]\ =\ t;}
-\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ here\ xs[0]\ <=\ xs[1]\ <=\ xs[2]}}
-\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \}}
-\DoxyCodeLine{00122\ \ \ \ \ \}}
-\DoxyCodeLine{00123\ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordtype}{double}\ t;}
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[0]\ >\ xs[1])\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ t\ =\ xs[0];}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ xs[0]\ =\ xs[1];}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ xs[1]\ =\ t;}
+\DoxyCodeLine{00113\ \ \ \ \ \}}
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{comment}{//\ here\ xs[0]\ <=\ xs[1]}}
+\DoxyCodeLine{00115\ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[1]\ >\ xs[2])\ \{}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ t\ =\ xs[1];}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ xs[1]\ =\ xs[2];}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ xs[2]\ =\ t;}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ here\ xs[1]\ <=\ xs[2]}}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (xs[0]\ >\ xs[1])\ \{}
+\DoxyCodeLine{00121\ \ \ \ \ \ \ \ \ \ \ \ \ t\ =\ xs[0];}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \ \ \ \ xs[0]\ =\ xs[1];}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ xs[1]\ =\ t;}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ here\ xs[0]\ <=\ xs[1]\ <=\ xs[2]}}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ \}}
 
 \end{DoxyCode}
 \Hypertarget{numeric_8c_a687b84a04df402ea2808a87bbdab49bc}\index{numeric.c@{numeric.c}!trapezium@{trapezium}}
@@ -230,23 +230,23 @@ Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00103}{103}} of file 
 {\footnotesize\ttfamily \label{numeric_8c_a687b84a04df402ea2808a87bbdab49bc} 
 double trapezium (\begin{DoxyParamCaption}\item[{double(\texorpdfstring{$\ast$}{*}}]{func~}{)(double), }\item[{double}]{a}{, }\item[{double}]{b}{, }\item[{int}]{n\+\_\+splits}{}\end{DoxyParamCaption})}
 
-Simpson rule. for one split:\+ let h = length of one segment ∫ = h/\+3 \texorpdfstring{$\ast$}{*} (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)} + 4\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}) for more splits, it is h/\+3 \texorpdfstring{$\ast$}{*} (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)} + 4\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + 2\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x2)} + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}) check paper for more details Trapezium rule. for one split let h = length of segment ∫ = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(xi)} + f(x\{i+1\}))/\+2 \texorpdfstring{$\ast$}{*} h = \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(xi)}/\+2 \texorpdfstring{$\ast$}{*} h + f(x\{i+1)/\+2 \texorpdfstring{$\ast$}{*} h for more splits, each point except a and b appears twice ∫ = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x2)}/\+2 + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}/\+2) \texorpdfstring{$\ast$}{*} h = = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}/\+2) \texorpdfstring{$\ast$}{*} h 
+Simpson rule. for one split:\+ let h = length of one segment ∫ = h/\+3 \texorpdfstring{$\ast$}{*} (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)} + 4\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}) for more splits, it is h/\+3 \texorpdfstring{$\ast$}{*} (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)} + 4\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + 2\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x2)} + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}) check paper for more details Trapezium rule. for one split let h = length of segment ∫ = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(xi)} + f(x\{i+1\}))/\+2 \texorpdfstring{$\ast$}{*} h = \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(xi)}/\+2 \texorpdfstring{$\ast$}{*} h + f(x\{i+1\})/\+2 \texorpdfstring{$\ast$}{*} h for more splits, each point except a and b appears twice ∫ = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x2)}/\+2 + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}/\+2) \texorpdfstring{$\ast$}{*} h = = (\doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(a)}/\+2 + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(x1)} + ... + \doxylink{numeric_8c_a9c41a448afc0d03223ad53a4dc645e27}{f(b)}/\+2) \texorpdfstring{$\ast$}{*} h 
 
-Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00197}{197}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
+Definition at line \doxymbox{\hyperlink{numeric_8c_source_l00204}{204}} of file \doxymbox{\hyperlink{numeric_8c_source}{numeric.\+c}}.
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
-\DoxyCodeLine{00198\ \ \ \ \ \textcolor{keywordtype}{double}\ h\ =\ (b\ -\/\ a)\ /\ n\_splits;}
-\DoxyCodeLine{00199\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ (func(a)\ +\ func(b))\ /\ 2.0;}
-\DoxyCodeLine{00200\ }
-\DoxyCodeLine{00201\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ n\_splits;\ ++i)\ \{}
-\DoxyCodeLine{00202\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ a\ +\ i\ *\ h;\ \textcolor{comment}{//\ xi}}
-\DoxyCodeLine{00203\ \ \ \ \ \ \ \ \ sum\ +=\ func(x);}
-\DoxyCodeLine{00204\ \ \ \ \ \}}
-\DoxyCodeLine{00205\ }
-\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordflow}{return}\ sum\ *\ h;}
-\DoxyCodeLine{00207\ \}}
+\DoxyCodeLine{00204\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00205\ \ \ \ \ \textcolor{keywordtype}{double}\ h\ =\ (b\ -\/\ a)\ /\ n\_splits;}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{keywordtype}{double}\ sum\ =\ (func(a)\ +\ func(b))\ /\ 2.0;}
+\DoxyCodeLine{00207\ }
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <\ n\_splits;\ ++i)\ \{}
+\DoxyCodeLine{00209\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ x\ =\ a\ +\ i\ *\ h;\ \textcolor{comment}{//\ xi}}
+\DoxyCodeLine{00210\ \ \ \ \ \ \ \ \ sum\ +=\ func(x);}
+\DoxyCodeLine{00211\ \ \ \ \ \}}
+\DoxyCodeLine{00212\ }
+\DoxyCodeLine{00213\ \ \ \ \ \textcolor{keywordflow}{return}\ sum\ *\ h;}
+\DoxyCodeLine{00214\ \}}
 
 \end{DoxyCode}
 
