@@ -1,0 +1,188 @@
+\doxysection{Tree\+Utils }
+\hypertarget{group__tree}{}\label{group__tree}\index{TreeUtils@{TreeUtils}}
+
+
+Basic functions to work with the Tree.  
+
+
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structNode}{Node}}
+\begin{DoxyCompactList}\small\item\em \doxylink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{Node.\+value} can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Node \doxymbox{\hyperlink{group__tree_ga3b09f37e675bcd48a01bf22155996872}{Node}}
+\begin{DoxyCompactList}\small\item\em \doxylink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{Node.\+value} can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}{copytree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}dest, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em copies tree (an expression) to a new independent tree. space for dest should be allocated first \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{group__tree_ga920d3a3b4e03665228e45bd1e8766511}{cmptree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em compares two trees to be fully identical \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\+\_\+v2}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em compares two trees to be identical with a more precise check for associative operators \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\begin{DoxyCompactList}\small\item\em frees all trees and the tree itself (avoid Use-\/\+After-\/\+Free!) \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\+\_\+rpn}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em prints tree in reverse Polish notation \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Basic functions to work with the Tree. 
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{group__tree_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{group__tree_ga3b09f37e675bcd48a01bf22155996872}\index{TreeUtils@{TreeUtils}!Node@{Node}}
+\index{Node@{Node}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{Node}{Node}}
+{\footnotesize\ttfamily \label{group__tree_ga3b09f37e675bcd48a01bf22155996872} 
+typedef struct Node Node}
+
+
+
+\doxylink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{Node.\+value} can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x). 
+
+
+
+\label{doc-func-members}
+\Hypertarget{group__tree_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{group__tree_ga920d3a3b4e03665228e45bd1e8766511}\index{TreeUtils@{TreeUtils}!cmptree@{cmptree}}
+\index{cmptree@{cmptree}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{cmptree()}{cmptree()}}
+{\footnotesize\ttfamily \label{group__tree_ga920d3a3b4e03665228e45bd1e8766511} 
+int cmptree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{ref}{}\end{DoxyParamCaption})}
+
+
+
+compares two trees to be fully identical 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00040}{40}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL\ ||\ ref\ ==\ NULL)\ \textcolor{keywordflow}{return}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL)\ \&\&\ (ref\ ==\ NULL);}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordflow}{return}\ (strcmp(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value,\ ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}})\ ==\ 0)\ \&\&\ \doxymbox{\hyperlink{group__tree_ga920d3a3b4e03665228e45bd1e8766511}{cmptree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left,\ ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}})\ \&\&\ \doxymbox{\hyperlink{group__tree_ga920d3a3b4e03665228e45bd1e8766511}{cmptree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right,\ ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}});}
+\DoxyCodeLine{00043\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}\index{TreeUtils@{TreeUtils}!cmptree\_v2@{cmptree\_v2}}
+\index{cmptree\_v2@{cmptree\_v2}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{cmptree\_v2()}{cmptree\_v2()}}
+{\footnotesize\ttfamily \label{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3} 
+int cmptree\+\_\+v2 (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{root}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{ref}{}\end{DoxyParamCaption})}
+
+
+
+compares two trees to be identical with a more precise check for associative operators 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00047}{47}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL\ ||\ ref\ ==\ NULL)\ \textcolor{keywordflow}{return}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL)\ \&\&\ (ref\ ==\ NULL);}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{comment}{//\ if\ operator\ is\ associative,\ operands\ can\ be\ reversed,\ despite\ the\ operation\ being\ the\ same;\ check\ if\ they\ both\ are\ a\ +\ or\ a\ *}}
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{if}\ ((strlen(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value)\ ==\ 1)\ \&\&\ (strlen(ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}})\ ==\ 1)}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \&\&\ (((\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value[0]\ ==\ \textcolor{charliteral}{'+'})\ \&\&\ (ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0]\ ==\ \textcolor{charliteral}{'+'}))\ ||\ ((\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value[0]\ ==\ \textcolor{charliteral}{'*'})\ \&\&\ (ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0]\ ==\ \textcolor{charliteral}{'*'}))))}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ (\doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left,\ ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}})\ \&\&\ \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right,\ ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}))\ ||\ (\doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left,\ ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}})\ \&\&\ \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right,\ ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}));}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{comment}{//\ else,\ they\ should\ be\ fully\ identical}}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keywordflow}{return}\ (strcmp(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value,\ ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}})\ ==\ 0)\ \&\&\ \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left,\ ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}})\ \&\&\ \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\_v2}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right,\ ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}});}
+\DoxyCodeLine{00057\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}\index{TreeUtils@{TreeUtils}!copytree@{copytree}}
+\index{copytree@{copytree}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{copytree()}{copytree()}}
+{\footnotesize\ttfamily \label{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17} 
+void copytree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{dest}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{ref}{}\end{DoxyParamCaption})}
+
+
+
+copies tree (an expression) to a new independent tree. space for dest should be allocated first 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00023}{23}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keywordflow}{if}\ (!ref)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00025\ \ \ \ \ snprintf(dest-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ ref-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}});}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{comment}{//dest-\/>number\ =\ ref-\/>number;}}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keywordflow}{if}\ (ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}})\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ dest-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ calloc(1,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structNode}{Node}}));}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}{copytree}}(dest-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}},\ ref-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}});}
+\DoxyCodeLine{00031\ \ \ \ \ \}}
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keywordflow}{if}\ (ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}})\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ dest-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ calloc(1,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structNode}{Node}}));}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}{copytree}}(dest-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}},\ ref-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}});}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}\index{TreeUtils@{TreeUtils}!freetree@{freetree}}
+\index{freetree@{freetree}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{freetree()}{freetree()}}
+{\footnotesize\ttfamily \label{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243} 
+void freetree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+frees all trees and the tree itself (avoid Use-\/\+After-\/\+Free!) 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00061}{61}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00063\ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left);}
+\DoxyCodeLine{00064\ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right);}
+\DoxyCodeLine{00065\ \ \ \ \ free(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{00066\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}\index{TreeUtils@{TreeUtils}!print\_rpn@{print\_rpn}}
+\index{print\_rpn@{print\_rpn}!TreeUtils@{TreeUtils}}
+\doxysubsubsection{\texorpdfstring{print\_rpn()}{print\_rpn()}}
+{\footnotesize\ttfamily \label{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11} 
+void print\+\_\+rpn (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{}\end{DoxyParamCaption})}
+
+
+
+prints tree in reverse Polish notation 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00070}{70}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keywordflow}{if}\ (node\ ==\ NULL)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\_rpn}}(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}});}
+\DoxyCodeLine{00074\ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\_rpn}}(node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}});}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%s\ "{}},\ node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}});}
+\DoxyCodeLine{00077\ \}}
+
+\end{DoxyCode}

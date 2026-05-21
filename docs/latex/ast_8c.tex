@@ -1,0 +1,215 @@
+\doxysection{src/\+ast.c File Reference}
+\hypertarget{ast_8c}{}\label{ast_8c}\index{src/ast.c@{src/ast.c}}
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \+\#include $<$string.\+h$>$}\newline
+{\ttfamily \+\#include $<$math.\+h$>$}\newline
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \doxymbox{\hyperlink{structNode}{Node}}
+\begin{DoxyCompactList}\small\item\em \doxylink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{Node.\+value} can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{ast_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\+\_\+\+LEN}}~1000
+\item 
+\+\#define \doxymbox{\hyperlink{ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\+\_\+\+LEN}}~10
+\item 
+\+\#define \doxymbox{\hyperlink{ast_8c_a96f37a8fc896378990385f2e03459e78}{CMP\+\_\+\+EPS}}~1e-\/6
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct Node \doxymbox{\hyperlink{group__tree_ga3b09f37e675bcd48a01bf22155996872}{Node}}
+\begin{DoxyCompactList}\small\item\em \doxylink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{Node.\+value} can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x). \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}{copytree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}dest, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em copies tree (an expression) to a new independent tree. space for dest should be allocated first \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{group__tree_ga920d3a3b4e03665228e45bd1e8766511}{cmptree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em compares two trees to be fully identical \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{group__tree_ga75769ccc669c8784507c3bea0ff5dfa3}{cmptree\+\_\+v2}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref)
+\begin{DoxyCompactList}\small\item\em compares two trees to be identical with a more precise check for associative operators \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\begin{DoxyCompactList}\small\item\em frees all trees and the tree itself (avoid Use-\/\+After-\/\+Free!) \end{DoxyCompactList}\item 
+void \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\+\_\+rpn}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node)
+\begin{DoxyCompactList}\small\item\em prints tree in reverse Polish notation \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}ref, int power)
+\begin{DoxyCompactList}\small\item\em splits the power into halfs, and builds chains of multiplications, minimazing tree height \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{ast_8c_a7faedb7f161efa5174efa02820428fe0}{build\+\_\+ast}} (char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}expr, int len)
+\item 
+void \doxymbox{\hyperlink{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}{flatten}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node, char \texorpdfstring{$\ast$}{*}oper, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}flat, int \texorpdfstring{$\ast$}{*}node\+\_\+cnt, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}oper\+\_\+pool, int \texorpdfstring{$\ast$}{*}oper\+\_\+cnt)
+\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}{balance\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}flat, int start, int end, char \texorpdfstring{$\ast$}{*}oper, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}oper\+\_\+pool, int \texorpdfstring{$\ast$}{*}oper\+\_\+idx, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\begin{DoxyCompactList}\small\item\em find the flat and balance \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{group__opt_ga5ea55cc614294723f5f189166a290525}{is\+\_\+num}} (char \texorpdfstring{$\ast$}{*}s)
+\begin{DoxyCompactList}\small\item\em checks if the string stores a constant number \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__opt_ga6078c80c3b73510c168e25018ef1c01a}{clear\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\begin{DoxyCompactList}\small\item\em applies optimizations in post-\/order \end{DoxyCompactList}\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__opt_ga54d3f41164ebe3202ce21e782c53590b}{remove\+\_\+zero}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__opt_gae873ee707cd03ca69395151c0888fd06}{reduce\+\_\+one}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\item 
+void \doxymbox{\hyperlink{group__opt_ga6b1d4cbefea480cd7f8528b6f88465df}{reduce\+\_\+ident}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\item 
+void \doxymbox{\hyperlink{group__opt_gafa547d414d655b167c5fee6ee5986a61}{precompute}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{ast_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{ast_8c_a96f37a8fc896378990385f2e03459e78}\index{ast.c@{ast.c}!CMP\_EPS@{CMP\_EPS}}
+\index{CMP\_EPS@{CMP\_EPS}!ast.c@{ast.c}}
+\doxysubsubsection{\texorpdfstring{CMP\_EPS}{CMP\_EPS}}
+{\footnotesize\ttfamily \label{ast_8c_a96f37a8fc896378990385f2e03459e78} 
+\+\#define CMP\+\_\+\+EPS~1e-\/6}
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00008}{8}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+\Hypertarget{ast_8c_aabf4f709c8199e41cf279c77112345fe}\index{ast.c@{ast.c}!MAX\_LEN@{MAX\_LEN}}
+\index{MAX\_LEN@{MAX\_LEN}!ast.c@{ast.c}}
+\doxysubsubsection{\texorpdfstring{MAX\_LEN}{MAX\_LEN}}
+{\footnotesize\ttfamily \label{ast_8c_aabf4f709c8199e41cf279c77112345fe} 
+\+\#define MAX\+\_\+\+LEN~1000}
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00006}{6}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+\Hypertarget{ast_8c_a7280aab7c582a59238228e0bb3002677}\index{ast.c@{ast.c}!VALUE\_LEN@{VALUE\_LEN}}
+\index{VALUE\_LEN@{VALUE\_LEN}!ast.c@{ast.c}}
+\doxysubsubsection{\texorpdfstring{VALUE\_LEN}{VALUE\_LEN}}
+{\footnotesize\ttfamily \label{ast_8c_a7280aab7c582a59238228e0bb3002677} 
+\+\#define VALUE\+\_\+\+LEN~10}
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00007}{7}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{ast_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{ast_8c_a7faedb7f161efa5174efa02820428fe0}\index{ast.c@{ast.c}!build\_ast@{build\_ast}}
+\index{build\_ast@{build\_ast}!ast.c@{ast.c}}
+\doxysubsubsection{\texorpdfstring{build\_ast()}{build\_ast()}}
+{\footnotesize\ttfamily \label{ast_8c_a7faedb7f161efa5174efa02820428fe0} 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} build\+\_\+ast (\begin{DoxyParamCaption}\item[{char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{expr}{, }\item[{int}]{len}{}\end{DoxyParamCaption})}
+
+processes each token; if it is a constant/\+variable, puts in onto stack; if it is an operator, grabs one/\+two nodes from stack, makes a new node with the operator, and puts it onto stack
+
+SAFE\+\_\+\+EXP=1 allows only integer powers 
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00104}{104}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *stack[\doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\_LEN}}];}
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keywordtype}{int}\ stack\_ptr\ =\ 0;}
+\DoxyCodeLine{00107\ }
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ len;\ ++i)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ *token\ =\ expr[i];}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *node\ =\ calloc(1,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structNode}{Node}}));}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}0"{}});}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ ((token[0]\ ==\ \textcolor{charliteral}{'x'})\ ||\ (token[0]\ ==\ \textcolor{charliteral}{'e'})\ ||\ (strcmp(token,\ \textcolor{stringliteral}{"{}pi"{}})\ ==\ 0))\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ token);}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ NULL;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ NULL;}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strlen(token)\ ==\ 1\ \&\&\ (\textcolor{charliteral}{'*'}\ <=\ token[0]\ \&\&\ token[0]\ <=\ \textcolor{charliteral}{'/'}))\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ token);}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00121\ \textcolor{preprocessor}{\#if\ SAFE\_EXP}}
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strlen(token)\ ==\ 1\ \&\&\ (token[0]\ ==\ \textcolor{charliteral}{'\string^'}))\ \{\ \textcolor{comment}{//\ only\ constant\ integer\ powers\ are\ allowed;\ treats\ x\string^y\ =\ x*x*...*x\ with\ y\ amount\ of\ multiplications;\ x\string^-\/y\ =\ 1\ /\ x\string^y}}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ power\ =\ atof(stack[-\/-\/stack\_ptr]-\/>value);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *ref\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00125\ }
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{double}\ integer\_part;}
+\DoxyCodeLine{00127\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fabs(modf(power,\ \&integer\_part))\ >\ \doxymbox{\hyperlink{ast_8c_a96f37a8fc896378990385f2e03459e78}{CMP\_EPS}})\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nPower\ is\ not\ an\ integer,\ exiting...\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (power\ >\ 1)\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ left\_power\ =\ power\ /\ 2;}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ right\_power\ =\ power\ -\/\ left\_power;}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}*"{}});}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\_tree}}(ref,\ left\_power);}
+\DoxyCodeLine{00137\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\_tree}}(ref,\ right\_power);}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (power\ ==\ 1)\ \{}
+\DoxyCodeLine{00139\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ free(node);}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node\ =\ ref;}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (power\ ==\ 0)\ \{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}1"{}});}
+\DoxyCodeLine{00143\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00144\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{00145\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ calloc(1,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structNode}{Node}}));}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}1"{}});}
+\DoxyCodeLine{00147\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\_tree}}(ref,\ -\/power);}
+\DoxyCodeLine{00148\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00149\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00150\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strlen(token)\ ==\ 1\ \&\&\ (token[0]\ ==\ \textcolor{charliteral}{'\string^'}))\ \{}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ token);}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00156\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (\textcolor{charliteral}{'c'}\ <=\ token[0]\ \&\&\ token[0]\ <=\ \textcolor{charliteral}{'t'})\{\ \textcolor{comment}{//\ should\ be\ on\ of\ sin,\ cos,\ tan,\ ctg,\ ln}}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ token);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ NULL;}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ stack[-\/-\/stack\_ptr];}
+\DoxyCodeLine{00161\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//\ a\ constant\ number}}
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ token);\ \textcolor{comment}{//\ as\ we\ have\ value\ as\ a\ string,\ lets\ just\ store\ it\ in\ string.\ can\ be\ used\ for\ negative}}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ NULL;}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ NULL;}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \ \ \ \ stack[stack\_ptr++]\ =\ node;}
+\DoxyCodeLine{00168\ \ \ \ \ \}}
+\DoxyCodeLine{00169\ \ \ \ \ \textcolor{keywordflow}{return}\ stack[0];}
+\DoxyCodeLine{00170\ \}}
+
+\end{DoxyCode}
+\Hypertarget{ast_8c_a323a512e296b476546711efe091e011c}\index{ast.c@{ast.c}!power\_tree@{power\_tree}}
+\index{power\_tree@{power\_tree}!ast.c@{ast.c}}
+\doxysubsubsection{\texorpdfstring{power\_tree()}{power\_tree()}}
+{\footnotesize\ttfamily \label{ast_8c_a323a512e296b476546711efe091e011c} 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} power\+\_\+tree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{ref}{, }\item[{int}]{power}{}\end{DoxyParamCaption})}
+
+
+
+splits the power into halfs, and builds chains of multiplications, minimazing tree height 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00082}{82}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00083\ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *node\ =\ calloc(1,\ \textcolor{keyword}{sizeof}(\doxymbox{\hyperlink{structNode}{Node}}));}
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keywordflow}{if}\ (power\ ==\ 1)\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_gafe827a4f023f2d5f980a8fbae2ca3c17}{copytree}}(node,\ ref);}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node;}
+\DoxyCodeLine{00087\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ left\_power\ =\ power\ /\ 2;}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ right\_power\ =\ power\ -\/\ left\_power;}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ snprintf(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \doxymbox{\hyperlink{diff__ast_8c_a7280aab7c582a59238228e0bb3002677}{VALUE\_LEN}},\ \textcolor{stringliteral}{"{}\%s"{}},\ \textcolor{stringliteral}{"{}*"{}});}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\_tree}}(ref,\ left\_power);}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ \doxymbox{\hyperlink{ast_8c_a323a512e296b476546711efe091e011c}{power\_tree}}(ref,\ right\_power);}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ node;}
+\DoxyCodeLine{00094\ \ \ \ \ \}}
+\DoxyCodeLine{00095\ \}}
+
+\end{DoxyCode}

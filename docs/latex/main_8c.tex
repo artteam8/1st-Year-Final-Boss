@@ -1,0 +1,245 @@
+\doxysection{src/\+main.c File Reference}
+\hypertarget{main_8c}{}\label{main_8c}\index{src/main.c@{src/main.c}}
+{\ttfamily \+\#include $<$stdio.\+h$>$}\newline
+{\ttfamily \+\#include $<$numeric.\+h$>$}\newline
+{\ttfamily \+\#include $<$math.\+h$>$}\newline
+{\ttfamily \+\#include $<$getopt.\+h$>$}\newline
+{\ttfamily \+\#include $<$stdlib.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a87641ce749a5333d4e9878c879532f54}{EPS1}}~1e-\/9
+\item 
+\+\#define \doxymbox{\hyperlink{main_8c_a6e0fa11d70158b1ec7225144f0243f50}{EPS2}}~1e-\/9
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef double(\texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}) (double)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \doxymbox{\hyperlink{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e}{f\+\_\+1}} (double x)
+\item 
+double \doxymbox{\hyperlink{main_8c_a3253bde1507b85ecd72db32bbd31380a}{f\+\_\+2}} (double x)
+\item 
+double \doxymbox{\hyperlink{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd}{f\+\_\+3}} (double x)
+\item 
+double \doxymbox{\hyperlink{main_8c_a53667a54d00b74f69aaf24592b0e4059}{d\+\_\+1}} (double x)
+\item 
+double \doxymbox{\hyperlink{main_8c_a77a828e02f9a7c60b9593d9fe6585c6c}{d\+\_\+2}} (double x)
+\item 
+double \doxymbox{\hyperlink{main_8c_aa9ab8940907e58b24b090dc97582ad89}{d\+\_\+3}} (double x)
+\item 
+void \doxymbox{\hyperlink{main_8c_a5fddc0e089bcef8fcc3c3915ecb2e71b}{sort\+\_\+func}} (double x, \doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}} fs\+[3]\+)
+\begin{DoxyCompactList}\small\item\em sorts array of three functions in points x \end{DoxyCompactList}\item 
+int \doxymbox{\hyperlink{main_8c_a0ddf1224851353fc92bfbff6f499fa97}{main}} (int argc, char \texorpdfstring{$\ast$}{*}argv\+[$\,$]\+)
+\begin{DoxyCompactList}\small\item\em I/\+O and general logic. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\label{doc-define-members}
+\Hypertarget{main_8c_doc-define-members}
+\doxysubsection{Macro Definition Documentation}
+\Hypertarget{main_8c_a87641ce749a5333d4e9878c879532f54}\index{main.c@{main.c}!EPS1@{EPS1}}
+\index{EPS1@{EPS1}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EPS1}{EPS1}}
+{\footnotesize\ttfamily \label{main_8c_a87641ce749a5333d4e9878c879532f54} 
+\+\#define EPS1~1e-\/9}
+
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00007}{7}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+\Hypertarget{main_8c_a6e0fa11d70158b1ec7225144f0243f50}\index{main.c@{main.c}!EPS2@{EPS2}}
+\index{EPS2@{EPS2}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{EPS2}{EPS2}}
+{\footnotesize\ttfamily \label{main_8c_a6e0fa11d70158b1ec7225144f0243f50} 
+\+\#define EPS2~1e-\/9}
+
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00008}{8}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\label{doc-typedef-members}
+\Hypertarget{main_8c_doc-typedef-members}
+\doxysubsection{Typedef Documentation}
+\Hypertarget{main_8c_a9c41a448afc0d03223ad53a4dc645e27}\index{main.c@{main.c}!f@{f}}
+\index{f@{f}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{f}{f}}
+{\footnotesize\ttfamily \label{main_8c_a9c41a448afc0d03223ad53a4dc645e27} 
+typedef double(\texorpdfstring{$\ast$}{*} f) (double)}
+
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00017}{17}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+
+\label{doc-func-members}
+\Hypertarget{main_8c_doc-func-members}
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8c_a53667a54d00b74f69aaf24592b0e4059}\index{main.c@{main.c}!d\_1@{d\_1}}
+\index{d\_1@{d\_1}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{d\_1()}{d\_1()}}
+{\footnotesize\ttfamily \label{main_8c_a53667a54d00b74f69aaf24592b0e4059} 
+double d\+\_\+1 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_a77a828e02f9a7c60b9593d9fe6585c6c}\index{main.c@{main.c}!d\_2@{d\_2}}
+\index{d\_2@{d\_2}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{d\_2()}{d\_2()}}
+{\footnotesize\ttfamily \label{main_8c_a77a828e02f9a7c60b9593d9fe6585c6c} 
+double d\+\_\+2 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_aa9ab8940907e58b24b090dc97582ad89}\index{main.c@{main.c}!d\_3@{d\_3}}
+\index{d\_3@{d\_3}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{d\_3()}{d\_3()}}
+{\footnotesize\ttfamily \label{main_8c_aa9ab8940907e58b24b090dc97582ad89} 
+double d\+\_\+3 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e}\index{main.c@{main.c}!f\_1@{f\_1}}
+\index{f\_1@{f\_1}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{f\_1()}{f\_1()}}
+{\footnotesize\ttfamily \label{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e} 
+double f\+\_\+1 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_a3253bde1507b85ecd72db32bbd31380a}\index{main.c@{main.c}!f\_2@{f\_2}}
+\index{f\_2@{f\_2}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{f\_2()}{f\_2()}}
+{\footnotesize\ttfamily \label{main_8c_a3253bde1507b85ecd72db32bbd31380a} 
+double f\+\_\+2 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd}\index{main.c@{main.c}!f\_3@{f\_3}}
+\index{f\_3@{f\_3}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{f\_3()}{f\_3()}}
+{\footnotesize\ttfamily \label{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd} 
+double f\+\_\+3 (\begin{DoxyParamCaption}\item[{double}]{x}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [extern]}}
+
+\Hypertarget{main_8c_a0ddf1224851353fc92bfbff6f499fa97}\index{main.c@{main.c}!main@{main}}
+\index{main@{main}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily \label{main_8c_a0ddf1224851353fc92bfbff6f499fa97} 
+int main (\begin{DoxyParamCaption}\item[{int}]{argc}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{argv}{\+[$\,$]\+}\end{DoxyParamCaption})}
+
+
+
+I/\+O and general logic. 
+
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00041}{41}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keywordtype}{int}\ print\_absc\ =\ 0;}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keywordtype}{int}\ print\_iters\ =\ 0;}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{struct\ }option\ cli\_keys[]\ =\ \{\{\textcolor{stringliteral}{"{}help"{}},\ no\_argument,\ 0,\ \ \textcolor{charliteral}{'h'}\},\ \{0,0,0,0\}\};}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \ \ \ \ \textcolor{keywordtype}{int}\ opt;}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keywordflow}{while}\ ((opt\ =\ getopt\_long(argc,\ argv,\ \textcolor{stringliteral}{"{}ai"{}},\ cli\_keys,\ NULL))\ !=\ -\/1)\ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(opt)\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'a'}:}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print\_absc\ =\ 1;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'i'}:}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ print\_iters\ =\ 1;}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'h'}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}-\/-\/help\ \ \ \ \ \ \ show\ this\ message\ and\ quit\(\backslash\)n\ -\/a\ \ \ \ \ \ \ \ \ \ show\ intersection\ points\(\backslash\)n\ -\/i\ \ \ \ \ \ \ \ \ \ show\ number\ of\ iterations\(\backslash\)n"{}});}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \textcolor{preprocessor}{\#if\ USE\_NEWTON}}
+\DoxyCodeLine{00063\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Newton\ method\ is\ used\(\backslash\)n"{}});}
+\DoxyCodeLine{00064\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00065\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Secant\ method\ is\ used\(\backslash\)n"{}});}
+\DoxyCodeLine{00066\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \textcolor{preprocessor}{\#if\ USE\_SIMPSON}}
+\DoxyCodeLine{00069\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Simpson\ rule\ is\ used\(\backslash\)n"{}});}
+\DoxyCodeLine{00070\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00071\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Trapezium\ rule\ is\ used\(\backslash\)n"{}});}
+\DoxyCodeLine{00072\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ FILE\ *spec\_file\ =\ fopen(SPEC\_FILE,\ \textcolor{stringliteral}{"{}r"{}});}
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keywordtype}{double}\ a,\ b;}
+\DoxyCodeLine{00077\ \ \ \ \ fscanf(spec\_file,\ \textcolor{stringliteral}{"{}\%lf\%lf"{}},\ \&a,\ \&b);}
+\DoxyCodeLine{00078\ \ \ \ \ \textcolor{comment}{//printf("{}a,b:\ \%lf\ \%lf\(\backslash\)n"{},\ a,\ b);}}
+\DoxyCodeLine{00079\ \textcolor{preprocessor}{\#if\ USE\_NEWTON}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keywordtype}{double}\ *xs\ =\ \doxymbox{\hyperlink{numeric_8c_a309c41ca36766ffeb2bab17015b9971f}{crosses}}(\doxymbox{\hyperlink{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e}{f\_1}},\ \doxymbox{\hyperlink{main_8c_a3253bde1507b85ecd72db32bbd31380a}{f\_2}},\ \doxymbox{\hyperlink{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd}{f\_3}},\ \doxymbox{\hyperlink{main_8c_a53667a54d00b74f69aaf24592b0e4059}{d\_1}},\ \doxymbox{\hyperlink{main_8c_a77a828e02f9a7c60b9593d9fe6585c6c}{d\_2}},\ \doxymbox{\hyperlink{main_8c_aa9ab8940907e58b24b090dc97582ad89}{d\_3}},\ a,\ b,\ \doxymbox{\hyperlink{main_8c_a87641ce749a5333d4e9878c879532f54}{EPS1}},\ print\_iters);}
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00082\ \ \ \ \ \textcolor{keywordtype}{double}\ *xs\ =\ \doxymbox{\hyperlink{numeric_8c_a309c41ca36766ffeb2bab17015b9971f}{crosses}}(\doxymbox{\hyperlink{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e}{f\_1}},\ \doxymbox{\hyperlink{main_8c_a3253bde1507b85ecd72db32bbd31380a}{f\_2}},\ \doxymbox{\hyperlink{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd}{f\_3}},\ a,\ b,\ \doxymbox{\hyperlink{main_8c_a87641ce749a5333d4e9878c879532f54}{EPS1}},\ print\_iters);}
+\DoxyCodeLine{00083\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \textcolor{keywordflow}{if}\ (print\_absc)\ printf(\textcolor{stringliteral}{"{}points:\ \%lf\ \%lf\ \%lf\(\backslash\)n"{}},\ xs[0],\ xs[1],\ xs[2]);}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}\ fs[]\ =\ \{\doxymbox{\hyperlink{main_8c_a00d8ae01a11ebc2222347b6d97f2ab9e}{f\_1}},\ \doxymbox{\hyperlink{main_8c_a3253bde1507b85ecd72db32bbd31380a}{f\_2}},\ \doxymbox{\hyperlink{main_8c_a43aaeb9bb2d4e4fc2fdd8926e1e4a2cd}{f\_3}}\};}
+\DoxyCodeLine{00089\ \ \ \ \ \textcolor{keywordtype}{double}\ area\ =\ 0;}
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keywordtype}{int}\ sign\ =\ 1;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{comment}{//\ determine\ if\ the\ longer\ curve\ is\ lower\ than\ the\ point\ of\ intersection\ of\ two\ short\ ones}}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 2;\ ++i)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <\ 2;\ ++j)\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (i\ !=\ j\ \&\&\ fabs(fs[i](xs[1])\ -\/\ fs[j](xs[1]))\ <\ 1e-\/6)\ \{}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ k\ =\ 0+1+2\ -\/\ i\ -\/\ j;}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fs[k](xs[1])\ <\ fs[i](xs[1]))\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ sign\ =\ -\/1;}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00103\ \ \ \ \ \}}
+\DoxyCodeLine{00104\ }
+\DoxyCodeLine{00105\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 2;\ ++i)\ \{}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{main_8c_a5fddc0e089bcef8fcc3c3915ecb2e71b}{sort\_func}}((xs[i]+xs[i+1])/2,\ fs);}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ area\ +=\ sign\ *\ (\doxymbox{\hyperlink{numeric_8c_a92877fee99fe8411e505e68a85a2c2ce}{integral}}(fs[1\ +\ sign],\ xs[i],\ xs[i+1],\ \doxymbox{\hyperlink{main_8c_a6e0fa11d70158b1ec7225144f0243f50}{EPS2}})\ -\/\ \doxymbox{\hyperlink{numeric_8c_a92877fee99fe8411e505e68a85a2c2ce}{integral}}(fs[1],\ xs[i],\ xs[i+1],\ \doxymbox{\hyperlink{main_8c_a6e0fa11d70158b1ec7225144f0243f50}{EPS2}}));}
+\DoxyCodeLine{00108\ \ \ \ \ \}}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ printf(\textcolor{stringliteral}{"{}Area:\ \%.4lf\(\backslash\)n"{}},\ area);}
+\DoxyCodeLine{00111\ \ \ \ \ free(xs);}
+\DoxyCodeLine{00112\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{00113\ \}}
+
+\end{DoxyCode}
+\Hypertarget{main_8c_a5fddc0e089bcef8fcc3c3915ecb2e71b}\index{main.c@{main.c}!sort\_func@{sort\_func}}
+\index{sort\_func@{sort\_func}!main.c@{main.c}}
+\doxysubsubsection{\texorpdfstring{sort\_func()}{sort\_func()}}
+{\footnotesize\ttfamily \label{main_8c_a5fddc0e089bcef8fcc3c3915ecb2e71b} 
+void sort\+\_\+func (\begin{DoxyParamCaption}\item[{double}]{x}{, }\item[{\doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}}]{fs}{\+[3]\+}\end{DoxyParamCaption})}
+
+
+
+sorts array of three functions in points x 
+
+
+
+Definition at line \doxymbox{\hyperlink{main_8c_source_l00021}{21}} of file \doxymbox{\hyperlink{main_8c_source}{main.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keywordflow}{if}\ (fs[0](x)\ >\ fs[1](x))\ \{}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}\ temp\ =\ fs[1];}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ fs[1]\ =\ fs[0];}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ fs[0]\ =\ temp;}
+\DoxyCodeLine{00026\ \ \ \ \ \}}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (fs[1](x)\ >\ fs[2](x))\ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{main_8c_a9c41a448afc0d03223ad53a4dc645e27}{f}}\ temp\ =\ fs[2];}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ fs[2]\ =\ fs[1];}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ fs[1]\ =\ temp;}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (fs[0](x)\ >\ fs[1](x))\ \{}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ temp\ =\ fs[1];}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ fs[1]\ =\ fs[0];}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ fs[0]\ =\ temp;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \}}
+
+\end{DoxyCode}

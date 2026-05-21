@@ -1,0 +1,109 @@
+\doxysubsection{Tree\+Balance }
+\hypertarget{group__balance}{}\label{group__balance}\index{TreeBalance@{TreeBalance}}
+
+
+Functions that balance the tree. Balancing is available only if the operators are associative, because only if they are, we can rearrange operands.  
+
+
+\doxysubsubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \doxymbox{\hyperlink{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}{flatten}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node, char \texorpdfstring{$\ast$}{*}oper, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}flat, int \texorpdfstring{$\ast$}{*}node\+\_\+cnt, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}oper\+\_\+pool, int \texorpdfstring{$\ast$}{*}oper\+\_\+cnt)
+\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}{balance\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}flat, int start, int end, char \texorpdfstring{$\ast$}{*}oper, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}oper\+\_\+pool, int \texorpdfstring{$\ast$}{*}oper\+\_\+idx, \doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\item 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\+\_\+tree}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}})
+\begin{DoxyCompactList}\small\item\em find the flat and balance \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsubsection{Detailed Description}
+Functions that balance the tree. Balancing is available only if the operators are associative, because only if they are, we can rearrange operands. 
+
+
+
+\label{doc-func-members}
+\Hypertarget{group__balance_doc-func-members}
+\doxysubsubsection{Function Documentation}
+\Hypertarget{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}\index{TreeBalance@{TreeBalance}!balance\_tree@{balance\_tree}}
+\index{balance\_tree@{balance\_tree}!TreeBalance@{TreeBalance}}
+\doxysubsubsubsection{\texorpdfstring{balance\_tree()}{balance\_tree()}}
+{\footnotesize\ttfamily \label{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f} 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} balance\+\_\+tree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{flat}{, }\item[{int}]{start}{, }\item[{int}]{end}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{oper}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{oper\+\_\+pool}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{oper\+\_\+idx}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+recreates the tree with balanced structure; uses the same operators, just rearranges them avoids rearranging the root operator 
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00201}{201}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00202\ \ \ \ \ \textcolor{keywordflow}{if}\ (start\ ==\ end)\ \textcolor{keywordflow}{return}\ flat[start];}
+\DoxyCodeLine{00203\ \ \ \ \ \textcolor{keywordtype}{int}\ mid\ =\ (start\ +\ end)\ /\ 2;}
+\DoxyCodeLine{00204\ \ \ \ \ \textcolor{comment}{//Node\ *cur\ =\ calloc(1,\ sizeof(Node));}}
+\DoxyCodeLine{00205\ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *cur\ =\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ?\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ :\ oper\_pool[(*oper\_idx)++];}
+\DoxyCodeLine{00206\ \ \ \ \ \textcolor{comment}{//snprintf(cur-\/>value,\ VALUE\_LEN,\ "{}\%s"{},\ oper);}}
+\DoxyCodeLine{00207\ \ \ \ \ \textcolor{comment}{//is\ already\ there}}
+\DoxyCodeLine{00208\ \ \ \ \ cur-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ =\ \doxymbox{\hyperlink{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}{balance\_tree}}(flat,\ start,\ mid,\ oper,\ oper\_pool,\ oper\_idx,\ NULL);}
+\DoxyCodeLine{00209\ \ \ \ \ cur-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ =\ \doxymbox{\hyperlink{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}{balance\_tree}}(flat,\ mid\ +\ 1,\ end,\ oper,\ oper\_pool,\ oper\_idx,\ NULL);}
+\DoxyCodeLine{00210\ \ \ \ \ \textcolor{keywordflow}{return}\ cur;}
+\DoxyCodeLine{00211\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__balance_ga2660d4fe1d458468da0f99c4a723a940}\index{TreeBalance@{TreeBalance}!check\_tree@{check\_tree}}
+\index{check\_tree@{check\_tree}!TreeBalance@{TreeBalance}}
+\doxysubsubsubsection{\texorpdfstring{check\_tree()}{check\_tree()}}
+{\footnotesize\ttfamily \label{group__balance_ga2660d4fe1d458468da0f99c4a723a940} 
+\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*} check\+\_\+tree (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{root}{}\end{DoxyParamCaption})}
+
+
+
+find the flat and balance 
+
+
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00215}{215}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00216\ \ \ \ \ \textcolor{keywordflow}{if}\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ ==\ NULL)\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}};}
+\DoxyCodeLine{00217\ }
+\DoxyCodeLine{00218\ \ \ \ \ \textcolor{keywordflow}{if}\ (strlen(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value)\ ==\ 1\ \&\&\ (\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value[0]\ ==\ \textcolor{charliteral}{'+'}\ ||\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value[0]\ ==\ \textcolor{charliteral}{'*'}))\ \{}
+\DoxyCodeLine{00219\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *flat[\doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\_LEN}}];}
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *oper\_pool[\doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\_LEN}}];}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ node\_cnt\ =\ 0;}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ oper\_cnt\ =\ 0;}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}{flatten}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}},\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value,\ flat,\ \&node\_cnt,\ oper\_pool,\ \&oper\_cnt);}
+\DoxyCodeLine{00224\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ oper\_idx\ =\ 1;\ \textcolor{comment}{//\ skip\ the\ root}}
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (node\_cnt\ >\ 3)\ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{group__balance_ga3bb484fe61989ffc6597100ba1d5cc6f}{balance\_tree}}(flat,\ 0,\ node\_cnt\ -\/\ 1,\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>value,\ oper\_pool,\ \&oper\_idx,\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{00226\ \ \ \ \ \}}
+\DoxyCodeLine{00227\ }
+\DoxyCodeLine{00228\ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left\ =\ \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\_tree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>left);}
+\DoxyCodeLine{00229\ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right\ =\ \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\_tree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}-\/>right);}
+\DoxyCodeLine{00230\ \ \ \ \ \textcolor{keywordflow}{return}\ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}};}
+\DoxyCodeLine{00231\ \}}
+
+\end{DoxyCode}
+\Hypertarget{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}\index{TreeBalance@{TreeBalance}!flatten@{flatten}}
+\index{flatten@{flatten}!TreeBalance@{TreeBalance}}
+\doxysubsubsubsection{\texorpdfstring{flatten()}{flatten()}}
+{\footnotesize\ttfamily \label{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c} 
+void flatten (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{oper}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{flat}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{node\+\_\+cnt}{, }\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{oper\+\_\+pool}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{oper\+\_\+cnt}{}\end{DoxyParamCaption})}
+
+finds a flat of associative operations; stores the nodes in flat and the operators in oper\+\_\+pool 
+
+Definition at line \doxymbox{\hyperlink{ast_8c_source_l00187}{187}} of file \doxymbox{\hyperlink{ast_8c_source}{ast.\+c}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00188\ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ oper)\ ==\ 0)\ \{}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ oper\_pool[(*oper\_cnt)++]\ =\ node;}
+\DoxyCodeLine{00190\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}{flatten}}(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}},\ oper,\ flat,\ node\_cnt,\ oper\_pool,\ oper\_cnt);}
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__balance_ga8057c0054c8cf1203cdea377f96e9a7c}{flatten}}(node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}},\ oper,\ flat,\ node\_cnt,\ oper\_pool,\ oper\_cnt);}
+\DoxyCodeLine{00192\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ flat[(*node\_cnt)++]\ =\ node;}
+\DoxyCodeLine{00194\ \ \ \ \ \}}
+\DoxyCodeLine{00195\ \}}
+
+\end{DoxyCode}

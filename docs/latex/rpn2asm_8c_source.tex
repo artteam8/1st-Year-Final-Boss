@@ -1,0 +1,167 @@
+\doxysection{rpn2asm.\+c}
+\hypertarget{rpn2asm_8c_source}{}\label{rpn2asm_8c_source}\index{src/rpn2asm.c@{src/rpn2asm.c}}
+\doxymbox{\hyperlink{rpn2asm_8c}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00001}00001\ \textcolor{preprocessor}{\#include\ <stdio.h>}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00002}00002\ \textcolor{preprocessor}{\#include\ <stdlib.h>}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00003}00003\ \textcolor{preprocessor}{\#include\ <string.h>}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00004}00004\ \textcolor{preprocessor}{\#include\ <diff\_ast.h>}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00005}00005\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00006}\doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{00006}}\ \textcolor{preprocessor}{\#define\ MAX\_LEN\ 1000}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00007}\doxymbox{\hyperlink{rpn2asm_8c_a33d756d593c451ec4a90fb3481f13c1f}{00007}}\ \textcolor{preprocessor}{\#define\ MAX\_CONSTS\ 20}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00008}\doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{00008}}\ \textcolor{preprocessor}{\#define\ MAX\_SIZE\ 100000}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00009}\doxymbox{\hyperlink{rpn2asm_8c_a6ebf6899d6c1c8b7b9d09be872c05aae}{00009}}\ \textcolor{preprocessor}{\#define\ EPS\ 1e-\/6}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00010}00010\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00012}00012\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00013}\doxymbox{\hyperlink{rpn2asm_8c_ab2ac728d6234212b1a7900d3a1c6d241}{00013}}\ \doxymbox{\hyperlink{rpn2asm_8c_ab2ac728d6234212b1a7900d3a1c6d241}{find\_in\_list}}(\textcolor{keywordtype}{double}\ num,\ \textcolor{keywordtype}{double}\ *arr,\ \textcolor{keywordtype}{int}\ len)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00014}00014\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ len;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00015}00015\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (-\/\doxymbox{\hyperlink{rpn2asm_8c_a6ebf6899d6c1c8b7b9d09be872c05aae}{EPS}}\ <\ num-\/arr[i]\ \&\&\ num-\/arr[i]\ <\ \doxymbox{\hyperlink{rpn2asm_8c_a6ebf6899d6c1c8b7b9d09be872c05aae}{EPS}})\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00016}00016\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ i;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00017}00017\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00018}00018\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00019}00019\ \ \ \ \ \textcolor{keywordflow}{return}\ -\/1;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00020}00020\ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00021}00021\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00023}00023\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00024}\doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{00024}}\ \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\_consts}}(\doxymbox{\hyperlink{structNode}{Node}}\ *node,\ \textcolor{keywordtype}{char}\ *secdata\_buffer,\ \textcolor{keywordtype}{int}\ *secdata\_idx,\ \textcolor{keywordtype}{int}\ *const\_index,\ \textcolor{keywordtype}{double}\ *const\_list)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00025}00025\ \ \ \ \ \textcolor{keywordflow}{if}\ (node\ ==\ NULL\ ||\ *const\_index\ ==\ \doxymbox{\hyperlink{rpn2asm_8c_a33d756d593c451ec4a90fb3481f13c1f}{MAX\_CONSTS}})\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00026}00026\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00027}00027\ \ \ \ \ \textcolor{keywordflow}{if}\ (node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ ==\ NULL\ \&\&\ node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ ==\ NULL\ \&\&\ node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0]\ !=\ \textcolor{charliteral}{'x'}\ \&\&\ \doxymbox{\hyperlink{rpn2asm_8c_ab2ac728d6234212b1a7900d3a1c6d241}{find\_in\_list}}(atof(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}),\ const\_list,\ *const\_index)\ ==\ -\/1)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00028}00028\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ written\ =\ snprintf(secdata\_buffer\ +\ *secdata\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *secdata\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ const\_\%d\ dq\ \%lf\(\backslash\)n"{}},\ *const\_index,\ atof(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00029}00029\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (written\ <\ 0\ ||\ *secdata\_idx\ +\ written\ >=\ \doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\_LEN}})\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00030}00030\ \ \ \ \ \ \ \ \ \ \ \ \ fprintf(stderr,\ \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nBUFFER\ WRITING\ ERROR!!!!!!!!!!!\(\backslash\)n\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00031}00031\ \ \ \ \ \ \ \ \ \ \ \ \ exit(1);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00032}00032\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00033}00033\ \ \ \ \ \ \ \ \ *secdata\_idx\ +=\ written;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00034}00034\ \ \ \ \ \ \ \ \ const\_list[*const\_index]\ =\ atof(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00035}00035\ \ \ \ \ \ \ \ \ ++(*const\_index);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00036}00036\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00037}00037\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\_consts}}(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}},\ secdata\_buffer,\ secdata\_idx,\ const\_index,\ const\_list);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00038}00038\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\_consts}}(node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}},\ secdata\_buffer,\ secdata\_idx,\ const\_index,\ const\_list);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00039}00039\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00040}00040\ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00041}00041\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00042}00042\ \textcolor{comment}{//\ TODO\ docs}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00043}00043\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00044}\doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{00044}}\ \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\_x87}}(\doxymbox{\hyperlink{structNode}{Node}}\ *node,\ \textcolor{keywordtype}{char}\ *write\_buffer,\ \textcolor{keywordtype}{int}\ *buffer\_idx,\ \textcolor{keywordtype}{double}\ *const\_list,\ \textcolor{keywordtype}{int}\ const\_num)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00045}00045\ \ \ \ \ \textcolor{keywordflow}{if}\ (node\ ==\ NULL)\ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00046}00046\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00047}00047\ \ \ \ \ \textcolor{keywordflow}{if}\ (node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}}\ ==\ NULL)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00048}00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}}\ ==\ NULL)\ \{\ \textcolor{comment}{//x\ or\ constant}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00049}00049\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0]\ ==\ \textcolor{charliteral}{'x'})\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ qword[ebp+8]\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00050}00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0]\ ==\ \textcolor{charliteral}{'e'})\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ qword[const\_e]\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00051}00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}pi"{}})\ ==\ 0)\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ qword[const\_pi]\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00052}00052\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00053}00053\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ const\_idx\ =\ \doxymbox{\hyperlink{rpn2asm_8c_ab2ac728d6234212b1a7900d3a1c6d241}{find\_in\_list}}(atof(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}),\ const\_list,\ const\_num);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00054}00054\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ qword[const\_\%d]\(\backslash\)n"{}},\ const\_idx);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00055}00055\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00056}00056\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//\ unary}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00057}00057\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\_x87}}(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}},\ write\_buffer,\ buffer\_idx,\ const\_list,\ const\_num);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00058}00058\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}sin"{}})\ ==\ 0)\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fsin\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00059}00059\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}cos"{}})\ ==\ 0)\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fcos\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00060}00060\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}tan"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00061}00061\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ st0\(\backslash\)n\ \ \ \ fsin\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ fcos\(\backslash\)n\ \ \ \ fdivp\ st1,\ st0\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00062}00062\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}ctg"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00063}00063\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fld\ st0\(\backslash\)n\ \ \ \ fcos\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ fsin\(\backslash\)n\ \ \ \ fdivp\ st1,\ st0\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00064}00064\ \ \ \ \ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (strcmp(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}},\ \textcolor{stringliteral}{"{}ln"{}})\ ==\ 0)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00065}00065\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fldln2\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ fyl2x\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00066}00066\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00067}00067\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00068}00068\ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \{\ \textcolor{comment}{//binary}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00069}00069\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\_x87}}(node-\/>\doxymbox{\hyperlink{structNode_ad0976834843c7618677d22a10c495b36}{left}},\ write\_buffer,\ buffer\_idx,\ const\_list,\ const\_num);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00070}00070\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\_x87}}(node-\/>\doxymbox{\hyperlink{structNode_af99e7102380da88d7c079fa264230cf4}{right}},\ write\_buffer,\ buffer\_idx,\ const\_list,\ const\_num);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00071}00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{switch}(node-\/>\doxymbox{\hyperlink{structNode_af39d8b2c0623dec22cdad0ac002e0f3b}{value}}[0])\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00072}00072\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'+'}:\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ faddp\ st1,\ st0\(\backslash\)n"{}});\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00073}00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'-\/'}:\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fsubp\ st1,\ st0\(\backslash\)n"{}});\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00074}00074\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'*'}:\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fmulp\ st1,\ st0\(\backslash\)n"{}});\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00075}00075\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'/'}:\ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fdivp\ st1,\ st0\(\backslash\)n"{}});\ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00076}00076\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{case}\ \textcolor{charliteral}{'\string^'}:\ \textcolor{comment}{//\ not\ fully\ supported\ yet;\ edge\ cases\ should\ be\ processed\ through\ 'if'\ (labels),\ but\ not\ implemented\ due\ to\ unique\ label\ problem,\ to\ not\ make\ the\ code\ even\ more\ complex}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00077}00077\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//*buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ MAX\_SIZE\ -\/\ *buffer\_idx,\ "{}\ \ \ \ ftst\(\backslash\)n\ \ \ \ fstsw\ ax\(\backslash\)n\ \ \ \ fwait\(\backslash\)n\ \ \ \ sahf\(\backslash\)n\ \ \ \ jnz\ .non\_zero\_exp\(\backslash\)n\ \ \ \ fstp\ st0\(\backslash\)n\ \ \ \ fstp\ st0\(\backslash\)n\ \ \ \ fld1\(\backslash\)n\ \ \ jmp\ .pow\_done\(\backslash\)n.non\_zero\_exp:\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ ftst\(\backslash\)n\ \ \ \ fstsw\ ax\(\backslash\)n\ \ \ \ sahf\(\backslash\)n\ \ \ \ jnz\ .calc\_pow\(\backslash\)n\ \ \ \ fstp\ st0\(\backslash\)n\ \ \ \ fstp\ st0\(\backslash\)n\ \ \ \ fldz\(\backslash\)n\ \ \ \ jmp\ .pow\_done\(\backslash\)n.calc\_pow:\(\backslash\)n\ \ \ \ fyl2x\(\backslash\)n\ \ \ \ fld\ st0\(\backslash\)n\ \ \ \ frndint\(\backslash\)n\ \ \ \ fsub\ st1,\ st0\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ f2xm1\(\backslash\)n\ \ \ \ fld1\(\backslash\)n\ \ \ \ faddp\(\backslash\)n\ \ \ \ fscale\(\backslash\)n\ \ \ \ fstp\ st1\(\backslash\)n.pow\_done:\(\backslash\)n"{});}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00078}00078\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ fxch\(\backslash\)n\ \ \ \ fyl2x\(\backslash\)n\ \ \ \ fld\ st0\(\backslash\)n\ \ \ \ frndint\(\backslash\)n\ \ \ \ fsub\ st1,\ st0\(\backslash\)n\ \ \ \ fxch\(\backslash\)n\ \ \ \ f2xm1\(\backslash\)n\ \ \ \ fld1\(\backslash\)n\ \ \ \ faddp\(\backslash\)n\ \ \ \ fscale\(\backslash\)n\ \ \ \ fstp\ st1\(\backslash\)n"{}});\ \textcolor{comment}{//\ a\ simpler\ version}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00079}00079\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00080}00080\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00081}00081\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00082}00082\ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00083}00083\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00085}00085\ \textcolor{keywordtype}{void}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00086}\doxymbox{\hyperlink{rpn2asm_8c_a19b543ed5ae4ddc6094fee92cb4bacb9}{00086}}\ \doxymbox{\hyperlink{rpn2asm_8c_a19b543ed5ae4ddc6094fee92cb4bacb9}{gen\_x87}}(\doxymbox{\hyperlink{structNode}{Node}}\ *\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}},\ \textcolor{keywordtype}{char}\ *write\_buffer,\ \textcolor{keywordtype}{int}\ *buffer\_idx,\ \textcolor{keywordtype}{double}\ *const\_list,\ \textcolor{keywordtype}{int}\ const\_num)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00087}00087\ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ push\ ebp\(\backslash\)n\ \ \ \ mov\ ebp,\ esp\(\backslash\)n\ \ \ \ push\ ebx\(\backslash\)n\ \ \ \ push\ esi\(\backslash\)n\ \ \ \ push\ edi\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00088}00088\ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\_x87}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}},\ write\_buffer,\ buffer\_idx,\ const\_list,\ const\_num);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00089}00089\ \ \ \ \ *buffer\_idx\ +=\ snprintf(write\_buffer\ +\ *buffer\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ *buffer\_idx,\ \textcolor{stringliteral}{"{}\ \ \ \ pop\ edi\(\backslash\)n\ \ \ \ pop\ esi\(\backslash\)n\ \ \ \ pop\ ebx\(\backslash\)n\ \ \ \ pop\ ebp\(\backslash\)n\ \ \ \ ret\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00090}00090\ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00091}00091\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00098}00098\ \textcolor{keywordtype}{int}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00099}\doxymbox{\hyperlink{rpn2asm_8c_a840291bc02cba5474a4cb46a9b9566fe}{00099}}\ \doxymbox{\hyperlink{rpn2asm_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}}(\textcolor{keywordtype}{void})\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00100}00100\ \ \ \ \ \textcolor{keywordtype}{char}\ *secdata\_buffer\ =\ calloc(\doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}},\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00101}00101\ \ \ \ \ \textcolor{keywordtype}{int}\ secdata\_idx\ =\ snprintf(secdata\_buffer,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}},\ \textcolor{stringliteral}{"{}section\ .rodata\(\backslash\)n\ \ \ \ const\_pi\ dq\ 3.141592653589793\(\backslash\)n\ \ \ \ const\_e\ dq\ 2.718281828459045\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00102}00102\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00103}00103\ \ \ \ \ \textcolor{keywordtype}{char}\ *sectext\_buffer\ =\ calloc(\doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}},\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00104}00104\ \ \ \ \ \textcolor{keywordtype}{int}\ sectext\_idx\ =\ snprintf(sectext\_buffer,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}},\ \textcolor{stringliteral}{"{}section\ .text\(\backslash\)n\ \ \ \ global\ f\_1,\ f\_2,\ f\_3,\ d\_1,\ d\_2,\ d\_3\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00105}00105\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00106}00106\ \ \ \ \ \textcolor{keywordtype}{int}\ const\_index\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00107}00107\ \ \ \ \ \textcolor{keywordtype}{double}\ *const\_list\ =\ calloc(\doxymbox{\hyperlink{rpn2asm_8c_a33d756d593c451ec4a90fb3481f13c1f}{MAX\_CONSTS}},\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{double}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00108}00108\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00109}00109\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 1;\ i\ <=\ 3;\ ++i)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00110}00110\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ **expr\ =\ calloc(\doxymbox{\hyperlink{rpn2asm_8c_aabf4f709c8199e41cf279c77112345fe}{MAX\_LEN}},\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}*));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00111}00111\ \ \ \ \ \ \ \ \ expr[0]\ =\ calloc(10,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00112}00112\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ idx\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00113}00113\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ pos\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00114}00114\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{char}\ c;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00115}00115\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00116}00116\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{while}\ (scanf(\textcolor{stringliteral}{"{}\%c"{}},\ \&c)\ ==\ 1\ \&\&\ c\ !=\ \textcolor{charliteral}{'\(\backslash\)n'})\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00117}00117\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (c\ ==\ \textcolor{charliteral}{'\ '})\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00118}00118\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr[idx][pos]\ =\ \textcolor{charliteral}{'\(\backslash\)0'};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00119}00119\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ++idx;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00120}00120\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ expr[idx]\ =\ calloc(10,\ \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}));}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00121}00121\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ pos\ =\ 0;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00122}00122\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00123}00123\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00124}00124\ \ \ \ \ \ \ \ \ \ \ \ \ expr[idx][pos]\ =\ c;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00125}00125\ \ \ \ \ \ \ \ \ \ \ \ \ ++pos;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00126}00126\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00127}00127\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00128}00128\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ =\ \doxymbox{\hyperlink{ast_8c_a7faedb7f161efa5174efa02820428fe0}{build\_ast}}(expr,\ idx\ +\ 1);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00129}00129\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ =\ \doxymbox{\hyperlink{group__opt_ga6078c80c3b73510c168e25018ef1c01a}{clear\_tree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00130}00130\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}\ =\ \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\_tree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00131}00131\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00132}00132\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\_rpn}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00133}00133\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00134}00134\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00135}00135\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\_consts}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}},\ secdata\_buffer,\ \&secdata\_idx,\ \&const\_index,\ const\_list);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00136}00136\ \ \ \ \ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00137}00137\ \ \ \ \ \ \ \ \ sectext\_idx\ +=\ snprintf(sectext\_buffer\ +\ sectext\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ sectext\_idx,\ \textcolor{stringliteral}{"{}f\_\%d:\(\backslash\)n"{}},\ i);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00138}00138\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_a19b543ed5ae4ddc6094fee92cb4bacb9}{gen\_x87}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}},\ sectext\_buffer,\ \&sectext\_idx,\ const\_list,\ const\_index);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00139}00139\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00140}00140\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00141}00141\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{structNode}{Node}}\ *diff\_root\ =\ \doxymbox{\hyperlink{diff__ast_8c_a74f4514358e3f1d310a3d96da7505dd2}{diff}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00142}00142\ \ \ \ \ \ \ \ \ diff\_root\ =\ \doxymbox{\hyperlink{group__opt_ga6078c80c3b73510c168e25018ef1c01a}{clear\_tree}}(diff\_root);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00143}00143\ \ \ \ \ \ \ \ \ diff\_root\ =\ \doxymbox{\hyperlink{group__balance_ga2660d4fe1d458468da0f99c4a723a940}{check\_tree}}(diff\_root);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00144}00144\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00145}00145\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga3f81b20d89d2be611bc7a33aa860bd11}{print\_rpn}}(diff\_root);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00146}00146\ \ \ \ \ \ \ \ \ printf(\textcolor{stringliteral}{"{}\(\backslash\)n"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00147}00147\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00148}00148\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\_consts}}(diff\_root,\ secdata\_buffer,\ \&secdata\_idx,\ \&const\_index,\ const\_list);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00149}00149\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00150}00150\ \ \ \ \ \ \ \ \ sectext\_idx\ +=\ snprintf(sectext\_buffer\ +\ sectext\_idx,\ \doxymbox{\hyperlink{rpn2asm_8c_a0592dba56693fad79136250c11e5a7fe}{MAX\_SIZE}}\ -\/\ sectext\_idx,\ \textcolor{stringliteral}{"{}d\_\%d:\(\backslash\)n"{}},\ i);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00151}00151\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{rpn2asm_8c_a19b543ed5ae4ddc6094fee92cb4bacb9}{gen\_x87}}(diff\_root,\ sectext\_buffer,\ \&sectext\_idx,\ const\_list,\ const\_index);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00152}00152\ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00153}00153\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}}(\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00154}00154\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{group__tree_ga992e8c5ebf67ac23b8e1a9c98543f243}{freetree}}(diff\_root);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00155}00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ j\ =\ 0;\ j\ <=\ idx;\ ++j)\ \{}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00156}00156\ \ \ \ \ \ \ \ \ \ \ \ \ free(expr[j]);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00157}00157\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00158}00158\ \ \ \ \ \ \ \ \ free(expr);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00159}00159\ \ \ \ \ \}}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00160}00160\ \ \ \ \ }
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00161}00161\ \ \ \ \ printf(\textcolor{stringliteral}{"{}\%d\ \%d\(\backslash\)n"{}},\ secdata\_idx,\ sectext\_idx);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00162}00162\ \ \ \ \ FILE\ *asm\_file\ =\ fopen(\textcolor{stringliteral}{"{}src/funcs.asm"{}},\ \textcolor{stringliteral}{"{}w"{}});}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00163}00163\ \ \ \ \ fwrite(secdata\_buffer,\ 1,\ secdata\_idx,\ asm\_file);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00164}00164\ \ \ \ \ fwrite(sectext\_buffer,\ 1,\ sectext\_idx,\ asm\_file);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00165}00165\ \ \ \ \ free(secdata\_buffer);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00166}00166\ \ \ \ \ free(sectext\_buffer);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00167}00167\ \ \ \ \ free(const\_list);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00168}00168\ \ \ \ \ fclose(asm\_file);}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00169}00169\ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\Hypertarget{rpn2asm_8c_source_l00170}00170\ \}}
+
+\end{DoxyCode}
