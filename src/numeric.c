@@ -9,6 +9,10 @@ typedef double (*f)(double);
 /// where to output iters
 FILE *outp;
 
+/// @defgroup root_methods Find Root Methods
+/// @brief Numeric methods to find root of an equation
+/// (more specifically, a point of intersection of two curves)
+/// {@
 #if USE_NEWTON
 /// Newton method.
 /// tangent equation in point x=x_n:
@@ -122,7 +126,7 @@ sort(double *xs) {
     }
 }
 
-/// finds intersections of three curves
+/// a wrapper, finds intersections of three given curves
 #if USE_NEWTON
 double*
 crosses(f f1, f f2, f f3, f d1, f d2, f d3, double a, double b, double eps1, int print_iters) {
@@ -153,6 +157,7 @@ crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters) {
 }
 #endif
 
+/// @}
 
 
 
@@ -160,7 +165,9 @@ crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters) {
 
 
 
-
+/// @defgroup int_methods Integration Methods
+/// @brief Numeric methods to find a definite integral of a function
+/// {@
 
 /// Simpson rule.
 /// for one split:
@@ -189,7 +196,7 @@ simpson(double (*func)(double), double a, double b, int n_splits) {
 /// Trapezium rule.
 /// for one split
 /// let h = length of segment
-/// ∫ = (f(xi) + f(x{i+1}))/2 * h = f(xi)/2 * h + f(x{i+1)/2 * h
+/// ∫ = (f(xi) + f(x{i+1}))/2 * h = f(xi)/2 * h + f(x{i+1})/2 * h
 /// for more splits, each point except a and b appears twice
 /// ∫ = (f(a)/2 + f(x1)/2 + f(x1)/2 + f(x2)/2 + ... + f(b)/2) * h = 
 /// = (f(a)/2 + f(x1) + ... + f(b)/2) * h
@@ -233,3 +240,5 @@ integral(double (*func)(double), double a, double b, double eps2) {
 
     return I_new;
 }
+
+/// @}

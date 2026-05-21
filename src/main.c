@@ -4,8 +4,8 @@
 #include <getopt.h>
 #include <stdlib.h>
 
-#define EPS1 1e-9
-#define EPS2 1e-9
+#define EPS1 1e-4
+#define EPS2 1e-4
 
 extern double f_1(double x);
 extern double f_2(double x);
