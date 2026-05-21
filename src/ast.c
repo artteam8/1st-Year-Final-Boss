@@ -6,15 +6,18 @@
 #define MAX_LEN 1000
 #define VALUE_LEN 10
 
-/// Node value stores an operator. if value stores "none", Node stores a number
+/// @defgroup tree TreeUtils
+/// @brief Basic functions to work with the Tree.
+/// @{
+
+/// Node.value can store an operator -- either binary or unary -- or an operand -- a constant, or the variable (x)
 typedef struct Node {
     char value[VALUE_LEN];
-    //double number;
     struct Node *left;
     struct Node *right;
 } Node;
 
-/// copies tree (statement) to a new independent tree. space for dest should be allocated first
+/// copies tree (an expression) to a new independent tree. space for dest should be allocated first
 void
 copytree(Node *dest, Node *ref) {
     if (!ref) return;
@@ -31,13 +34,28 @@ copytree(Node *dest, Node *ref) {
     }
 }
 
+/// compares two trees to be fully identical
 int
 cmptree(Node *root, Node *ref) {
     if (root == NULL || ref == NULL) return (root == NULL) && (ref == NULL);
     return (strcmp(root->value, ref->value) == 0) && cmptree(root->left, ref->left) && cmptree(root->right, ref->right);
 }
 
-/// frees subtrees and the tree
+/// compares two trees to be identical with a more precise check for associative operators
+int
+cmptree_v2(Node *root, Node *ref) {
+    if (root == NULL || ref == NULL) return (root == NULL) && (ref == NULL);
+
+    // if operator is associative, operands can be reversed, despite the operation being the same; check if they both are a + or a *
+    if ((strlen(root->value) == 1) && (strlen(ref->value) == 1)
+        && (((root->value[0] == '+') && (ref->value[0] == '+')) || ((root->value[0] == '*') && (ref->value[0] == '*'))))
+        return (cmptree_v2(root->left, ref->left) && cmptree_v2(root->right, ref->right)) || (cmptree_v2(root->left, ref->right) && cmptree_v2(root->right, ref->left));
+        
+    // else, they should be fully identical
+    return (strcmp(root->value, ref->value) == 0) && cmptree_v2(root->left, ref->left) && cmptree_v2(root->right, ref->right);
+}
+
+/// frees all subtrees and the tree itself (avoid Use-After-Free!)
 void
 freetree(Node *root) {
     if (root == NULL) return;
@@ -47,20 +65,18 @@ freetree(Node *root) {
 }
 
 /// prints tree in reverse Polish notation
-void print_rpn(Node *node) {
+void
+print_rpn(Node *node) {
     if (node == NULL) return;
 
     print_rpn(node->left);
     print_rpn(node->right);
 
-    //if (strcmp(node->value, "none") != 0) {
     printf("%s ", node->value);
-    //} else {
-    //    printf("%lf ", node->number); 
-    //}
 }
+/// @}
 
-/// splits the power into halfs, and builds chains of multiplications minimazing tree height
+/// splits the power into halfs, and builds chains of multiplications, minimazing tree height
 Node*
 power_tree(Node *ref, int power) {
     Node *node = calloc(1, sizeof(Node));
@@ -88,7 +104,7 @@ build_ast(char **expr, int len) {
         //printf("t: %s\n", token);
         Node *node = calloc(1, sizeof(Node));
         //node->number = 0;
-        snprintf(node->value, VALUE_LEN, "%s", "none");
+        snprintf(node->value, VALUE_LEN, "%s", "0");
 
         if ((token[0] == 'x') || (token[0] == 'e') || (strcmp(token, "pi") == 0)) {
             snprintf(node->value, VALUE_LEN, "%s", token);
@@ -102,7 +118,6 @@ build_ast(char **expr, int len) {
         } else if (strlen(token) == 1 && (token[0] == '^')) { // only constant integer powers are allowed; treats x^y = x*x*...*x with y amount of multiplications; x^-y = 1 / x^y
             //Node *power_node = stack[--stack_ptr];
             //double power = power_node->number;
-            //if (strcmp(power_node->value, "none") != 0) power = atof(power_node->value);
             double power = atof(stack[--stack_ptr]->value);
             Node *ref = stack[--stack_ptr];
 
@@ -118,14 +133,12 @@ build_ast(char **expr, int len) {
                 //node = stack[--stack_ptr];
                 node = ref;
             } else if (power == 0) {
-                //snprintf(node->value, VALUE_LEN, "%s", "none");
                 //node->number = 1;
                 snprintf(node->value, VALUE_LEN, "%s", "1");
             } else {
                 //Node *ref = stack[--stack_ptr];
                 snprintf(node->value, VALUE_LEN, "%s", "/");
                 node->left = calloc(1, sizeof(Node));
-                //snprintf(node->left->value, VALUE_LEN, "%s", "none");
                 //node->left->number = 1;
                 snprintf(node->left->value, VALUE_LEN, "%s", "1");
                 node->right = power_tree(ref, -power);
@@ -293,14 +306,14 @@ clear_tree(Node *root) {
     }
     // reduce identical nodes
     if (root->value[0] == '/') {
-        if (cmptree(root->left, root->right)) {
+        if (cmptree_v2(root->left, root->right)) {
             snprintf(root->value, VALUE_LEN, "%s", "1");
             freetree(root->left);
             root->left = NULL;
             freetree(root->right);
             root->right = NULL;
         } else if ((root->left->value[0] == '^') && (root->right->value[0] == '^')
-            && cmptree(root->left->left, root->right->left)) {
+            && cmptree_v2(root->left->left, root->right->left)) {
             Node *power_left = root->left->right;
 
             Node *expr = root->left->left;
@@ -315,7 +328,7 @@ clear_tree(Node *root) {
 
             root->right = clear_tree(root->right);
         } else if ((root->left->value[0] == '^')
-            && cmptree(root->left->left, root->right)) {
+            && cmptree_v2(root->left->left, root->right)) {
             Node *power_left = root->left->right;
 
             Node *expr = root->left->left;
@@ -333,7 +346,7 @@ clear_tree(Node *root) {
 
             root->right = clear_tree(root->right);
         } else if ((root->right->value[0] == '^')
-            && cmptree(root->right->left, root->left)) {
+            && cmptree_v2(root->right->left, root->left)) {
             snprintf(root->value, VALUE_LEN, "%s", "^");
             snprintf(root->right->value, VALUE_LEN, "%s", "-");
 
@@ -346,7 +359,7 @@ clear_tree(Node *root) {
 
             root->right = clear_tree(root->right);
         }
-    } else if ((root->value[0] == '-') && (cmptree(root->left, root->right))) {
+    } else if ((root->value[0] == '-') && (cmptree_v2(root->left, root->right))) {
             snprintf(root->value, VALUE_LEN, "%s", "0");
             freetree(root->left);
             root->left = NULL;

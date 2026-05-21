@@ -133,7 +133,7 @@ diff(Node *node) {
                 sign = -1;
             } else if (strcmp(node->value, "tan") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                snprintf(der->left->value, VALUE_LEN, "%s", "none");
+                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
                 //der->left->number = 1;
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
 
@@ -154,7 +154,7 @@ diff(Node *node) {
                 copytree(der->right->right->left, node->left);
             } else if (strcmp(node->value, "ctg")) {
                 der->left = calloc(1, sizeof(Node));
-                snprintf(der->left->value, VALUE_LEN, "%s", "none");
+                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
                 //der->left->number = 1;
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
 
@@ -177,7 +177,7 @@ diff(Node *node) {
                 sign = -1;
             } else if (strcmp(node->value, "ln") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                snprintf(der->left->value, VALUE_LEN, "%s", "none");
+                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
                 //der->left->number = 1;
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
                 
@@ -190,7 +190,7 @@ diff(Node *node) {
                 Node *neg = calloc(1, sizeof(Node));
                 snprintf(neg->value, VALUE_LEN, "%s", "-");
                 neg->left = calloc(1, sizeof(Node));
-                snprintf(neg->left->value, VALUE_LEN, "%s", "none");
+                snprintf(neg->left->value, VALUE_LEN, "%s", "0");
                 neg->right = der;
 
                 der = neg;

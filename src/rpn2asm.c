@@ -151,7 +151,7 @@ main(void) {
     }
     
     printf("%d %d\n", secdata_idx, sectext_idx);
-    FILE *asm_file = fopen("funcs.asm", "w");
+    FILE *asm_file = fopen("src/funcs.asm", "w");
     fwrite(secdata_buffer, 1, secdata_idx, asm_file);
     fwrite(sectext_buffer, 1, sectext_idx, asm_file);
     free(secdata_buffer);
