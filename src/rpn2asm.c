@@ -8,6 +8,7 @@
 #define MAX_SIZE 100000
 #define EPS 1e-6
 
+/// inefficient find for constant number
 int
 find_in_list(double num, double *arr, int len) {
     for (int i = 0; i < len; ++i) {
@@ -24,7 +25,6 @@ find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index
     if (node == NULL || *const_index == MAX_CONSTS) return;
 
     if (node->left == NULL && node->right == NULL && node->value[0] != 'x' && find_in_list(atof(node->value), const_list, *const_index) == -1) {
-        //consts[*index] = node->number;
         int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, atof(node->value));
         if (written < 0 || *secdata_idx + written >= MAX_LEN) {
             fprintf(stderr, "\n\nBUFFER WRITING ERROR!!!!!!!!!!!\n\n");
@@ -39,12 +39,13 @@ find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index
     }
 }
 
+// TODO docs
 void
 convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list, int const_num) {
     if (node == NULL) return;
 
     if (node->right == NULL) {
-        if (node->left == NULL) { //value
+        if (node->left == NULL) { //x or constant
             if (node->value[0] == 'x') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[ebp+8]\n");
             else if (node->value[0] == 'e') *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_e]\n");
             else if (strcmp(node->value, "pi") == 0) *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fld qword[const_pi]\n");
@@ -72,14 +73,15 @@ convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list,
             case '-': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fsubp st1, st0\n"); break;
             case '*': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fmulp st1, st0\n"); break;
             case '/': *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fdivp st1, st0\n"); break;
-            case '^': // not fully supported yet due to unique label problem
+            case '^': // not fully supported yet; edge cases should be processed through 'if' (labels), but not implemented due to unique label problem, to not make the code even more complex
                 //*buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    ftst\n    fstsw ax\n    fwait\n    sahf\n    jnz .non_zero_exp\n    fstp st0\n    fstp st0\n    fld1\n   jmp .pow_done\n.non_zero_exp:\n    fxch\n    ftst\n    fstsw ax\n    sahf\n    jnz .calc_pow\n    fstp st0\n    fstp st0\n    fldz\n    jmp .pow_done\n.calc_pow:\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n.pow_done:\n");
-                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fxch\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n");
+                *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    fxch\n    fyl2x\n    fld st0\n    frndint\n    fsub st1, st0\n    fxch\n    f2xm1\n    fld1\n    faddp\n    fscale\n    fstp st1\n"); // a simpler version
                 break;
         }
     }
 }
 
+/// writes a single function body
 void
 gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int const_num) {
     *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    push ebp\n    mov ebp, esp\n    push ebx\n    push esi\n    push edi\n");
@@ -87,6 +89,12 @@ gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int
     *buffer_idx += snprintf(write_buffer + *buffer_idx, MAX_SIZE - *buffer_idx, "    pop edi\n    pop esi\n    pop ebx\n    pop ebp\n    ret\n");
 }
 
+/// reads three functions from stdin;
+/// for each:
+/// builds a tree;
+/// finds the derivative;
+/// makes asm functions f_* and d_* accordingly;
+/// writes to src/funcs.asm
 int
 main(void) {
     char *secdata_buffer = calloc(MAX_SIZE, sizeof(char));
@@ -119,7 +127,7 @@ main(void) {
 
         Node *root = build_ast(expr, idx + 1);
         root = clear_tree(root);
-        root = check_subtree(root);
+        root = check_tree(root);
 
         print_rpn(root);
         printf("\n");
@@ -132,7 +140,7 @@ main(void) {
 
         Node *diff_root = diff(root);
         diff_root = clear_tree(diff_root);
-        diff_root = check_subtree(diff_root);
+        diff_root = check_tree(diff_root);
 
         print_rpn(diff_root);
         printf("\n");
@@ -144,7 +152,7 @@ main(void) {
 
         freetree(root);
         freetree(diff_root);
-        for (int j = 0; j < idx; ++j) {
+        for (int j = 0; j <= idx; ++j) {
             free(expr[j]);
         }
         free(expr);
@@ -157,5 +165,6 @@ main(void) {
     free(secdata_buffer);
     free(sectext_buffer);
     free(const_list);
+    fclose(asm_file);
     return 0;
 }

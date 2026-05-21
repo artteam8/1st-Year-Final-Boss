@@ -36,6 +36,7 @@ sort_func(double x, f fs[3]) {
     }
 }
 
+/// I/O and general logic
 int
 main(int argc, char *argv[]) {
     int print_absc = 0;
@@ -88,6 +89,7 @@ main(int argc, char *argv[]) {
     double area = 0;
     int sign = 1;
 
+    // determine if the longer curve is lower than the point of intersection of two short ones
     for (int i = 0; i < 2; ++i) {
         for (int j = 0; j < 2; ++j) {
             if (i != j && fabs(fs[i](xs[1]) - fs[j](xs[1])) < 1e-6) {
@@ -102,7 +104,6 @@ main(int argc, char *argv[]) {
 
     for (int i = 0; i < 2; ++i) {
         sort_func((xs[i]+xs[i+1])/2, fs);
-        //area += integral(fs[1], xs[i], xs[i+1], EPS2) - integral(fs[0], xs[i], xs[i+1], EPS2);
         area += sign * (integral(fs[1 + sign], xs[i], xs[i+1], EPS2) - integral(fs[1], xs[i], xs[i+1], EPS2));
     }
 

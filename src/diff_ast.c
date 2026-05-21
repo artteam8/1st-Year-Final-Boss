@@ -3,6 +3,17 @@
 
 #define VALUE_LEN 10
 
+/// a single function for differentiating an AST.
+/// rules used:
+/// (f(x)+g(x))' = f'(x) + g'(x)
+///
+/// (f(x)-g(x))' = f'(x) - g'(x)
+///
+/// (f(x)*g(x))' = f'(x)*g(x) + f(x)*g'(x)
+///
+/// (f(x)/g(x))' = (f'(x)*g(x) - f(x)*g'(x)) / (g(x)^2)
+///
+/// (f(x)^g(x))' = (e^(ln(f(x)) * g(x)))' = f(x)^g(x) * (g(x) * f'(x)/f(x) + ln(f(x)) * g'(x))
 Node*
 diff(Node *node) {
     if (node == NULL) return node;
@@ -27,8 +38,6 @@ diff(Node *node) {
                     snprintf(first->value, VALUE_LEN, "%s", "*");
                     snprintf(second->value, VALUE_LEN, "%s", "*");
                     first->left = diff(node->left);
-                    //first->right = node->right;
-                    //second->left = node->left;
                     first->right = calloc(1, sizeof(Node));
                     second->left = calloc(1, sizeof(Node));
                     copytree(first->right, node->right);
@@ -46,8 +55,6 @@ diff(Node *node) {
                     snprintf(first->value, VALUE_LEN, "%s", "*");
                     snprintf(second->value, VALUE_LEN, "%s", "*");
                     first->left = diff(node->left);
-                    //first->right = node->right;
-                    //second->left = node->left;
                     first->right = calloc(1, sizeof(Node));
                     second->left = calloc(1, sizeof(Node));
                     copytree(first->right, node->right);
@@ -61,12 +68,10 @@ diff(Node *node) {
 
                     Node *denumenator = calloc(1, sizeof(Node));
                     denumenator->left = calloc(1, sizeof(Node));
-                    //memcpy(denumenator->left, second, sizeof(Node)); // doesn't copy the subtree, leaves the ptrs
+
                     copytree(denumenator->left, node->right);
                     denumenator->right = calloc(1, sizeof(Node));
-                    //denumenator->right->number = 2;
-                    //snprintf(denumenator->right->value, VALUE_LEN, "%s", -1); // marking as constant
-                    //snprintf(denumenator->value, VALUE_LEN, "%s", '^');
+
                     copytree(denumenator->right, node->right);
                     snprintf(denumenator->value, VALUE_LEN, "%s", "*");
 
@@ -77,7 +82,6 @@ diff(Node *node) {
                     return new;
                 }
                 case '^': {
-                    // f(x) ^ g(x) = f(x) ^ g(x) * (ln(f(x)) * g(x))' = f(x) ^ g(x) * (ln(f(x))*g(x)' + f(x)'/f(x)*g(x))
                     snprintf(new->value, VALUE_LEN, "%s", "*");
                     new->left = calloc(1, sizeof(Node));
                     copytree(new->left, node); // f(x)^g(x)
@@ -87,24 +91,23 @@ diff(Node *node) {
                     Node *first = calloc(1, sizeof(Node));
                     Node *ln = calloc(1, sizeof(Node));
                     snprintf(ln->value, VALUE_LEN, "%s", "ln");
-                    //ln->left = node->left; //f(x)
                     ln->left = calloc(1, sizeof(Node));
                     copytree(ln->left, node->left); //f(x)
                     ln->right = NULL;
                     snprintf(first->value, VALUE_LEN, "%s", "*");
                     first->left = ln;
-                    first->right = diff(node->right); //g(x)'
+                    first->right = diff(node->right); //g'(x)
                     
                     Node *second = calloc(1, sizeof(Node));
                     Node *f_to_der = calloc(1, sizeof(Node));
                     snprintf(f_to_der->value, VALUE_LEN, "%s", "/");
                     f_to_der->left = diff(node->left);
-                    //f_to_der->right = node->left;
+
                     f_to_der->right = calloc(1, sizeof(Node));
                     copytree(f_to_der->right, node->left);
                     snprintf(second->value, VALUE_LEN, "%s", "*");
                     second->left = f_to_der;
-                    //second->right = node->right; //g(x)
+
                     second->right = calloc(1, sizeof(Node));
                     copytree(second->right, node->right); //g(x)
 
@@ -133,13 +136,10 @@ diff(Node *node) {
                 sign = -1;
             } else if (strcmp(node->value, "tan") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
-                //der->left->number = 1;
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
 
                 snprintf(der->value, VALUE_LEN, "%s", "/");
                 der->right = calloc(1, sizeof(Node));
-                //snprintf(der->right->value, VALUE_LEN, "%s", '^');
                 snprintf(der->right->value, VALUE_LEN, "%s", "*");
 
                 der->right->left = calloc(1, sizeof(Node));
@@ -147,20 +147,18 @@ diff(Node *node) {
                 snprintf(der->right->left->value, VALUE_LEN, "%s", "cos");
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
-                //snprintf(der->right->right->value, VALUE_LEN, "%s", -1);
-                //der->right->right->number = 2;
+
                 snprintf(der->right->right->value, VALUE_LEN, "%s", "cos");
                 der->right->right->left = calloc(1, sizeof(Node));
                 copytree(der->right->right->left, node->left);
             } else if (strcmp(node->value, "ctg")) {
                 der->left = calloc(1, sizeof(Node));
-                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
-                //der->left->number = 1;
+
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
 
                 snprintf(der->value, VALUE_LEN, "%s", "/");
                 der->right = calloc(1, sizeof(Node));
-                //snprintf(der->right->value, VALUE_LEN, "%s", '^');
+
                 snprintf(der->right->value, VALUE_LEN, "%s", "*");
                 der->right->left = calloc(1, sizeof(Node));
                 der->right->right = calloc(1, sizeof(Node));
@@ -168,8 +166,7 @@ diff(Node *node) {
                 snprintf(der->right->left->value, VALUE_LEN, "%s", "sin");
                 der->right->left->left = calloc(1, sizeof(Node));
                 copytree(der->right->left->left, node->left);
-                //snprintf(der->right->right->value, VALUE_LEN, "%s", -1);
-                //der->right->right->number = 2;
+
                 snprintf(der->right->right->value, VALUE_LEN, "%s", "sin");
                 der->right->right->left = calloc(1, sizeof(Node));
                 copytree(der->right->right->left, node->left);
@@ -177,8 +174,7 @@ diff(Node *node) {
                 sign = -1;
             } else if (strcmp(node->value, "ln") == 0) {
                 der->left = calloc(1, sizeof(Node));
-                //snprintf(der->left->value, VALUE_LEN, "%s", "none");
-                //der->left->number = 1;
+
                 snprintf(der->left->value, VALUE_LEN, "%s", "1");
                 
                 der->right = calloc(1, sizeof(Node));
@@ -204,8 +200,7 @@ diff(Node *node) {
         /////////////////
         //  constants  //
         /////////////////
-        //snprintf(new->value, VALUE_LEN, "%s", "none");
-        if (node->value[0] == 'x') snprintf(new->value, VALUE_LEN, "%s", "1");//new->number = 1;
+        if (node->value[0] == 'x') snprintf(new->value, VALUE_LEN, "%s", "1");
         else snprintf(new->value, VALUE_LEN, "%s", "0");
     }
 

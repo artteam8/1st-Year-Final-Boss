@@ -2,14 +2,19 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define MAX_ITER 1000000
+#define MAX_ITER 10000
 
 typedef double (*f)(double);
 
-FILE *outp = NULL;
+/// where to output iters
+FILE *outp;
 
 #if USE_NEWTON
-/// Newton method. TODO explanation
+/// Newton method.
+/// tangent equation in point x=x_n:
+/// y = (f'(x) - g'(x)) * (x - x_n) + (f(x_n) - g(x_n))
+/// next step is where tangent crosses X axis, so, y=0
+/// x = x_n - (f(x) - g(x)) / (f'(x_n) - g'(x_n))
 double
 root(double (*f)(double),
     double (*g)(double),
@@ -21,16 +26,18 @@ root(double (*f)(double),
 
     int iter = 0;
     double y, dy;
-    double x = (a + b) / 2;
+    double x = (a + b) / 2; // lets use the middle
 
     while (iter < MAX_ITER) {
         y = f(x) - g(x);
-        if (fabs(y) < eps1) break;
+        if (fabs(y) < eps1) break; // root is found
 
         dy = f_der(x) - g_der(x);
-        if(fabs(dy) < eps1) break;
-
+        
         x = x - y/dy;
+        if (x > b) x = b; // if x got too big, get it back
+        if (x < a) x = a; //  if x got too small, get it back
+
         ++iter;
     }
 
@@ -38,7 +45,16 @@ root(double (*f)(double),
     return x;
 }
 #else
-/// Secant method. TODO explanation
+/// Secant method.
+/// secant equation through points a and b:
+/// y = (f(a) - g(a)) + ((f(b) - g(b)) - (f(a) - g(a)) * (x - a) / (b - a)
+/// let y=0
+/// -(f(a) - g(a)) = ((f(b) - g(b)) - (f(a) - g(a)) * (x - a) / (b - a)
+/// x - a = -(f(a) - g(a)) * (b - a) / ((f(b) - g(b)) - (f(a) - g(a))
+/// x = a - (f(a) - g(a)) * (b - a) / ((f(b) - g(b)) - (f(a) - g(a))
+///
+/// we have segments (a; x) and (x; b)
+/// determine which segment to take, by checking which one has the sign different on its start and end
 double
 root(double (*f)(double),
     double (*g)(double),
@@ -47,12 +63,12 @@ root(double (*f)(double),
     double eps1) {
 
     int iter = 0;
-    double fa = f(a) - g(a);
-    double fb = f(b) - g(b);
+    double ya = f(a) - g(a);
+    double yb = f(b) - g(b);
     double x, y;
 
     while (iter < MAX_ITER) {
-        x = a - fa * (b - a) / (fb - fa);
+        x = a - ya * (b - a) / (yb - ya);
         y = f(x) - g(x);
 
         if (fabs(y) < eps1) {
@@ -61,20 +77,18 @@ root(double (*f)(double),
         }
 
         // checking where the root is
-        if (fa * y < 0) {
+        if (ya * y < 0) {
             b = x;
-            fb = y;
+            yb = y;
         } else {
             a = x;
-            fa = y;
+            ya = y;
         }
 
         if (fabs(b - a) < eps1) {
             fprintf(outp, "iters: %d\n", iter);
             return x;
         }
-
-
 
         ++iter;
     }
@@ -112,6 +126,7 @@ sort(double *xs) {
 #if USE_NEWTON
 double*
 crosses(f f1, f f2, f f3, f d1, f d2, f d3, double a, double b, double eps1, int print_iters) {
+    // if no -i flag, output it straight to /dev/null blackhole
     if (print_iters) outp = stdout;
     else outp = fopen("/dev/null", "w");
 
@@ -125,6 +140,7 @@ crosses(f f1, f f2, f f3, f d1, f d2, f d3, double a, double b, double eps1, int
 #else
 double*
 crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters) {
+    // if no -i flag, output it straight to /dev/null blackhole
     if (print_iters) outp = stdout;
     else outp = fopen("/dev/null", "w");
 
@@ -146,7 +162,12 @@ crosses(f f1, f f2, f f3, double a, double b, double eps1, int print_iters) {
 
 
 
-/// Simpson rule. TODO explanation
+/// Simpson rule.
+/// for one split:
+/// let h = length of one segment
+/// ∫ = h/3 * (f(a) + 4f(x1) + f(b))
+/// for more splits, it is h/3 * (f(a) + 4f(x1) + 2f(x2) + ... + f(b))
+/// check paper for more details
 #if USE_SIMPSON
 double
 simpson(double (*func)(double), double a, double b, int n_splits) {
@@ -165,14 +186,20 @@ simpson(double (*func)(double), double a, double b, int n_splits) {
     return sum * h / 3;
 }
 #else
-/// Trapezium rule. TODO explanation
+/// Trapezium rule.
+/// for one split
+/// let h = length of segment
+/// ∫ = (f(xi) + f(x{i+1}))/2 * h = f(xi)/2 * h + f(x{i+1)/2 * h
+/// for more splits, each point except a and b appears twice
+/// ∫ = (f(a)/2 + f(x1)/2 + f(x1)/2 + f(x2)/2 + ... + f(b)/2) * h = 
+/// = (f(a)/2 + f(x1) + ... + f(b)/2) * h
 double
 trapezium(double (*func)(double), double a, double b, int n_splits) {
     double h = (b - a) / n_splits;
     double sum = (func(a) + func(b)) / 2.0;
 
     for (int i = 1; i < n_splits; ++i) {
-        double x = a + i * h;
+        double x = a + i * h; // xi
         sum += func(x);
     }
 
@@ -180,7 +207,8 @@ trapezium(double (*func)(double), double a, double b, int n_splits) {
 }
 #endif
 
-/// repeats integrating with increasing number of splits until eps2 is reached. TODO explanation
+/// repeats integration with increasing number of splits until eps2 is reached.
+/// Runge rule is used, check paper for more details
 double
 integral(double (*func)(double), double a, double b, double eps2) {
     int n_splits = 10000;

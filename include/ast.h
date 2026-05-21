@@ -18,7 +18,7 @@ Node*
 build_ast(char **expr, int len);
 
 Node*
-check_subtree(Node *root);
+check_tree(Node *root);
 
 Node*
 clear_tree(Node *root);
