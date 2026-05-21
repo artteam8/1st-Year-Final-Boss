@@ -23,7 +23,7 @@ int \doxymbox{\hyperlink{rpn2asm_8c_ab2ac728d6234212b1a7900d3a1c6d241}{find\+\_\
 void \doxymbox{\hyperlink{rpn2asm_8c_ab548c4551953da4d753a35fb08fc3860}{find\+\_\+consts}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node, char \texorpdfstring{$\ast$}{*}secdata\+\_\+buffer, int \texorpdfstring{$\ast$}{*}secdata\+\_\+idx, int \texorpdfstring{$\ast$}{*}const\+\_\+index, double \texorpdfstring{$\ast$}{*}const\+\_\+list)
 \begin{DoxyCompactList}\small\item\em find constants in tree to define them in .rodata \end{DoxyCompactList}\item 
 void \doxymbox{\hyperlink{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2}{convert\+\_\+x87}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}node, char \texorpdfstring{$\ast$}{*}write\+\_\+buffer, int \texorpdfstring{$\ast$}{*}buffer\+\_\+idx, double \texorpdfstring{$\ast$}{*}const\+\_\+list, int const\+\_\+num)
-\item 
+\begin{DoxyCompactList}\small\item\em post-\/order recursion that converts an AST to x87\+\_\+32 assembly \end{DoxyCompactList}\item 
 void \doxymbox{\hyperlink{rpn2asm_8c_a19b543ed5ae4ddc6094fee92cb4bacb9}{gen\+\_\+x87}} (\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}\doxymbox{\hyperlink{numeric_8c_aa81b1736748c564740700de7d0153ac4}{root}}, char \texorpdfstring{$\ast$}{*}write\+\_\+buffer, int \texorpdfstring{$\ast$}{*}buffer\+\_\+idx, double \texorpdfstring{$\ast$}{*}const\+\_\+list, int const\+\_\+num)
 \begin{DoxyCompactList}\small\item\em writes a single function body \end{DoxyCompactList}\item 
 int \doxymbox{\hyperlink{rpn2asm_8c_a840291bc02cba5474a4cb46a9b9566fe}{main}} (void)
@@ -83,6 +83,10 @@ Definition at line \doxymbox{\hyperlink{rpn2asm_8c_source_l00008}{8}} of file \d
 \doxysubsubsection{\texorpdfstring{convert\_x87()}{convert\_x87()}}
 {\footnotesize\ttfamily \label{rpn2asm_8c_ab3b1c2228087dea6c957dbd9f7f78ce2} 
 void convert\+\_\+x87 (\begin{DoxyParamCaption}\item[{\doxymbox{\hyperlink{structNode}{Node}} \texorpdfstring{$\ast$}{*}}]{node}{, }\item[{char \texorpdfstring{$\ast$}{*}}]{write\+\_\+buffer}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{buffer\+\_\+idx}{, }\item[{double \texorpdfstring{$\ast$}{*}}]{const\+\_\+list}{, }\item[{int}]{const\+\_\+num}{}\end{DoxyParamCaption})}
+
+
+
+post-\/order recursion that converts an AST to x87\+\_\+32 assembly 
 
 
 

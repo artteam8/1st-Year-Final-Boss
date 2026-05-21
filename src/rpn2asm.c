@@ -39,7 +39,7 @@ find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index
     }
 }
 
-// TODO docs
+/// post-order recursion that converts an AST to x87_32 assembly
 void
 convert_x87(Node *node, char *write_buffer, int *buffer_idx, double *const_list, int const_num) {
     if (node == NULL) return;
