@@ -80,7 +80,7 @@ root(double (*f)(double),
             return x;
         }
 
-        // checking where the root is
+        // false position method
         if (ya * y < 0) {
             b = x;
             yb = y;
@@ -88,6 +88,7 @@ root(double (*f)(double),
             a = x;
             ya = y;
         }
+
 
         if (fabs(b - a) < eps1) {
             fprintf(outp, "iters: %d\n", iter);

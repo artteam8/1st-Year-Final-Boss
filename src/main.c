@@ -92,9 +92,9 @@ main(int argc, char *argv[]) {
     int sign = 1;
 
     // determine if the longer curve is lower than the point of intersection of two short ones
-    for (int i = 0; i < 2; ++i) {
-        for (int j = 0; j < 2; ++j) {
-            if (i != j && fabs(fs[i](xs[1]) - fs[j](xs[1])) < 1e-6) {
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < 3; ++j) {
+            if (i != j && fabs(fs[i](xs[1]) - fs[j](xs[1])) < EPS1) {
                 int k = 0+1+2 - i - j;
                 if (fs[k](xs[1]) < fs[i](xs[1])) {
                     sign = -1;
