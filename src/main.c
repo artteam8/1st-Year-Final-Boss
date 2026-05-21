@@ -43,6 +43,8 @@ main(int argc, char *argv[]) {
     int print_iters = 0;
     struct option cli_keys[] = {{"help", no_argument, 0,  'h'}, {0,0,0,0}};
 
+
+    
     int opt;
     while ((opt = getopt_long(argc, argv, "ai", cli_keys, NULL)) != -1) {
         switch(opt) {

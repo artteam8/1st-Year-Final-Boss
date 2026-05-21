@@ -6,7 +6,7 @@ USE_NEWTON?=0
 USE_SIMPSON?=1
 
 CC := gcc
-CFLAGS := -std=c99 -Wall -Wextra -m32 -lm -O2 -DUSE_NEWTON=$(USE_NEWTON) -DUSE_SIMPSON=$(USE_SIMPSON) -DSAFE_EXP=$(SAFE_EXP) -DSPEC_FILE=\"$(SPEC_FILE)\"  -I include
+CFLAGS := -std=c99 -Wall -Wextra -m32 -O2 -DUSE_NEWTON=$(USE_NEWTON) -DUSE_SIMPSON=$(USE_SIMPSON) -DSAFE_EXP=$(SAFE_EXP) -DSPEC_FILE=\"$(SPEC_FILE)\" -DMADE_WITH_MAKE=1 -I include
 
 all: report/report.pdf bin/main
 force: ;
@@ -16,7 +16,7 @@ clean:
 	rm src/funcs.asm
 
 bin/main:  obj/main.o obj/numeric.o obj/funcs.o | bin
-	$(CC) -m32 $^ -o $@
+	$(CC) -m32 -lm $^ -o $@
 	@if command -v figlet >/dev/null 2>&1; then figlet -f slant "main built!"; else echo "main built\n\n\n"; fi
 
 obj/funcs.o: src/funcs.asm

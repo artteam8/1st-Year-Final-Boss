@@ -256,7 +256,7 @@ remove_zero(Node *root) {
     if (strlen(root->value) == 1) {
         if (((root->value[0] == '*') && ((strcmp(root->left->value, "0") == 0) || (strcmp(root->right->value, "0") == 0)))
         || ((root->value[0] == '/') && (strcmp(root->left->value, "0") == 0))
-        || ((root->value[0] == '+' || root->value[0] == '-') && ((strcmp(root->left->value, "0") == 0)) && (strcmp(root->right->value, "0") == 0))) {
+        || ((root->value[0] == '+' || (strcmp(root->value, "-") == 0)) && ((strcmp(root->left->value, "0") == 0)) && (strcmp(root->right->value, "0") == 0))) {
     
             freetree(root->left);
             freetree(root->right);
@@ -275,7 +275,7 @@ remove_zero(Node *root) {
                 free(root);
                 root = temp;
             }
-        } else if ((root->value[0] == '-') && (strcmp(root->right->value, "0") == 0)){
+        } else if ((strcmp(root->value, "-") == 0) && (strcmp(root->right->value, "0") == 0)){
             Node *temp = root->left;
             free(root->right);
             free(root);
@@ -384,7 +384,7 @@ reduce_ident(Node *root) {
 
             root->right = clear_tree(root->right); // updated the child, maybe 1-a can be reduced
         }
-    } else if ((root->value[0] == '-') && (cmptree_v2(root->left, root->right))) {
+    } else if ((strcmp(root->value, "-") == 0) && (cmptree_v2(root->left, root->right))) {
             snprintf(root->value, VALUE_LEN, "%s", "0");
             freetree(root->left);
             root->left = NULL;
@@ -402,6 +402,11 @@ precompute(Node *root) {
             double res = 0;
             double left = atof(root->left->value);
             double right = atof(root->right->value);
+            if (strcmp(root->left->value, "e") == 0) left = 2.718281828459045;
+            if (strcmp(root->right->value, "e") == 0) right = 2.718281828459045;
+            if (strcmp(root->left->value, "pi") == 0) left = 3.141592653589793;
+            if (strcmp(root->right->value, "pi") == 0) right = 3.141592653589793;
+
             switch(root->value[0]) {
                 case '+':
                     res = left + right;

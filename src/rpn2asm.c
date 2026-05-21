@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <diff_ast.h>
+#include <getopt.h>
 
 #define MAX_LEN 1000
 #define MAX_CONSTS 20
@@ -24,6 +25,7 @@ void
 find_consts(Node *node, char *secdata_buffer, int *secdata_idx, int *const_index, double *const_list) {
     if (node == NULL || *const_index == MAX_CONSTS) return;
 
+    //printf(":::::::::::::%s\n", node->value);
     if (node->left == NULL && node->right == NULL && node->value[0] != 'x' && find_in_list(atof(node->value), const_list, *const_index) == -1) {
         int written = snprintf(secdata_buffer + *secdata_idx, MAX_SIZE - *secdata_idx, "    const_%d dq %lf\n", *const_index, atof(node->value));
         if (written < 0 || *secdata_idx + written >= MAX_LEN) {
@@ -96,7 +98,7 @@ gen_x87(Node *root, char *write_buffer, int *buffer_idx, double *const_list, int
 /// makes asm functions f_* and d_* accordingly;
 /// writes to src/funcs.asm
 int
-main(void) {
+main(int argc, char *argv[]) {
     char *secdata_buffer = calloc(MAX_SIZE, sizeof(char));
     int secdata_idx = snprintf(secdata_buffer, MAX_SIZE, "section .rodata\n    const_pi dq 3.141592653589793\n    const_e dq 2.718281828459045\n");
 
@@ -106,7 +108,30 @@ main(void) {
     int const_index = 0;
     double *const_list = calloc(MAX_CONSTS, sizeof(double));
 
-    for (int i = 1; i <= 3; ++i) {
+
+
+
+    struct option cli_keys[] = {{"help", no_argument, 0,  'h'}, {"test", no_argument, 0,  't'},  {0,0,0,0}};
+    int is_test = 0;
+    int opt;
+    while ((opt = getopt_long(argc, argv, "", cli_keys, NULL)) != -1) {
+        switch(opt) {
+            case 't':
+                is_test = 1;
+                break;
+            case 'h':
+                printf("Reads the SPEC_FILE, builds AST, writes assembly to src/funcs.asm.\n\n--help       show this message and quit\n--test       test mode, provide an RPN function on stdin, it will output assembly on stdout\n");
+                return 0;
+        }
+    }
+
+
+
+    int func_num;
+    if (!is_test) func_num = 3;
+    else func_num = 1;
+
+    for (int i = 1; i <= func_num; ++i) {
         char **expr = calloc(MAX_LEN, sizeof(char*));
         expr[0] = calloc(10, sizeof(char));
         int idx = 0;
@@ -159,7 +184,9 @@ main(void) {
     }
     
     printf("%d %d\n", secdata_idx, sectext_idx);
-    FILE *asm_file = fopen("src/funcs.asm", "w");
+    FILE *asm_file;
+    if (!is_test) asm_file = fopen("src/funcs.asm", "w");
+    else asm_file = stdout;
     fwrite(secdata_buffer, 1, secdata_idx, asm_file);
     fwrite(sectext_buffer, 1, sectext_idx, asm_file);
     free(secdata_buffer);
