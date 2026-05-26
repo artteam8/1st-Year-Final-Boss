@@ -4,7 +4,6 @@
 #include <getopt.h>
 #include <stdlib.h>
 
-#define EPS1 1e-4
 #define EPS2 1e-4
 
 extern double f_1(double x);
@@ -39,6 +38,7 @@ sort_func(double x, f fs[3]) {
 /// I/O and general logic
 int
 main(int argc, char *argv[]) {
+    double M1 = 10000, M2 = 10000, M3 = 10000;
     int print_absc = 0;
     int print_iters = 0;
     struct option cli_keys[] = {{"help", no_argument, 0,  'h'}, {0,0,0,0}};
@@ -46,7 +46,7 @@ main(int argc, char *argv[]) {
 
     
     int opt;
-    while ((opt = getopt_long(argc, argv, "ai", cli_keys, NULL)) != -1) {
+    while ((opt = getopt_long(argc, argv, "aim:", cli_keys, NULL)) != -1) {
         switch(opt) {
             case 'a':
                 print_absc = 1;
@@ -54,11 +54,21 @@ main(int argc, char *argv[]) {
             case 'i':
                 print_iters = 1;
                 break;
+            case 'm':
+                M1 = atof(optarg);
+                M2 = atof(argv[optind]);
+                M3 = atof(argv[optind+1]);
+                optind += 2;
+                break;
             case 'h':
-                printf("--help       show this message and quit\n -a          show intersection points\n -i          show number of iterations\n");
+                printf("--help       show this message and quit\n -a          show intersection points\n -i          show number of iterations\n -m          provide upper bounds of derivatives on segment, three doubles (10000 by default)\n");
                 return 0;
         }
     }
+
+
+    double EPS1 = 0.026457513 / sqrt(M1+M2+M3);
+    printf("eps1: %lf\n", EPS1);
 
 
 #if USE_NEWTON
