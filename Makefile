@@ -16,7 +16,7 @@ clean:
 	rm src/funcs.asm
 
 bin/main:  obj/main.o obj/numeric.o obj/funcs.o | bin
-	$(CC) -m32 -lm $^ -o $@
+	$(CC) -m32 $^ -o $@ -lm
 	@if command -v figlet >/dev/null 2>&1; then figlet -f slant "main built!"; else echo "main built\n\n\n"; fi
 
 obj/funcs.o: src/funcs.asm
@@ -35,7 +35,7 @@ src/funcs.asm: bin/gen $(SPEC_FILE)
 	tail -n +2 $(SPEC_FILE) | ./bin/gen
 
 bin/gen: obj/rpn2asm.o obj/ast.o obj/diff_ast.o | bin
-	$(CC) -m32 -lm $^ -o $@
+	$(CC) -m32 $^ -o $@ -lm
 
 obj/%.o: src/%.c
 	@mkdir -p $(dir $@)

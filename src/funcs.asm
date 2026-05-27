@@ -1,7 +1,7 @@
 section .rodata
     const_pi dq 3.141592653589793
     const_e dq 2.718281828459045
-    const_0 dq 10.539700
+    const_0 dq 227929913.000000
     const_1 dq 0.000000
     const_2 dq -1.000000
     const_3 dq 1.000000
